@@ -17,7 +17,7 @@
       android:inputType="textPassword"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/username2" />
+      app:layout_constraintTop_toBottomOf="@+id/mail" />
 
   <EditText
       android:id="@+id/username"
@@ -33,13 +33,13 @@
       app:layout_constraintTop_toBottomOf="@+id/textv" />
 
   <EditText
-      android:id="@+id/username2"
+      android:id="@+id/mail"
       android:layout_width="340dp"
       android:layout_height="78dp"
-      android:layout_marginTop="36dp"
+      android:layout_marginTop="24dp"
       android:background="@drawable/input_bg"
       android:ems="10"
-      android:inputType="textPersonName"
+      android:inputType="textEmailAddress"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.492"
       app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="72dp"
-      android:text="Login"
+      android:text="Register"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.498"
       app:layout_constraintStart_toStartOf="parent"
@@ -58,10 +58,10 @@
 
   <TextView
       android:id="@+id/textv"
-      android:layout_width="135dp"
-      android:layout_height="41dp"
+      android:layout_width="193dp"
+      android:layout_height="54dp"
       android:layout_marginTop="32dp"
-      android:text="LOGIN"
+      android:text="REGISTER"
       android:textAlignment="center"
       android:textColor="@color/white"
       android:textSize="34sp"
