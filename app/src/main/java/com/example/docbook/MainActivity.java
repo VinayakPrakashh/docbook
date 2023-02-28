@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.docbook.R.id;
 
@@ -27,9 +28,12 @@ TextView t1,treg;
         b1.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String username=uname.getText().toString();
-            String password=pass.getText().toString();
+            String username = uname.getText().toString();
+            String password = pass.getText().toString();
 
+            if (username.equals("aslam")) {
+                Toast.makeText(getApplicationContext(), "Login success", Toast.LENGTH_SHORT).show();
+            }
         }
     });
     treg.setOnClickListener(new View.OnClickListener() {
