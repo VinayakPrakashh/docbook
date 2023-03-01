@@ -34,17 +34,29 @@ TextView t1,treg;
         SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String emailAUTH= sharedPreferences.getString("mail","").toString();
         String passwordAUT=sharedPreferences.getString("password","").toString();
-        if(mauth.signInWithEmailAndPassword(emailAUTH,passwordAUT).isSuccessful()){
-            startActivity(new Intent(MainActivity.this,HomeActivity.class));
-        }
-        Toast.makeText(getApplicationContext(), emailAUTH+"  "+passwordAUT, Toast.LENGTH_SHORT).show();
+
         mail=findViewById(R.id.username);
         pass=findViewById(R.id.password);
         b1=findViewById(R.id.b1);
         treg=findViewById(id.tregister);
 mauth=FirebaseAuth.getInstance();
 mUser=mauth.getCurrentUser();
+        if(emailAUTH.length()!=0){
+            mauth.signInWithEmailAndPassword(emailAUTH,passwordAUT).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                    }
+                    else {
 
+                    }
+                }
+            });
+        }
+     else {
+
+        }
         b1.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -65,6 +77,7 @@ mUser=mauth.getCurrentUser();
                             myEdit.putString("password",pass.getText().toString());
                             myEdit.commit();
                             Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(MainActivity.this,HomeActivity.class));
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();

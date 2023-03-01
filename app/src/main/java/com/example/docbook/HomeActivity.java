@@ -11,12 +11,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity {
-Button lgout;
+Button lgout,appointment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         lgout=findViewById(R.id.logout);
+        appointment=findViewById(R.id.finddoctor);
         SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String mail= sharedPreferences.getString("mail","").toString();
         Toast.makeText(getApplicationContext(), "Welcome "+mail,Toast.LENGTH_SHORT).show();
@@ -27,6 +28,12 @@ Button lgout;
                 editor.clear();
                 editor.apply();;
                 startActivity(new Intent(HomeActivity.this,MainActivity.class));
+            }
+        });
+        appointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,AppointmentActivity.class));
             }
         });
     }
