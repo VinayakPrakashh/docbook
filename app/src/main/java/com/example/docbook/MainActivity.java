@@ -1,5 +1,6 @@
 package com.example.docbook;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -13,42 +14,64 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.docbook.R.id;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
-EditText uname,pass;
+EditText mail,pass;
 Button b1;
 TextView t1,treg;
+    FirebaseAuth mauth;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        uname=findViewById(R.id.username);
+        SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        String emailAUTH= sharedPreferences.getString("mail","").toString();
+        String passwordAUT=sharedPreferences.getString("password","").toString();
+        if(mauth.signInWithEmailAndPassword(emailAUTH,passwordAUT).isSuccessful()){
+            startActivity(new Intent(MainActivity.this,HomeActivity.class));
+        }
+        Toast.makeText(getApplicationContext(), emailAUTH+"  "+passwordAUT, Toast.LENGTH_SHORT).show();
+        mail=findViewById(R.id.username);
         pass=findViewById(R.id.password);
         b1=findViewById(R.id.b1);
         treg=findViewById(id.tregister);
+mauth=FirebaseAuth.getInstance();
+mUser=mauth.getCurrentUser();
+
         b1.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String username = uname.getText().toString();
+            String email = mail.getText().toString();
             String password = pass.getText().toString();
             Database db=new Database(getApplicationContext(),"healthcare",null,1);
-            if (username.length()==0 || password.length()==0) {
+            if (email.length()==0 || password.length()==0) {
                 Toast.makeText(getApplicationContext(), "Please fill the fields", Toast.LENGTH_SHORT).show();
             }
             else {
-                if(db.login(username,password)==1){
+                mauth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                            myEdit.putString("mail", mail.getText().toString());
+                            myEdit.putString("password",pass.getText().toString());
+                            myEdit.commit();
+                            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
-                    Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                    SharedPreferences sharedPreferences=getSharedPreferences("shared_prefs",Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor=sharedPreferences.edit();
-                    editor.putString("username",username);
-                    editor.apply();
-                    startActivity(new Intent(MainActivity.this,HomeActivity.class));
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
-                }
             }
         }
     });
@@ -58,6 +81,10 @@ TextView t1,treg;
             startActivity(new Intent(MainActivity.this,RegisterActivity.class));
         }
     });
+
+    }
+    private void user(){
+
     }
 
 }

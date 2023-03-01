@@ -17,9 +17,9 @@ Button lgout;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         lgout=findViewById(R.id.logout);
-        SharedPreferences sharedPreferences =getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-        String username= sharedPreferences.getString("username","").toString();
-        Toast.makeText(getApplicationContext(), "Welcome "+username,Toast.LENGTH_SHORT).show();
+        SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        String mail= sharedPreferences.getString("mail","").toString();
+        Toast.makeText(getApplicationContext(), "Welcome "+mail,Toast.LENGTH_SHORT).show();
         lgout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
