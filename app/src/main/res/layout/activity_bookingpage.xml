@@ -4,6 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".bookingpageActivity">
+    tools:context=".bookingpageActivity"
+    android:background="@drawable/back1"
+    >
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="343dp"
+        android:layout_height="58dp"
+        android:text="BOOK APPOINTMENT"
+        android:textColor="#ECE4E4"
+        android:textSize="34sp"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <EditText
+        android:id="@+id/adress"
+        android:layout_width="309dp"
+        android:layout_height="63dp"
+        android:background="@drawable/input_bg"
+        android:ems="10"
+        android:hint="address"
+        android:inputType="textPersonName"
+        android:textColor="#F3F2F2"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="334dp" />
+
+    <EditText
+        android:id="@+id/contactnumber"
+        android:layout_width="309dp"
+        android:layout_height="63dp"
+        android:background="@drawable/input_bg"
+        android:ems="10"
+        android:hint="contact number"
+        android:inputType="textPersonName"
+        android:textColor="#F3F2F2"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="446dp" />
+
+    <EditText
+        android:id="@+id/fname"
+        android:layout_width="309dp"
+        android:layout_height="63dp"
+        android:background="@drawable/input_bg"
+        android:ems="10"
+        android:hint="Full name"
+        android:inputType="textPersonName"
+        android:textColor="#F3F2F2"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="224dp" />
+
+    <Button
+        android:id="@+id/book"
+        android:layout_width="306dp"
+        android:layout_height="43dp"
+        android:text="BOOK"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="597dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
