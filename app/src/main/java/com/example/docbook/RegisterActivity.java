@@ -1,5 +1,6 @@
 package com.example.docbook;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,8 +11,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class RegisterActivity extends AppCompatActivity {
 Button b1;
+    FirebaseAuth mauth;
+    FirebaseUser mUser;
 EditText uname,pass,mail;
 TextView login;
     @Override
@@ -23,6 +32,8 @@ TextView login;
         b1=findViewById(R.id.b1);
         mail=findViewById(R.id.mail);
         login=findViewById(R.id.tregister);
+       mauth=FirebaseAuth.getInstance();
+       mUser=mauth.getCurrentUser();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,9 +51,26 @@ TextView login;
                     Toast.makeText(RegisterActivity.this, "Please fill the Required fields", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    db.register(username,email,password);
-                    Toast.makeText(RegisterActivity.this, "Registration success", Toast.LENGTH_SHORT).show();
+                    PerforAuth();
+
+                }
+            }
+        });
+    }
+
+    private void PerforAuth() {
+        String username=uname.getText().toString();
+        String email=mail.getText().toString();
+        String password=pass.getText().toString();
+        mauth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Sucess", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this,MainActivity.class));
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
