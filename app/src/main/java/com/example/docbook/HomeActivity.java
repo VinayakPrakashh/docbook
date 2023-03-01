@@ -17,7 +17,7 @@ Button lgout,appointment;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         lgout=findViewById(R.id.logout);
-        appointment=findViewById(R.id.finddoctor);
+        appointment=findViewById(R.id.doctor);
         SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String mail= sharedPreferences.getString("mail","").toString();
         Toast.makeText(getApplicationContext(), "Welcome "+mail,Toast.LENGTH_SHORT).show();
