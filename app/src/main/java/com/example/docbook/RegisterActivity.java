@@ -50,7 +50,6 @@ TextView login;
                 String username=uname.getText().toString();
                 String email=mail.getText().toString();
                 String password=pass.getText().toString();
-                Database db=new Database(getApplicationContext(),"healthcare",null,1);
                 if(username.length()==0 || email.length()==0 || password.length()==0){
                     Toast.makeText(RegisterActivity.this, "Please fill the Required fields", Toast.LENGTH_SHORT).show();
                 }
