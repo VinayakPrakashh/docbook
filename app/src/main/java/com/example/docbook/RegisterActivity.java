@@ -12,18 +12,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 Button b1;
     FirebaseAuth mauth;
-    FirebaseUser mUser;
 
 EditText uname,pass,mail;
 TextView login;
@@ -37,7 +42,6 @@ TextView login;
         mail=findViewById(R.id.mail);
         login=findViewById(R.id.tregister);
        mauth=FirebaseAuth.getInstance();
-       mUser=mauth.getCurrentUser();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,11 +73,18 @@ TextView login;
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + userId);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+// Get the current user's UID
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    String uid = mAuth.getCurrentUser().getUid();
+
+// Get a reference to the "users" collection
+                    CollectionReference usersRef = db.collection("users");
+
+// Create a new user object with the user's details
                     User user = new User(username, email,password);
-                    ref.setValue(user);
+                    usersRef.document(uid).set(user);
                     Toast.makeText(getApplicationContext(), "Sucess", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this,MainActivity.class));
                 }

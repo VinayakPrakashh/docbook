@@ -12,10 +12,4 @@ String doctorname="Aslam Suneer",phone="9441002930",exp="5 years";
         setContentView(R.layout.activity_neurologist);
 
     }
-    private String[][] neurologist=
-
-    {
-        {"Doctorname : Prasanth Vaghese", "EXP : 5years", "phone:9744084710"}
-    };
-
 }

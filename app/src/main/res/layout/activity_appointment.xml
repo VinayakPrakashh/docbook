@@ -256,15 +256,5 @@
         </androidx.cardview.widget.CardView>
     </GridLayout>
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="90dp"
-        android:layout_height="41dp"
-        android:text="BACK"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.081"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout2" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
