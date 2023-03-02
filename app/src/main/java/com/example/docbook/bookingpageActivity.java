@@ -1,5 +1,6 @@
 package com.example.docbook;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -44,6 +45,7 @@ reasons=findViewById(R.id.reason);
 contact=findViewById(R.id.contactnumber);
 ages=findViewById(R.id.age);
 b1=findViewById(R.id.book);
+
 b1.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
@@ -56,17 +58,25 @@ PerforAuth();
 
 
     private void PerforAuth() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth=FirebaseAuth.getInstance();;
+        String uid = auth.getCurrentUser().getUid();
         String nameauth=name.getText().toString();
         int ageauth=Integer.parseInt(ages.getText().toString());
         String contactauth=contact.getText().toString();
         String reasonauth=reasons.getText().toString();
         Appointment appointment = new Appointment(nameauth, ageauth, contactauth,reasonauth);
-
-// Add the appointment object to the Firestore database
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        CollectionReference appointmentsCollection = firestore.collection("appointment");
-        appointmentsCollection.add(appointment);
-        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+        db.collection("appointments").document(uid).set(appointment)  .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "Appointment added successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Failed to add appointment", Toast.LENGTH_SHORT).show();
+                    }});
     }
     public class Booking {
         private String doctorName;
