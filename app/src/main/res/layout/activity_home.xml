@@ -22,8 +22,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="383dp"
-        android:layout_height="635dp"
+        android:layout_height="600dp"
         android:layout_below="@+id/titlehome"
         android:layout_margin="20dp"
         android:columnCount="2"

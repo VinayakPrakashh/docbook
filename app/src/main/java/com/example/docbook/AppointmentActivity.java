@@ -1,6 +1,7 @@
 package com.example.docbook;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,20 +12,29 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AppointmentActivity extends AppCompatActivity {
-Button appointment;
+Button backs;
 FirebaseAuth mAuth;
     FirebaseUser mUser;
+    CardView doctor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment);
-appointment=findViewById(R.id.appointment);
-appointment.setOnClickListener(new View.OnClickListener() {
+backs=findViewById(R.id.back);
+doctor=findViewById(R.id.neurologists);
+doctor.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
         startActivity(new Intent(AppointmentActivity.this,bookingpageActivity.class));
     }
 });
+backs.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(AppointmentActivity.this,HomeActivity.class));
+    }
+});
+
     }
 
 }

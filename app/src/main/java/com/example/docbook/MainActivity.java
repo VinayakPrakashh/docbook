@@ -80,7 +80,7 @@ mUser=mauth.getCurrentUser();
                             startActivity(new Intent(MainActivity.this,HomeActivity.class));
                         }
                         else {
-                            Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

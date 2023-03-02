@@ -37,5 +37,6 @@ CardView lgout,appointment;
                 startActivity(new Intent(HomeActivity.this,AppointmentActivity.class));
             }
         });
+
     }
 }

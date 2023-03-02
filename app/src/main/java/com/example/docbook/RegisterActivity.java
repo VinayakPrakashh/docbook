@@ -70,15 +70,11 @@ TextView login;
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + userId);
 
-                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
-                    String uid = currentUser.getUid();
-                    String email = currentUser.getEmail();
-
-                    usersRef.child(uid).setValue(email);
-                    usersRef.child(uid).setValue(password);
-                    usersRef.child(uid).setValue(username);
+                    User user = new User(username, email,password);
+                    ref.setValue(user);
                     Toast.makeText(getApplicationContext(), "Sucess", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this,MainActivity.class));
                 }
@@ -88,6 +84,21 @@ TextView login;
             }
         });
     }
+    public class User {
+        public String username=uname.getText().toString();;
+        public String email=mail.getText().toString();;
 
+        public String password=pass.getText().toString();;
+
+        public User() {
+            // Default constructor required for calls to DataSnapshot.getValue(User.class)
+        }
+
+        public User(String username, String email,String password) {
+            this.username = username;
+            this.email = email;
+            this.password=password;
+        }
+    }
 
 }
