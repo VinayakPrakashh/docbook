@@ -36,6 +36,17 @@ PerforAuth();
     }
 });
     }
+    private void PerforAuth() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/" + userId);
+        String bookingId = userRef.child("bookings").push().getKey();
+        String doctorName=name.getText().toString();
+        String appointmentTime=address.getText().toString();
+        String location=num.getText().toString();
+        Booking booking = new Booking(doctorName, appointmentTime, location);
+        userRef.child("bookings").child(bookingId).setValue(booking);
+        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+    }
     public class Booking {
         private String doctorName;
         private String appointmentTime;
@@ -50,16 +61,18 @@ PerforAuth();
             this.appointmentTime = appointmentTime;
             this.location = location;
         }
-    }
-    private void PerforAuth() {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/" + userId);
-        String bookingId = userRef.child("bookings").push().getKey();
 
-        Booking booking = new Booking(doctorName, appointmentTime, location);
-        userRef.child("bookings").child(bookingId).setValue(booking);
-        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
-    }
+        public String getDoctorName() {
+            return doctorName;
+        }
 
+        public String getAppointmentTime() {
+            return appointmentTime;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+    }
 
 }
