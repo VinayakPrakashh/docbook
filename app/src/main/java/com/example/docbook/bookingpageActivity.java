@@ -2,32 +2,48 @@ package com.example.docbook;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnFailureListener;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class bookingpageActivity extends AppCompatActivity {
-EditText name,address,num;
+EditText name,reasons,contact,ages;
+
+EditText dateButton;
 Button b1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookingpage);
 name=findViewById(R.id.fname);
-address=findViewById(R.id.adress);
-num=findViewById(R.id.contactnumber);
+reasons=findViewById(R.id.reason);
+contact=findViewById(R.id.contactnumber);
+ages=findViewById(R.id.age);
 b1=findViewById(R.id.book);
-
 b1.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
@@ -36,15 +52,20 @@ PerforAuth();
     }
 });
     }
+
+
+
     private void PerforAuth() {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/" + userId);
-        String bookingId = userRef.child("bookings").push().getKey();
-        String doctorName=name.getText().toString();
-        String appointmentTime=address.getText().toString();
-        String location=num.getText().toString();
-        Booking booking = new Booking(doctorName, appointmentTime, location);
-        userRef.child("bookings").child(bookingId).setValue(booking);
+        String nameauth=name.getText().toString();
+        int ageauth=Integer.parseInt(ages.getText().toString());
+        String contactauth=contact.getText().toString();
+        String reasonauth=reasons.getText().toString();
+        Appointment appointment = new Appointment(nameauth, ageauth, contactauth,reasonauth);
+
+// Add the appointment object to the Firestore database
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        CollectionReference appointmentsCollection = firestore.collection("appointment");
+        appointmentsCollection.add(appointment);
         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
     }
     public class Booking {
@@ -74,5 +95,53 @@ PerforAuth();
             return location;
         }
     }
+    public class Appointment {
+        private String name;
+        private int age;
+        private String phone;
+        private String reason;
+
+        public Appointment() {}
+
+        public Appointment(String name, int age, String phone, String reason) {
+            this.name = name;
+            this.age = age;
+            this.phone = phone;
+            this.reason = reason;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
+        public String getReason() {
+            return reason;
+        }
+
+        public void setReason(String reason) {
+            this.reason = reason;
+        }
+    }
+
 
 }

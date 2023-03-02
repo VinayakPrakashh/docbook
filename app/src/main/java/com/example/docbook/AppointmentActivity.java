@@ -20,18 +20,12 @@ FirebaseAuth mAuth;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment);
-backs=findViewById(R.id.back);
+
 doctor=findViewById(R.id.neurologists);
 doctor.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
         startActivity(new Intent(AppointmentActivity.this,bookingpageActivity.class));
-    }
-});
-backs.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        startActivity(new Intent(AppointmentActivity.this,HomeActivity.class));
     }
 });
 
