@@ -15,6 +15,9 @@
             android:name=".neurologist"
             android:exported="false" />
         <activity
+            android:name=".radiologist"
+            android:exported="false" />
+        <activity
             android:name=".AppointmentActivity"
             android:exported="false" />
         <activity

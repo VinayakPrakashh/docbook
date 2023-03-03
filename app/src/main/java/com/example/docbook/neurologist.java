@@ -15,6 +15,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -107,31 +110,32 @@ b1=findViewById(R.id.book);
 
     private void PerforAuth() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseAuth auth=FirebaseAuth.getInstance();;
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         String uid = auth.getCurrentUser().getUid();
-        String nameauth=name.getText().toString();
-        int ageauth=Integer.parseInt(ages.getText().toString());
-        String contactauth=contact.getText().toString();
-        String reasonauth=reasons.getText().toString();
-        String dateinfo=datewrite2.getText().toString();
-        Toast.makeText(getApplicationContext(),dateinfo, Toast.LENGTH_SHORT).show();
+        String nameauth = name.getText().toString();
+        int ageauth = Integer.parseInt(ages.getText().toString());
+        String contactauth = contact.getText().toString();
+        String reasonauth = reasons.getText().toString();
+        String dateinfo = datewrite2.getText().toString();
+        Toast.makeText(getApplicationContext(), dateinfo, Toast.LENGTH_SHORT).show();
 
+        DocumentReference neurologistRef = db.collection("appointments").document(uid).collection("neurologist").document();
 
+        Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo);
 
-        Appointment appointment = new Appointment(nameauth, ageauth, contactauth,reasonauth,dateinfo);
-
-        db.collection("appointments").document(uid).set(appointment)  .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getApplicationContext(), "Appointment added successfully", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Failed to add appointment", Toast.LENGTH_SHORT).show();
-                    }});
+        neurologistRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Appointment added successfully", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Failed to add appointment", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
     public class Appointment {
         private String name;
         private int age;
@@ -141,12 +145,12 @@ b1=findViewById(R.id.book);
 
         public Appointment() {}
 
-        public Appointment(String name, int age, String phone, String reason,String date) {
+        public Appointment(String name, int age, String phone, String reason, String date) {
             this.name = name;
             this.age = age;
             this.phone = phone;
             this.reason = reason;
-            this.date=date;
+            this.date = date;
         }
 
         public String getName() {
@@ -180,11 +184,13 @@ b1=findViewById(R.id.book);
         public void setReason(String reason) {
             this.reason = reason;
         }
+
         public void setDate(String date) {
-           this.date=date;
+            this.date = date;
         }
-        public String getDate(){
-            return  date;
+
+        public String getDate() {
+            return date;
         }
     }
 

@@ -36,7 +36,7 @@ Button b1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_neurologist);
+        setContentView(R.layout.activity_radiologist);
 name=findViewById(R.id.fname);
 reasons=findViewById(R.id.reason);
 contact=findViewById(R.id.contactnumber);

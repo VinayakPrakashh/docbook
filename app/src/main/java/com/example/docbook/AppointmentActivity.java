@@ -15,14 +15,20 @@ public class AppointmentActivity extends AppCompatActivity {
 Button backs;
 FirebaseAuth mAuth;
     FirebaseUser mUser;
-    CardView doctor;
+    CardView neuro,radio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment);
-
-doctor=findViewById(R.id.neurologists);
-doctor.setOnClickListener(new View.OnClickListener() {
+radio=findViewById(R.id.radiologist);
+neuro=findViewById(R.id.neurologists);
+radio.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(AppointmentActivity.this,radiologist.class));
+    }
+});
+neuro.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
         startActivity(new Intent(AppointmentActivity.this, neurologist.class));
