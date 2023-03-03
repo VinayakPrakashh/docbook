@@ -12,10 +12,7 @@
         android:theme="@style/Theme.Docbook"
         tools:targetApi="31">
         <activity
-            android:name=".NeurologistActivity"
-            android:exported="false" />
-        <activity
-            android:name=".bookingpageActivity"
+            android:name=".neurologist"
             android:exported="false" />
         <activity
             android:name=".AppointmentActivity"
