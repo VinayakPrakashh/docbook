@@ -3,8 +3,10 @@ package com.example.docbook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -29,9 +31,10 @@ import java.util.Calendar;
 
 public class neurologist extends AppCompatActivity {
 EditText name,reasons,contact,ages;
-
+    private String[] genderOptions = {"Male", "Female", "Other"};
 ImageButton date;
 Button b1;
+TextView genders;
     int day;
     int month;
     int year;
@@ -46,6 +49,7 @@ reasons=findViewById(R.id.reason);
 contact=findViewById(R.id.contactnumber);
 ages=findViewById(R.id.age);
 b1=findViewById(R.id.book);
+genders=findViewById(R.id.gender);
         date = (ImageButton) findViewById(R.id.date);
         cal = Calendar.getInstance();
         day = cal.get(Calendar.DAY_OF_MONTH);
@@ -55,6 +59,23 @@ b1=findViewById(R.id.book);
         int minute = cal.get(Calendar.MINUTE);
 
         datewrite2 = (TextView) findViewById(R.id.datetex);
+        genders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(neurologist.this);
+                builder.setTitle("Select Gender");
+                builder.setSingleChoiceItems(genderOptions, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle gender selection here
+                        String selectedGender = genderOptions[which];
+                        genders.setText(selectedGender);
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +104,7 @@ b1=findViewById(R.id.book);
                                         DateFormat.is24HourFormat(neurologist.this)
                                 );
 
-                                // Show the TimePickerDialog
+
                                 timePickerDialog.show();
                             }
                         },
@@ -117,12 +138,13 @@ b1=findViewById(R.id.book);
         String contactauth = contact.getText().toString();
         String reasonauth = reasons.getText().toString();
         String dateinfo = datewrite2.getText().toString();
+        String genderselect=genders.getText().toString();
         Toast.makeText(getApplicationContext(), dateinfo, Toast.LENGTH_SHORT).show();
 
-        DocumentReference neurologistRef =     db.collection("appointments").document(uid)
+        DocumentReference neurologistRef =db.collection("appointments").document(uid)
                 .collection("neurologist").document("appointment");
 
-        Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo);
+        Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo,genderselect);
 
         neurologistRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -143,15 +165,17 @@ b1=findViewById(R.id.book);
         private String phone;
         private String reason;
         private String date;
+        private String genderselect;
 
         public Appointment() {}
 
-        public Appointment(String name, int age, String phone, String reason, String date) {
+        public Appointment(String name, int age, String phone, String reason, String date,String gender) {
             this.name = name;
             this.age = age;
             this.phone = phone;
             this.reason = reason;
             this.date = date;
+            this.genderselect=gender;
         }
 
         public String getName() {
@@ -192,6 +216,13 @@ b1=findViewById(R.id.book);
 
         public String getDate() {
             return date;
+        }
+        public void setGender(String gender) {
+            this.genderselect = gender;
+        }
+
+        public String getGender() {
+            return genderselect;
         }
     }
 
