@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -118,8 +119,9 @@ b1=findViewById(R.id.book);
 
 
         Appointment appointment = new Appointment(nameauth, ageauth, contactauth,reasonauth,dateinfo);
-
-        db.collection("appointments").document(uid).set(appointment)  .addOnSuccessListener(new OnSuccessListener<Void>() {
+        DocumentReference neurologistRef =     db.collection("appointments").document(uid)
+                .collection("radiologist").document("appointment");
+        neurologistRef.set(appointment) .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getApplicationContext(), "Appointment added successfully", Toast.LENGTH_SHORT).show();

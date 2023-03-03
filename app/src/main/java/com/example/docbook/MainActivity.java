@@ -62,7 +62,6 @@ mUser=mauth.getCurrentUser();
         public void onClick(View view) {
             String email = mail.getText().toString();
             String password = pass.getText().toString();
-            Database db=new Database(getApplicationContext(),"healthcare",null,1);
             if (email.length()==0 || password.length()==0) {
                 Toast.makeText(getApplicationContext(), "Please fill the fields", Toast.LENGTH_SHORT).show();
             }
