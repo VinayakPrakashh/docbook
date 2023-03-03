@@ -119,7 +119,8 @@ b1=findViewById(R.id.book);
         String dateinfo = datewrite2.getText().toString();
         Toast.makeText(getApplicationContext(), dateinfo, Toast.LENGTH_SHORT).show();
 
-        DocumentReference neurologistRef = db.collection("appointments").document(uid).collection("neurologist").document();
+        DocumentReference neurologistRef =     db.collection("appointments").document(uid)
+                .collection("neurologist").document("appointment");
 
         Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo);
 
