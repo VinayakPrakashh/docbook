@@ -42,7 +42,7 @@ neuro.setOnClickListener(new View.OnClickListener() {
     public void onClick(View view) {
         SharedPreferences sharedPreferences = getSharedPreferences("docselect",MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
-        myEdit.putString("specialization", "booking");
+        myEdit.putString("specialization", "Neurologist");
         myEdit.commit();
         startActivity(new Intent(AppointmentActivity.this, DoctorDetailsActivity.class));
     }

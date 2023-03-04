@@ -84,15 +84,17 @@ String photo=spec+".jpg";
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
+
                                 // Extract doctor details here
                                 String name = document.getString("name");
-                                String specialization = document.getString("Specialization");
+                                String specialization = document.getString("specialization");
                                 int experience = document.getLong("experience").intValue();
                                 String hospital = document.getString("hospital");
                                 long contact = document.getLong("contact");
                                 String qualification=document.getString("qualification");
                                 String exp = Integer.toString(experience);
                                 // Update UI with doctor details
+
                                 String dcon= Long.toString(contact);
 
 

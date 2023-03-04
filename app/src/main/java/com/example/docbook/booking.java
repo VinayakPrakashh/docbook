@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class booking extends AppCompatActivity {
 EditText name,reasons,contact,ages;
@@ -136,17 +139,24 @@ genders=findViewById(R.id.gender);
         String reasonauth = reasons.getText().toString();
         String dateinfo = datewrite2.getText().toString();
         String genderselect=genders.getText().toString();
-        Toast.makeText(getApplicationContext(), dateinfo, Toast.LENGTH_SHORT).show();
+        SharedPreferences sharedPreferences = getSharedPreferences("docselect",MODE_PRIVATE);
+        String spec= sharedPreferences.getString("specialization","").toString();
 
         DocumentReference neurologistRef =db.collection("appointments").document(uid)
-                .collection("booking").document("appointment");
+                .collection(spec).document("appointment");
 
         Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo,genderselect);
 
         neurologistRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "Appointment added successfully", Toast.LENGTH_SHORT).show();
+
+
+// 1. Success message
+                new SweetAlertDialog(booking.this)
+                        .setTitleText("Appointment Booked!")
+                        .show();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
