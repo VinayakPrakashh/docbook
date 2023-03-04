@@ -31,7 +31,7 @@ radio.setOnClickListener(new View.OnClickListener() {
 neuro.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(AppointmentActivity.this, neurologist.class));
+        startActivity(new Intent(AppointmentActivity.this, DoctorDetailsActivity.class));
     }
 });
 

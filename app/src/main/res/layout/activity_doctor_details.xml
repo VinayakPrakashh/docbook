@@ -23,10 +23,10 @@
 
         <!-- Doctor Photo -->
         <ImageView
-            android:id="@+id/doctor_photo"
+            android:id="@+id/dphoto"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/cardiologists"
+
             android:contentDescription="Doctor Photo"/>
 
         <!-- Doctor Name and Specialization -->
@@ -39,20 +39,20 @@
 
             <!-- Doctor Name -->
             <TextView
-                android:id="@+id/doctor_name"
+                android:id="@+id/dname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Doctor Name"
+
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <!-- Doctor Specialization -->
             <TextView
-                android:id="@+id/doctor_specialization"
+                android:id="@+id/dspec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Doctor Specialization"
+
                 android:textColor="#ffffff"
                 android:textSize="16sp"/>
 
@@ -71,29 +71,29 @@
 
         <!-- Hospital Name -->
         <TextView
-            android:id="@+id/hospital_name"
+            android:id="@+id/dhospital"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hospital Name"
+
             android:textColor="#ffffff"
             android:textSize="16sp"/>
 
         <!-- Experience -->
         <TextView
-            android:id="@+id/experience"
+            android:id="@+id/dexp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Experience"
+
             android:textColor="#ffffff"
             android:textSize="16sp"
             android:layout_marginTop="16dp"/>
 
         <!-- Contact Number -->
         <TextView
-            android:id="@+id/contact_number"
+            android:id="@+id/dcontact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contact Number"
+
             android:textColor="#ffffff"
             android:textSize="16sp"
             android:layout_marginTop="16dp"/>
@@ -101,6 +101,8 @@
     </LinearLayout>
 
     <!-- Book Appointment Button -->
+
+
     <Button
         android:id="@+id/book_appointment_button"
         android:layout_width="match_parent"

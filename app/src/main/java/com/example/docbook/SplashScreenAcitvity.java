@@ -3,7 +3,6 @@ package com.example.docbook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.window.SplashScreen;
 
 public class SplashScreenAcitvity extends AppointmentActivity{
 

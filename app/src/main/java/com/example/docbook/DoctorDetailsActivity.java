@@ -10,27 +10,44 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class DoctorDetailsActivity extends AppCompatActivity {
-TextView docname,docspec,docexp,dochospital,doccontact;
+TextView docname2,docspec2,dochospital2,dexp2,doccontact2;
 Button b1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        docname=findViewById(R.id.doctor_name);
-        docspec=findViewById(R.id.doctor_specialization);
-        docexp=findViewById(R.id.experience);
-        dochospital=findViewById(R.id.hospital_name);
-        doccontact=findViewById(R.id.contact_number);
         setContentView(R.layout.activity_doctor_details);
+
+
+
+        setContentView(R.layout.activity_doctor_details);
+        docname2=findViewById(R.id.dname);
+        docspec2=findViewById(R.id.dspec);
+        dochospital2=findViewById(R.id.dhospital);
+        dexp2=findViewById(R.id.dexp);
+        doccontact2=findViewById(R.id.dcontact);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 b1=findViewById(R.id.book_appointment_button);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("cardiologists.jpg");
+        ImageView imageView = findViewById(R.id.dphoto);
+        Glide.with(this /* context */)
+                .load(imageRef)
+                .into(imageView);
+
         db.collection("doctor")
                 .document("neurologist")
                 .get()
@@ -44,17 +61,23 @@ b1=findViewById(R.id.book_appointment_button);
                             if (document.exists()) {
                                 // Extract doctor details here
                                 String name = document.getString("name");
-                                String specialization = document.getString("specialization");
+                                String specialization = document.getString("Specialization");
                                 int experience = document.getLong("experience").intValue();
                                 String hospital = document.getString("hospital");
-                                String contact = document.getString("contact");
-
+                                long contact = document.getLong("contact");
+                                String exp = Integer.toString(experience);
                                 // Update UI with doctor details
-                                docname.setText(name);
-                                docspec.setText(specialization);
-                                docexp.setText(String.valueOf(experience));
-                                dochospital.setText(hospital);
-                                doccontact.setText(contact);
+                                String dcon= Long.toString(contact);
+
+
+
+
+                                docname2.setText("Name: "+name);
+                                docspec2.setText("Specialization: "+specialization);
+                                dochospital2.setText("Hospital: "+hospital);
+                                dexp2.setText("Experience: "+exp+" Years");
+                                doccontact2.setText("Contact No: "+dcon);
+
 
                             } else {
                                 Log.d(TAG, "No such document");
@@ -67,7 +90,7 @@ b1=findViewById(R.id.book_appointment_button);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DoctorDetailsActivity.this,radiologist.class));
+                startActivity(new Intent(DoctorDetailsActivity.this,neurologist.class));
             }
         });
 
