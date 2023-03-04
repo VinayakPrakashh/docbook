@@ -13,25 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 Button b1;
     FirebaseAuth mauth;
 
-EditText uname,pass,mail;
+EditText uname,pass,mail,cpass;
 TextView login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +31,10 @@ TextView login;
         setContentView(R.layout.activity_register);
         uname=findViewById(R.id.username);
         pass=findViewById(R.id.password);
-        b1=findViewById(R.id.b1);
+        cpass=findViewById(R.id.cpassword);
+
         mail=findViewById(R.id.mail);
+        b1=findViewById(R.id.b1);
         login=findViewById(R.id.tregister);
        mauth=FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener() {
@@ -52,18 +46,62 @@ TextView login;
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String username=uname.getText().toString();
                 String email=mail.getText().toString();
                 String password=pass.getText().toString();
-                if(username.length()==0 || email.length()==0 || password.length()==0){
-                    Toast.makeText(RegisterActivity.this, "Please fill the Required fields", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    PerforAuth();
+                String confirmPassword=cpass.getText().toString();
 
+                // Validate username
+                if (username.isEmpty()) {
+                    uname.setError("Username is required");
+                    uname.requestFocus();
+                    return;
+                } else if (username.length() < 4) {
+                    uname.setError("Username must be at least 4 characters");
+                    uname.requestFocus();
+                    return;
                 }
+                // Validate email
+                if (email.isEmpty()) {
+                    mail.setError("Email is required");
+                    mail.requestFocus();
+                    return;
+                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    mail.setError("Invalid email address");
+                    mail.requestFocus();
+                    return;
+                }
+                // Validate password
+                if (password.isEmpty()) {
+                    pass.setError("Password is required");
+                    pass.requestFocus();
+                    return;
+                } else if (password.length() < 6) {
+                    pass.setError("Password must be at least 6 characters");
+                    pass.requestFocus();
+                    return;
+                }
+
+                // Validate confirm password
+                if (confirmPassword.isEmpty()) {
+                    cpass.setError("Confirm password is required");
+                    cpass.requestFocus();
+                    return;
+                } else if (!confirmPassword.equals(password)) {
+                    cpass.setError("Passwords do not match");
+                    cpass.requestFocus();
+                    return;
+                }
+
+
+
+                // All fields are valid
+                PerforAuth();
             }
         });
+
+
     }
 
     private void PerforAuth() {
