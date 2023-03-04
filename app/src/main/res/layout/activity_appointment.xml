@@ -30,7 +30,7 @@
     <GridLayout
         android:id="@+id/gridLayout2"
         android:layout_width="383dp"
-        android:layout_height="630dp"
+        android:layout_height="638dp"
         android:layout_below="@+id/titleappointment"
         android:layout_margin="20dp"
         android:columnCount="2"
