@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back1"
+    android:background="@drawable/bgmain"
     tools:context=".RegisterActivity">
 
   <EditText
@@ -108,7 +108,7 @@
       android:id="@+id/user"
       android:layout_width="177dp"
       android:layout_height="51dp"
-      android:layout_marginTop="52dp"
+      android:layout_marginTop="40dp"
       android:text="Username"
       android:textColor="@color/white"
       android:textSize="30dp"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back1"
+    android:background="@drawable/bgmain"
     tools:context=".HomeActivity">
 
     <TextView
@@ -12,12 +12,13 @@
         android:layout_width="166dp"
         android:layout_height="45dp"
         android:layout_marginTop="16dp"
-        android:text="Docbook"
+        android:text="DOCBOOK"
+        android:paddingStart="4dp"
         android:textColor="#FAFAFA"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.563"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
