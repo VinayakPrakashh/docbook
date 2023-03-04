@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,13 +16,13 @@ public class AppointmentActivity extends AppCompatActivity {
 Button backs;
 FirebaseAuth mAuth;
     FirebaseUser mUser;
-    CardView neuro,radio,pedia,cardi,ortho;
+    ImageView neuro,radio,pedia,cardi,ortho;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment);
 radio=findViewById(R.id.radiologist);
-neuro=findViewById(R.id.neurologists);
+neuro=findViewById(R.id.neurologist);
 pedia=findViewById(R.id.pediatrician);
 cardi=findViewById(R.id.cardiologist);
 ortho=findViewById(R.id.orthologist);

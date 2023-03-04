@@ -1,8 +1,5 @@
 package com.example.docbook;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,11 +40,33 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = mail.getText().toString();
                 String password = pass.getText().toString();
-                if (email.length()==0 || password.length()==0) {
-                    Toast.makeText(getApplicationContext(), "Please fill the fields", Toast.LENGTH_SHORT).show();
+
+
+// Validate email
+                if (email.isEmpty()) {
+                    mail.setError("Email is required");
+                    mail.requestFocus();
+                    return;
+                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    mail.setError("Invalid email address");
+                    mail.requestFocus();
+                    return ;
                 }
-                else {
-                    Dialog dialog = new Dialog(LoginActivity.this);
+
+// Validate password
+                if (password.isEmpty()) {
+                    pass.setError("Password is required");
+                    pass.requestFocus();
+                    return;
+                } else if (password.length() < 6) {
+                    pass.setError("Password must be at least 6 characters");
+                    pass.requestFocus();
+                    return;
+                }
+
+
+
+                Dialog dialog = new Dialog(LoginActivity.this);
                     dialog.setContentView(R.layout.loading_dialog);
                     dialog.setCancelable(false);
 
@@ -70,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
-                }
+
             }
         });
         treg.setOnClickListener(new View.OnClickListener() {
