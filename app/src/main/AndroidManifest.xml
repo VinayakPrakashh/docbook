@@ -12,6 +12,12 @@
         android:theme="@style/Theme.Docbook"
         tools:targetApi="31">
         <activity
+            android:name=".DoctorDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
@@ -20,6 +26,17 @@
         <activity
             android:name=".radiologist"
             android:exported="false" />
+        <activity
+            android:name=".SplashScreenAcitvity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="DuplicateActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".AppointmentActivity"
             android:exported="false" />

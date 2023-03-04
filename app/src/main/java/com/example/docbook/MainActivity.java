@@ -31,6 +31,7 @@ TextView t1,treg;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String emailAUTH= sharedPreferences.getString("mail","").toString();
         String passwordAUT=sharedPreferences.getString("password","").toString();
