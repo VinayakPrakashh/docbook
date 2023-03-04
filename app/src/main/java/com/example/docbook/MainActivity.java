@@ -35,10 +35,7 @@ TextView t1,treg;
         String emailAUTH= sharedPreferences.getString("mail","").toString();
         String passwordAUT=sharedPreferences.getString("password","").toString();
 
-        mail=findViewById(R.id.username);
-        pass=findViewById(R.id.password);
-        b1=findViewById(R.id.b1);
-        treg=findViewById(id.tregister);
+
 mauth=FirebaseAuth.getInstance();
 mUser=mauth.getCurrentUser();
         if(emailAUTH.length()!=0){
@@ -49,7 +46,7 @@ mUser=mauth.getCurrentUser();
                         startActivity(new Intent(MainActivity.this,HomeActivity.class));
                     }
                     else {
-
+startActivity(new Intent(MainActivity.this,LoginActivity.class));
                     }
                 }
             });
@@ -57,46 +54,9 @@ mUser=mauth.getCurrentUser();
      else {
 
         }
-        b1.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String email = mail.getText().toString();
-            String password = pass.getText().toString();
-            if (email.length()==0 || password.length()==0) {
-                Toast.makeText(getApplicationContext(), "Please fill the fields", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                mauth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-                            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-                            myEdit.putString("mail", mail.getText().toString());
-                            myEdit.putString("password",pass.getText().toString());
-                            myEdit.commit();
-                            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this,HomeActivity.class));
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
 
-            }
-        }
-    });
-    treg.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            startActivity(new Intent(MainActivity.this,RegisterActivity.class));
-        }
-    });
 
     }
-    private void user(){
 
-    }
 
 }

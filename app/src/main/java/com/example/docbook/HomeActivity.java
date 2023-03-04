@@ -28,7 +28,7 @@ CardView lgout,appointment;
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.clear();
                 editor.apply();;
-                startActivity(new Intent(HomeActivity.this,MainActivity.class));
+                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
             }
         });
         appointment.setOnClickListener(new View.OnClickListener() {
