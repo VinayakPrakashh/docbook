@@ -7,9 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeActivity extends AppCompatActivity {
 CardView lgout,appointment;
@@ -21,14 +27,51 @@ CardView lgout,appointment;
         appointment=findViewById(R.id.doctor);
         SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String mail= sharedPreferences.getString("mail","").toString();
-        Toast.makeText(getApplicationContext(), "Welcome "+mail,Toast.LENGTH_SHORT).show();
+        String password=sharedPreferences.getString("password","").toString();
+        // Inside your authentication method (e.g. email/password authentication)
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(mail, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String uid = user.getUid();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        DocumentReference docRef = db.collection("users").document(uid);
+                        docRef.get().addOnSuccessListener(documentSnapshot -> {
+                            if (documentSnapshot.exists()) {
+                                String username = documentSnapshot.getString("username");
+                                // Display the toast message if it hasn't been displayed yet
+                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                                boolean isToastDisplayed = prefs.getBoolean("toast_displayed", false);
+                                if (!isToastDisplayed) {
+                                    Toast.makeText(this, "Welcome, " + username + "!", Toast.LENGTH_SHORT).show();
+                                    SharedPreferences.Editor editor = prefs.edit();
+                                    editor.putBoolean("toast_displayed", true);
+                                    editor.apply();
+                                }
+
+                            }
+                        });
+                    } else {
+                        // Handle authentication error
+                    }
+                });
+
         lgout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.clear();
-                editor.apply();;
+                editor.apply();
+                // When the user clicks the logout button
+                FirebaseAuth.getInstance().signOut();
+                Context context = view.getContext();
+// Reset the value of toast_displayed to false
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editors = prefs.edit();
+                editors.putBoolean("toast_displayed", false);
+                editors.apply();
                 startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+
             }
         });
         appointment.setOnClickListener(new View.OnClickListener() {

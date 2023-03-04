@@ -3,6 +3,7 @@ package com.example.docbook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -43,10 +44,17 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please fill the fields", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    Dialog dialog = new Dialog(LoginActivity.this);
+                    dialog.setContentView(R.layout.loading_dialog);
+                    dialog.setCancelable(false);
+
+// When the user clicks the login button
+                    dialog.show();
                     mauth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+                                dialog.dismiss();
                                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                                 myEdit.putString("mail", mail.getText().toString());
@@ -56,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                             }
                             else {
+                                dialog.dismiss();
                                 Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
                             }
                         }

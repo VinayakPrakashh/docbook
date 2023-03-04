@@ -1,5 +1,6 @@
 package com.example.docbook;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -66,9 +67,15 @@ TextView login;
     }
 
     private void PerforAuth() {
+
+        Dialog dialog = new Dialog(RegisterActivity.this);
+        dialog.setContentView(R.layout.loading_dialog);
+        dialog.setCancelable(false);
+        dialog.show();
         String username=uname.getText().toString();
         String email=mail.getText().toString();
         String password=pass.getText().toString();
+
         mauth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -85,10 +92,12 @@ TextView login;
 // Create a new user object with the user's details
                     User user = new User(username, email,password);
                     usersRef.document(uid).set(user);
+                    dialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Sucess", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this,MainActivity.class));
                 }
                 else {
+                    dialog.dismiss();
                     Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
                 }
             }

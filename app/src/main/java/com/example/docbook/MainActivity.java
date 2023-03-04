@@ -46,13 +46,13 @@ mUser=mauth.getCurrentUser();
                         startActivity(new Intent(MainActivity.this,HomeActivity.class));
                     }
                     else {
-startActivity(new Intent(MainActivity.this,LoginActivity.class));
+
                     }
                 }
             });
         }
      else {
-
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }
 
 
