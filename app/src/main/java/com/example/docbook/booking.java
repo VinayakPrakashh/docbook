@@ -1,8 +1,5 @@
 package com.example.docbook;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -18,18 +15,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.firebase.firestore.CollectionReference;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.OnFailureListener;
-
-
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
 
-public class neurologist extends AppCompatActivity {
+public class booking extends AppCompatActivity {
 EditText name,reasons,contact,ages;
     private String[] genderOptions = {"Male", "Female", "Other"};
 ImageButton date;
@@ -62,7 +59,7 @@ genders=findViewById(R.id.gender);
         genders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(neurologist.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(booking.this);
                 builder.setTitle("Select Gender");
                 builder.setSingleChoiceItems(genderOptions, -1, new DialogInterface.OnClickListener() {
                     @Override
@@ -82,7 +79,7 @@ genders=findViewById(R.id.gender);
             public void onClick(View v) {
                 // Show a DatePickerDialog to get the date
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        neurologist.this,
+                        booking.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -91,7 +88,7 @@ genders=findViewById(R.id.gender);
 
                                 // Show a TimePickerDialog to get the time
                                 TimePickerDialog timePickerDialog = new TimePickerDialog(
-                                        neurologist.this,
+                                        booking.this,
                                         new TimePickerDialog.OnTimeSetListener() {
                                             @Override
                                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -101,7 +98,7 @@ genders=findViewById(R.id.gender);
                                         },
                                         hour,
                                         minute,
-                                        DateFormat.is24HourFormat(neurologist.this)
+                                        DateFormat.is24HourFormat(booking.this)
                                 );
 
 
@@ -142,7 +139,7 @@ genders=findViewById(R.id.gender);
         Toast.makeText(getApplicationContext(), dateinfo, Toast.LENGTH_SHORT).show();
 
         DocumentReference neurologistRef =db.collection("appointments").document(uid)
-                .collection("neurologist").document("appointment");
+                .collection("booking").document("appointment");
 
         Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo,genderselect);
 

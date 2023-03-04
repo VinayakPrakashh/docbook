@@ -23,7 +23,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".neurologist"
+            android:name=".booking"
             android:exported="false" />
         <activity
             android:name=".radiologist"

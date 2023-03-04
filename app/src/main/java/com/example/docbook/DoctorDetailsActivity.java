@@ -3,6 +3,7 @@ package com.example.docbook;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -43,11 +44,14 @@ Button b1;
         dquali=findViewById(R.id.dqualification);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 b1=findViewById(R.id.book_appointment_button);
+        SharedPreferences sharedPreferences = getSharedPreferences("docselect",MODE_PRIVATE);
+        String spec= sharedPreferences.getString("specialization","").toString();
+
         // Get a reference to the Firebase Storage instance
         FirebaseStorage storage = FirebaseStorage.getInstance();
-
+String photo=spec+".jpg";
 // Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("cardiologists.jpg");
+        StorageReference imageRef = storage.getReference().child(photo);
 
 // Download the image file into a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -70,7 +74,7 @@ b1=findViewById(R.id.book_appointment_button);
 
 
         db.collection("doctor")
-                .document("neurologist")
+                .document(spec)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -113,7 +117,7 @@ b1=findViewById(R.id.book_appointment_button);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DoctorDetailsActivity.this,neurologist.class));
+                startActivity(new Intent(DoctorDetailsActivity.this, booking.class));
             }
         });
 
