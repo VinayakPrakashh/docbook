@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,7 +24,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -50,15 +53,15 @@ contact=findViewById(R.id.contactnumber);
 ages=findViewById(R.id.age);
 b1=findViewById(R.id.book);
 genders=findViewById(R.id.gender);
+
+
+        datewrite2 = (TextView) findViewById(R.id.datetex);
         date = (ImageButton) findViewById(R.id.date);
         cal = Calendar.getInstance();
         day = cal.get(Calendar.DAY_OF_MONTH);
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int minute = cal.get(Calendar.MINUTE);
 
-        datewrite2 = (TextView) findViewById(R.id.datetex);
         genders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +83,18 @@ genders=findViewById(R.id.gender);
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Show a DatePickerDialog to get the date
+                // Get the current date and time
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+
+// Add one day to the current date to set it as the minimum date
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+
+// Show a DatePickerDialog to get the date
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         booking.this,
                         new DatePickerDialog.OnDateSetListener() {
@@ -95,15 +109,43 @@ genders=findViewById(R.id.gender);
                                         new TimePickerDialog.OnTimeSetListener() {
                                             @Override
                                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                                // Append the selected time to the EditText field
-                                                datewrite2.append(" " + hourOfDay + ":" + minute);
+                                                // Get the current time
+                                                Calendar currentTime = Calendar.getInstance();
+
+                                                // Set the selected time to the current time if it is in the past
+                                                if (year == currentTime.get(Calendar.YEAR)
+                                                        && monthOfYear == currentTime.get(Calendar.MONTH)
+                                                        && dayOfMonth == currentTime.get(Calendar.DAY_OF_MONTH)
+                                                        && hourOfDay < currentTime.get(Calendar.HOUR_OF_DAY)) {
+                                                    hourOfDay = currentTime.get(Calendar.HOUR_OF_DAY);
+                                                    minute = currentTime.get(Calendar.MINUTE);
+                                                }
+
+                                                // Check if the selected time is within the allowed range (9 AM - 4 PM)
+                                                if (hourOfDay < 9 || (hourOfDay == 9 && minute < 0) || hourOfDay > 16) {
+                                                    // Show an error message and return
+                                                    Toast.makeText(booking.this, "Booking time must be between 9 AM and 4 PM", Toast.LENGTH_LONG).show();
+                                                    return;
+                                                }
+
+                                                // Format the selected time as 12-hour format
+                                                String timeFormat = hourOfDay >= 12 ? "PM" : "AM";
+                                                int hour = hourOfDay % 12;
+                                                hour = hour == 0 ? 12 : hour;
+                                                SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a", Locale.getDefault());
+                                                String formattedTime = timeFormatter.format(new Date(0, 0, 0, hour, minute));
+
+                                                // Append the formatted time to the EditText field
+                                                datewrite2.append(" " + formattedTime);
                                             }
                                         },
                                         hour,
                                         minute,
-                                        DateFormat.is24HourFormat(booking.this)
+                                        false // Force time picker to display in 12-hour format
                                 );
 
+                                // Set the minimum time to the current time
+                                timePickerDialog.updateTime(hour, minute);
 
                                 timePickerDialog.show();
                             }
@@ -113,15 +155,109 @@ genders=findViewById(R.id.gender);
                         day
                 );
 
-                // Show the DatePickerDialog
+// Set the minimum date to the next day
+                datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+
+// Show the DatePickerDialog
                 datePickerDialog.show();
+
+
+
+
             }
         });
 
-                b1.setOnClickListener(new View.OnClickListener() {
+
+        b1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        PerforAuth();
+
+                                String nameValue = name.getText().toString().trim();
+                                String reasonValue = reasons.getText().toString().trim();
+                                String contactValue = contact.getText().toString().trim();
+                                String ageValue = ages.getText().toString().trim();
+                                String genderValue = genders.getText().toString().trim();
+                                String dateValue = datewrite2.getText().toString().trim();
+
+                                // Validate name
+                                if (nameValue.isEmpty()) {
+                                    name.setError("Please enter your name");
+                                    name.requestFocus();
+                                    return;
+                                }
+
+
+                        // Validate age
+                        if(ageValue.isEmpty()) {
+                            ages.setError("Please enter your age");
+                            ages.requestFocus();
+                            return;
+                        }
+
+                        if (genderValue.equals("Select Gender")) {
+                            genders.requestFocus();
+                            Toast.makeText(getApplicationContext(), "Please select your gender", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                      if(contactValue.length() != 10) {
+                            contact.setError("Please enter a valid 10-digit contact number");
+                            contact.requestFocus();
+                            return;
+                        }
+
+                                // Validate contact number
+                                else if(contactValue.isEmpty()) {
+                                    contact.setError("Please enter your contact number");
+                                    contact.requestFocus();
+                                    return;
+                                }
+                        // Validate reason
+                        if(reasonValue.isEmpty()) {
+                            reasons.setError("Please enter your reason for booking");
+                            reasons.requestFocus();
+                            return;
+                        }
+
+
+
+                                // Validate gender
+
+                                // Validate date and time
+                                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy h:mm a", Locale.getDefault());
+                                try {
+                                    Date date = format.parse(dateValue);
+                                    Date now = new Date();
+
+                                    // Check if date is in the past
+                                    if (date.before(now)) {
+                                        datewrite2.setError("Please select a future date and time");
+                                        datewrite2.requestFocus();
+                                        return;
+                                    }
+
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.setTime(date);
+
+                                    // Check if time is between 9am and 4pm
+                                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                                    if (hour < 9 || hour > 16) {
+                                        datewrite2.setError("Please select a time between 9am and 4pm");
+                                        datewrite2.requestFocus();
+                                        return;
+                                    }
+
+                                } catch (ParseException e) {
+                                    datewrite2.setError("Please select a valid date and time");
+                                    datewrite2.requestFocus();
+                                    return;
+                                }
+PerforAuth();
+                                // If all fields are valid, proceed with booking
+                                // ...
+
+
+
 
                     }
                 });
