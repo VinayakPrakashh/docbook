@@ -24,7 +24,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.activity_medicine, null);
+        View view = inflater.inflate(R.layout.layout_product, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -50,11 +50,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             textViewProductPrice = itemView.findViewById(R.id.product_price);
         }
     }
+
     public static class Product {
         private String name;
-        private int price;
+        private double price;
 
-        public Product(String name, int price) {
+        public Product(String name, double price) {
             this.name = name;
             this.price = price;
         }
@@ -63,10 +64,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             return name;
         }
 
-        public int getPrice() {
+        public double getPrice() {
             return price;
         }
     }
 
 }
-

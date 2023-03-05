@@ -1,16 +1,15 @@
 package com.example.docbook;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,13 +17,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeActivity extends AppCompatActivity {
-CardView lgout,appointment;
+CardView lgout,appointment,store;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         lgout=findViewById(R.id.logout);
         appointment=findViewById(R.id.doctor);
+        store=findViewById(R.id.medicine);
         SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String mail= sharedPreferences.getString("mail","").toString();
         String password=sharedPreferences.getString("password","").toString();
@@ -78,6 +78,12 @@ CardView lgout,appointment;
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this,AppointmentActivity.class));
+            }
+        });
+        store.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,MedicineActivity.class));
             }
         });
 

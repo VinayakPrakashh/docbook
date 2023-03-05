@@ -31,36 +31,33 @@ public class MedicineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_medicine);
 
 
-                recyclerView = findViewById(R.id.recyclerView);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-                productList = new ArrayList<>();
-                productAdapter = new ProductAdapter(this, productList);
-                recyclerView.setAdapter(productAdapter);
+        productList = new ArrayList<>();
+        productAdapter = new ProductAdapter(this, productList);
+        recyclerView.setAdapter(productAdapter);
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("products")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        String name = document.getString("name");
-                                        long price = document.getLong("price");
-                                        int price2 = Math.toIntExact(price);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("products")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String name = document.getString("name");
+                                double price = document.getDouble("cost");
 
-                                        ProductAdapter.Product product = new Product(name, price2);
-                                        productList.add(product);
-                                    }
-                                    productAdapter.notifyDataSetChanged();
-                                } else {
-                                    Log.d(TAG, "Error getting documents: ", task.getException());
-                                }
+                                ProductAdapter.Product product = new Product(name, price);
+                                productList.add(product);
                             }
-                        });
-            }
-        }
-
-
+                            productAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+}
