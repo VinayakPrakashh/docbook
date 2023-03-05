@@ -27,9 +27,6 @@
             android:name=".booking"
             android:exported="false" />
         <activity
-            android:name=".radiologist"
-            android:exported="false" />
-        <activity
             android:name=".AppointmentActivity"
             android:exported="false" />
         <activity
@@ -37,6 +34,9 @@
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CartActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

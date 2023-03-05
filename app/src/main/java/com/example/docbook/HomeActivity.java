@@ -17,7 +17,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeActivity extends AppCompatActivity {
-CardView lgout,appointment,store;
+CardView lgout,appointment,store,cart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +25,7 @@ CardView lgout,appointment,store;
         lgout=findViewById(R.id.logout);
         appointment=findViewById(R.id.doctor);
         store=findViewById(R.id.medicine);
+        cart=findViewById(R.id.order);
         SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String mail= sharedPreferences.getString("mail","").toString();
         String password=sharedPreferences.getString("password","").toString();
@@ -84,6 +85,12 @@ CardView lgout,appointment,store;
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this,MedicineActivity.class));
+            }
+        });
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,CartActivity.class));
             }
         });
 
