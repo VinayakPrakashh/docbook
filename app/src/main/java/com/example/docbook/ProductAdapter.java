@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private Context context;
     private List<Product> productList;
@@ -33,6 +35,37 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = productList.get(position);
         holder.textViewProductName.setText(product.getName());
         holder.textViewProductPrice.setText(String.format("$%.2f", product.getPrice()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                String prod=product.getName();
+                String price = String.valueOf(product.getPrice());
+                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Order Now?")
+                        .setContentText(prod+" at Rs:"+price)
+                        .setConfirmText("ORDER")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                // 1. Success message
+                                new SweetAlertDialog(context)
+                                        .setTitleText("Order Placed")
+                                        .show();
+                                sDialog.dismissWithAnimation();
+                            }
+                        })
+                        .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     @Override
@@ -68,5 +101,4 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             return price;
         }
     }
-
 }

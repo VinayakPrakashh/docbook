@@ -2,11 +2,11 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,18 +31,17 @@ public class MedicineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine);
 
-// Create a new DividerItemDecoration object with a yellow color
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
         productList = new ArrayList<>();
         productAdapter = new ProductAdapter(this, productList);
         recyclerView.setAdapter(productAdapter);
-
+        Dialog dialog = new Dialog(MedicineActivity.this);
+        dialog.setContentView(R.layout.loading_dialog);
+        dialog.setCancelable(false);
+        dialog.show();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("products")
                 .get()
@@ -56,10 +55,12 @@ public class MedicineActivity extends AppCompatActivity {
 
                                 ProductAdapter.Product product = new Product(name, price);
                                 productList.add(product);
+                                dialog.dismiss();
                             }
                             productAdapter.notifyDataSetChanged();
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
+                            dialog.dismiss();
                         }
                     }
                 });
