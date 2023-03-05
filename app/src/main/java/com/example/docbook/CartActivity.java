@@ -27,8 +27,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class CartActivity extends AppCompatActivity {
     Button storenav;
+    SweetAlertDialog sDialog;
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
     private List<Product> productList;
@@ -36,7 +39,7 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-
+     sDialog = new SweetAlertDialog(CartActivity.this);
 storenav=findViewById(R.id.store);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -60,21 +63,35 @@ storenav=findViewById(R.id.store);
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            if (task.getResult().size() > 0) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 String name = document.getString("name");
-                               String price=document.getString("cost");
+                                String price = document.getString("cost");
 
                                 Product product = new Product(name, price);
                                 productList.add(product);
 
                                 dialog.dismiss();
                             }
+
+                            }
+                            else{
+
+                                new SweetAlertDialog(CartActivity.this, SweetAlertDialog.ERROR_TYPE)
+
+                                        .setContentText("Your Cart is Empty!")
+                                        .show();
+
+                            }
                            cartAdapter.notifyDataSetChanged();
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+
                             dialog.dismiss();
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+
                         }
+                        dialog.dismiss();
                     }
                 });
         storenav.setOnClickListener(new View.OnClickListener() {
