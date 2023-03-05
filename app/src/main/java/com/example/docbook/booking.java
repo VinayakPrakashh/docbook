@@ -270,46 +270,47 @@ PerforAuth();
 
 
     private void PerforAuth() {
+
         if (isNetworkAvailable(this)) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            String uid = auth.getCurrentUser().getUid();
+            String nameauth = name.getText().toString();
+            int ageauth = Integer.parseInt(ages.getText().toString());
+            String contactauth = contact.getText().toString();
+            String reasonauth = reasons.getText().toString();
+            String dateinfo = datewrite2.getText().toString();
+            String genderselect=genders.getText().toString();
+            SharedPreferences sharedPreferences = getSharedPreferences("docselect",MODE_PRIVATE);
+            String spec= sharedPreferences.getString("specialization","").toString();
 
-        } else {
-            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "No internet connection. Please try again later.", Snackbar.LENGTH_LONG);
+            DocumentReference neurologistRef =db.collection("appointments").document(uid)
+                    .collection(spec).document("appointment");
 
-        }
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String uid = auth.getCurrentUser().getUid();
-        String nameauth = name.getText().toString();
-        int ageauth = Integer.parseInt(ages.getText().toString());
-        String contactauth = contact.getText().toString();
-        String reasonauth = reasons.getText().toString();
-        String dateinfo = datewrite2.getText().toString();
-        String genderselect=genders.getText().toString();
-        SharedPreferences sharedPreferences = getSharedPreferences("docselect",MODE_PRIVATE);
-        String spec= sharedPreferences.getString("specialization","").toString();
+            Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo,genderselect);
 
-        DocumentReference neurologistRef =db.collection("appointments").document(uid)
-                .collection(spec).document("appointment");
-
-        Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo,genderselect);
-
-        neurologistRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
+            neurologistRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
 
 
 // 1. Success message
-                new SweetAlertDialog(booking.this)
-                        .setTitleText("Appointment Booked!")
-                        .show();
+                    new SweetAlertDialog(booking.this)
+                            .setTitleText("Appointment Booked!")
+                            .show();
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Failed to add appointment", Toast.LENGTH_SHORT).show();
-            }
-        });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), "Failed to add appointment", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "No internet connection. Please try again later.", Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
+
     }
 
     public class Appointment {
