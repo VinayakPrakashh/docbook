@@ -1,5 +1,7 @@
 package com.example.docbook;
 
+import static com.example.docbook.Connection.isNetworkAvailable;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -252,6 +255,7 @@ genders=findViewById(R.id.gender);
                                     datewrite2.requestFocus();
                                     return;
                                 }
+
 PerforAuth();
                                 // If all fields are valid, proceed with booking
                                 // ...
@@ -266,6 +270,12 @@ PerforAuth();
 
 
     private void PerforAuth() {
+        if (isNetworkAvailable(this)) {
+
+        } else {
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "No internet connection. Please try again later.", Snackbar.LENGTH_LONG);
+
+        }
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String uid = auth.getCurrentUser().getUid();
