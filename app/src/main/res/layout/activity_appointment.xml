@@ -33,19 +33,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="352dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="36dp"
         android:src="@drawable/radio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <ImageView
         android:id="@+id/cardiologist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="148dp"
-        android:src="@drawable/cardiologistsCopy"
+        android:background="@drawable/image_view_shadow"
+        android:elevation="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cardio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,17 +55,19 @@
         android:id="@+id/orthologist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="148dp"
-        android:layout_marginEnd="16dp"
         android:src="@drawable/ortho"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toEndOf="@+id/cardiologist"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/pediatrician"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="352dp"
         android:src="@drawable/pedia"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,17 +77,17 @@
         android:id="@+id/neurologist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="548dp"
         android:src="@drawable/neuro"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="52dp"
         android:layout_marginTop="276dp"
         android:shadowColor="#000000"
         android:shadowDx="5"
@@ -117,8 +121,8 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginBottom="228dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="480dp"
         android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="5"
@@ -127,8 +131,8 @@
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView7"
@@ -151,8 +155,8 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginBottom="37dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="666dp"
         android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="5"
@@ -161,8 +165,8 @@
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
