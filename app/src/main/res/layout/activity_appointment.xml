@@ -13,7 +13,7 @@
         android:id="@+id/titleappointment"
         android:layout_width="215dp"
         android:layout_height="51dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="5"
@@ -23,22 +23,24 @@
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.617"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
-        android:id="+@id/radiologist"
+        android:id="@+id/radiologist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="352dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/cardiologistsCopy"
-        tools:layout_editor_absoluteX="215dp"
-        tools:layout_editor_absoluteY="352dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
-        android:id="+@id/cardiologist"
+        android:id="@+id/cardiologist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="+@id/orthologist"
+        android:id="@+id/orthologist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="148dp"
@@ -58,32 +60,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="+@id/pediatrician"
+        android:id="@+id/pediatrician"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="352dp"
         android:src="@drawable/cardiologistsCopy"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="352dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="+@id/neurologist"
+        android:id="@+id/neurologist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="70dp"
         android:src="@drawable/cardiologistsCopy"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="542dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="268dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="276dp"
         android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="7"
-        android:text="TextView"
+        android:text="Cardiologist"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -94,61 +100,69 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="276dp"
+        android:layout_marginEnd="67dp"
         android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="7"
-        android:text="TextView"
+        android:text="Orthologist"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="262dp"
-        tools:layout_editor_absoluteY="270dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="228dp"
         android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="7"
-        android:text="TextView"
+        android:text="Pediatrician"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="73dp"
-        tools:layout_editor_absoluteY="480dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="480dp"
+        android:layout_marginEnd="68dp"
         android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="7"
-        android:text="TextView"
+        android:text="Radiologist"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="269dp"
-        tools:layout_editor_absoluteY="480dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="37dp"
         android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="7"
-        android:text="TextView"
+        android:text="Neurologist"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="73dp"
-        tools:layout_editor_absoluteY="661dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
