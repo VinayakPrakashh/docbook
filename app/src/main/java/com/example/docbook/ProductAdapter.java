@@ -64,7 +64,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                                 DocumentReference userBookingRef = db.collection("bookings").document(userId);
 
 // Create a new subcollection for the item
-                                CollectionReference itemRef = userBookingRef.collection(prod);
+                                CollectionReference itemRef = userBookingRef.collection("itemdetails");
 
 // Create a new document with the item's name and cost
                                 Map<String, Object> itemData = new HashMap<>();
@@ -72,7 +72,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                                 itemData.put("cost",price);
 
 // Use the item name as the document name within the subcollection
-                                itemRef.document("itemdetails").set(itemData)
+                                itemRef.document(prod).set(itemData)
                                         .addOnSuccessListener(documentReference -> {
                                             // Item added successfully
                                             // Item added successfully
