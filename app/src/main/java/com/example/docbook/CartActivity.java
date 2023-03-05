@@ -3,8 +3,11 @@ package com.example.docbook;
 import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
+    Button storenav;
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
     private List<Product> productList;
@@ -33,7 +37,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-
+storenav=findViewById(R.id.store);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -73,5 +77,15 @@ public class CartActivity extends AppCompatActivity {
                         }
                     }
                 });
+        storenav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CartActivity.this,MedicineActivity.class));
+            }
+        });
+
+    }
+    public void onBackPressed(){
+        startActivity(new Intent(CartActivity.this,HomeActivity.class));
     }
 }

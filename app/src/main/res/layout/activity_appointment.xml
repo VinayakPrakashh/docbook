@@ -111,6 +111,7 @@
         android:shadowDy="5"
         android:shadowRadius="7"
         android:text="Orthologist"
+        android:paddingStart="10dp"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"

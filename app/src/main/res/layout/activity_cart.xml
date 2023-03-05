@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/medicine">
+    android:background="@drawable/back2">
 
     <TextView
         android:id="@+id/textView9"
@@ -30,5 +30,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9"
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/layout_product" />
+    <Button
+        android:id="@+id/store"
+        android:layout_width="144dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginBottom="16dp"
+        android:text="Go to Store"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/teal_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
