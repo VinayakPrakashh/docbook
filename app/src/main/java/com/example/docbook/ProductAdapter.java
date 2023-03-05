@@ -9,7 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -50,11 +57,42 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+// Create a new document in the "bookings" collection with the user's ID
+                                DocumentReference userBookingRef = db.collection("bookings").document(userId);
+
+// Create a new subcollection for the item
+                                CollectionReference itemRef = userBookingRef.collection(prod);
+
+// Create a new document with the item's name and cost
+                                Map<String, Object> itemData = new HashMap<>();
+                                itemData.put("name", prod);
+                                itemData.put("cost",price);
+
+// Use the item name as the document name within the subcollection
+                                itemRef.document("itemdetails").set(itemData)
+                                        .addOnSuccessListener(documentReference -> {
+                                            // Item added successfully
+                                            // Item added successfully
+                                            new SweetAlertDialog(context)
+                                                    .setTitleText("Order Placed")
+                                                    .show();
+                                            sDialog.dismissWithAnimation();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            // Error adding item
+                                            // Error adding item
+                                            new SweetAlertDialog(context)
+                                                    .setTitleText("Failed to place order")
+                                                    .show();
+                                            sDialog.dismissWithAnimation();
+                                        });
+
                                 // 1. Success message
-                                new SweetAlertDialog(context)
-                                        .setTitleText("Order Placed")
-                                        .show();
-                                sDialog.dismissWithAnimation();
+
+
                             }
                         })
                         .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
