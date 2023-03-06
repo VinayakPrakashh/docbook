@@ -119,47 +119,81 @@
         android:id="@+id/book"
         android:layout_width="306dp"
         android:layout_height="43dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="28dp"
         android:text="BOOK APPOINTMENT"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datetex" />
+        app:layout_constraintTop_toBottomOf="@+id/timetex" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="161dp"
         android:layout_height="25dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
 
-        android:text="Select Date and Time"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="218dp"
+        android:text="Select Date"
         android:textColor="#FFC107"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reason" />
+
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="161dp"
+        android:layout_height="25dp"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="218dp"
+        android:text="Select time"
+        android:textColor="#FFC107"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <ImageButton
         android:id="@+id/date"
         android:layout_width="64dp"
         android:layout_height="53dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/datetex"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:srcCompat="@drawable/calendar" />
 
+    <ImageButton
+        android:id="@+id/time"
+        android:layout_width="64dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="31dp"
+        app:layout_constraintEnd_toStartOf="@+id/timetex"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:srcCompat="@drawable/calendar" />
+
     <TextView
         android:id="@+id/datetex"
-        android:layout_width="231dp"
-        android:layout_height="94dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="227dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="75dp"
         android:text=""
         android:textColor="@color/white"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintStart_toEndOf="@+id/date"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/timetex"
+        android:layout_width="227dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="75dp"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
