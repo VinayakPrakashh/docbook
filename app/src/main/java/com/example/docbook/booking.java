@@ -36,7 +36,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class booking extends AppCompatActivity {
 EditText name,reasons,contact,ages;
-public int val;
+public int val=3;
     private String[] genderOptions = {"Male", "Female", "Other"};
     private String[] timeslots=
             {"9 AM to 10 AM",
@@ -263,6 +263,7 @@ timetext=findViewById(R.id.timetex);
                             new SweetAlertDialog(booking.this)
                                     .setTitleText("This time slot is already booked.")
                                     .show();
+                            val=2;
                         } else {
                             // Document does not exist, create it
                             docRef2.set(new HashMap<>()).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -272,7 +273,7 @@ timetext=findViewById(R.id.timetex);
                                     new SweetAlertDialog(booking.this)
                                             .setTitleText("Time Slot Booked!")
                                             .show();
-                                    val = 1;
+                                    val = 4;
                                 }
                             });
                         }
@@ -282,7 +283,7 @@ timetext=findViewById(R.id.timetex);
                 }
             });
 
-            if (val != 1) {
+            if (val ==4) {
                 DocumentReference neurologistRef = db.collection("appointments").document(uid)
                         .collection(spec).document("appointment");
 
