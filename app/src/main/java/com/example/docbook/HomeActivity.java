@@ -75,7 +75,7 @@ CardView lgout,appointment,store,cart,abouts,article;
                 SharedPreferences.Editor editors = prefs.edit();
                 editors.putBoolean("toast_displayed", false);
                 editors.apply();
-                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                startActivity(new Intent(HomeActivity.this,MainActivity.class));
 
             }
         });
@@ -121,11 +121,10 @@ CardView lgout,appointment,store,cart,abouts,article;
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Start the launcher activity and finish this activity
-                        Intent a = new Intent(Intent.ACTION_MAIN);
-                        a.addCategory(Intent.CATEGORY_HOME);
-                        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(a);
+
+                        finishAffinity(); // Close all activities
+                        System.exit(0); // Exit the app
+                       HomeActivity.super.onBackPressed();
                     }
                 })
                 .setNegativeButton("No", null)
