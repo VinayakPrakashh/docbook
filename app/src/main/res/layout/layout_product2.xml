@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/product_quantity"
-        android:layout_width="133dp"
+        android:layout_width="63dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:text=""

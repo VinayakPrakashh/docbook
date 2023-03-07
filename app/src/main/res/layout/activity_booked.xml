@@ -8,15 +8,15 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="346dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="60dp"
-        android:text="YOUR APPOINTMENTS"
+        android:layout_width="379dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="36dp"
+        android:text=" YOUR APPOINTMENTS"
         android:textColor="@color/white"
         android:textSize="31sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.753"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
         app:layout_constraintVertical_bias="1.0"
-        tools:listitem="@layout/layout_product" />
+        tools:listitem="@layout/layout_product2" />
     <Button
         android:id="@+id/store"
         android:layout_width="144dp"

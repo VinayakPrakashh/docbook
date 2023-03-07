@@ -64,7 +64,8 @@ storenav=findViewById(R.id.store);
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String date = document.getString("date");
                         String name= document.getString("doctor");
-                        BookedAdapter.Product product = new BookedAdapter.Product(name,date);
+                        String specialization=document.getString("specialization");
+                        BookedAdapter.Product product = new BookedAdapter.Product(name,specialization,date);
                         productList.add(product);
                         bookedAdapter.notifyDataSetChanged();
 

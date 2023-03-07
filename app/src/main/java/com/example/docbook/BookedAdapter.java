@@ -31,9 +31,9 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.textViewProductName.setText(product.getName());
-        holder.textViewProductPrice.setText(product.getDate());
-
+        holder.textViewname.setText(product.getName());
+        holder.textViewdate.setText(product.getDate());
+        holder.textViewspec.setText(product.getSpecialization());
 
 
     }
@@ -44,14 +44,14 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewProductName, textViewProductPrice,textViewProductQuantity;
+        TextView textViewname, textViewdate,textViewspec;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewProductName = itemView.findViewById(R.id.product_name);
-            textViewProductPrice = itemView.findViewById(R.id.product_price);
-            textViewProductQuantity = itemView.findViewById(R.id.product_quantity);
+            textViewname = itemView.findViewById(R.id.product_name);
+            textViewdate= itemView.findViewById(R.id.product_price);
+            textViewspec = itemView.findViewById(R.id.product_quantity);
 
         }
     }
@@ -59,10 +59,12 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
     public static class Product {
         private String name;
         private String date;
+        private String specialization;
 
-        public Product(String name, String date) {
+        public Product(String name,String specialization, String date) {
             this.name = name;
             this.date =date;
+            this.specialization=specialization;
 
         }
 
@@ -73,6 +75,8 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
         public String getDate() {
             return date;
         }
-
+        public String getSpecialization() {
+            return specialization;
+        }
     }
 }
