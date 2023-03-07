@@ -228,15 +228,8 @@ timetext=findViewById(R.id.timetex);
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             FirebaseAuth auth = FirebaseAuth.getInstance();
-            String uid = auth.getCurrentUser().getUid();
-            String nameauth = name.getText().toString();
-            int ageauth = Integer.parseInt(ages.getText().toString());
-            String contactauth = contact.getText().toString();
-            String reasonauth = reasons.getText().toString();
             String dateinfo = datewrite2.getText().toString();
             String time = timetext.getText().toString();
-
-            String genderselect = genders.getText().toString();
             SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
             String spec = sharedPreferences.getString("specialization", "").toString();
 
@@ -269,6 +262,7 @@ bookit();
                             });
                         }
                     } else {
+                        Toast.makeText(booking.this, "Error Getting Documents", Toast.LENGTH_SHORT).show();
                         // Error getting document, handle accordingly
                     }
                 }

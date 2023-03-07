@@ -30,18 +30,24 @@ public class MedicineActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
     private List<ProductAdapter.Product> productList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medicine);
 
-cartnav=findViewById(R.id.cart);
+        cartnav = findViewById(R.id.cart);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         productList = new ArrayList<>();
         productAdapter = new ProductAdapter(this, productList);
         recyclerView.setAdapter(productAdapter);
+
+        // Add the DividerItemDecoration
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
         Dialog dialog = new Dialog(MedicineActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
         dialog.setCancelable(false);
@@ -76,6 +82,7 @@ cartnav=findViewById(R.id.cart);
         });
 
     }
+
     public void onBackPressed(){
         startActivity(new Intent(MedicineActivity.this,HomeActivity.class));
     }

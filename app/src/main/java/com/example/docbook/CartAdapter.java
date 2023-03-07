@@ -33,7 +33,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         Product product = productList.get(position);
         holder.textViewProductName.setText(product.getName());
         holder.textViewProductPrice.setText("Rs:"+product.getPrice());
-        holder.textViewProductQuantity.setText(product.getQuantity());
+        holder.textViewProductQuantity.setText(" x "+product.getQuantity());
 
 
     }
