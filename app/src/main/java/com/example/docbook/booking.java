@@ -224,53 +224,67 @@ timetext=findViewById(R.id.timetex);
 
 
     private void PerforAuth() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String dateinfo = datewrite2.getText().toString();
+        String time = timetext.getText().toString();
+        String uid = auth.getCurrentUser().getUid();
+        SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
+        String spec = sharedPreferences.getString("specialization", "").toString();
 
+        DocumentReference docRef2 = db.collection("bookingtime")
+                .document(spec)
+                .collection(dateinfo)
+                .document("timeSlots")
+                .collection("time")
+                .document(time);
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            String dateinfo = datewrite2.getText().toString();
-            String time = timetext.getText().toString();
-            SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
-            String spec = sharedPreferences.getString("specialization", "").toString();
-
-            DocumentReference docRef2 = db.collection("bookingtime")
-                    .document(spec)
-                    .collection(dateinfo)
-                    .document("timeSlots")
-                    .collection("time")
-                    .document(time);
-
-            docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            // Document already exists, handle accordingly
-                            new SweetAlertDialog(booking.this)
-                                    .setTitleText("This time slot is already booked.")
-                                    .show();
-
-                        } else {
-                            // Document does not exist, create it
-                            docRef2.set(new HashMap<>()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-bookit();
-
-                                }
-                            });
-                        }
+        docRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // Document already exists, handle accordingly
+                        new SweetAlertDialog(booking.this)
+                                .setTitleText("This time slot is already booked.")
+                                .show();
                     } else {
-                        Toast.makeText(booking.this, "Error Getting Documents", Toast.LENGTH_SHORT).show();
-                        // Error getting document, handle accordingly
+                        // Document does not exist, create it
+                        docRef2.set(new HashMap<>()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                DocumentReference appointmentRef = db.collection("appointments").document(uid)
+                                        .collection(spec).document("appointment");
+
+                                appointmentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+                                                // Appointment already exists for the user and doctor, handle accordingly
+                                                new SweetAlertDialog(booking.this)
+                                                        .setTitleText("You already have an appointment with this doctor.")
+                                                        .show();
+                                            } else {
+                                                bookit();
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        });
                     }
+                } else {
+                    Toast.makeText(booking.this, "Error Getting Documents", Toast.LENGTH_SHORT).show();
+                    // Error getting document, handle accordingly
                 }
-            });
-        }
+            }
+        });
+    }
 
     private void bookit() {
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String uid = auth.getCurrentUser().getUid();
@@ -280,7 +294,6 @@ bookit();
         String reasonauth = reasons.getText().toString();
         String dateinfo = datewrite2.getText().toString();
         String time = timetext.getText().toString();
-
         String genderselect = genders.getText().toString();
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
         String spec = sharedPreferences.getString("specialization", "").toString();
@@ -288,19 +301,15 @@ bookit();
         DocumentReference neurologistRef = db.collection("appointments").document(uid)
                 .collection(spec).document("appointment");
 
-
         Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo, time, genderselect);
 
         neurologistRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-
-
-// 1. Success message
+                // Success message
                 new SweetAlertDialog(booking.this)
                         .setTitleText("Appointment Booked!")
                         .show();
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -309,6 +318,7 @@ bookit();
             }
         });
     }
+
 
 
     public class Appointment {
