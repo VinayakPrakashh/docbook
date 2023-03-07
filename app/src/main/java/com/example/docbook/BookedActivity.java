@@ -2,10 +2,8 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +37,7 @@ public class BookedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booked);
      sDialog = new SweetAlertDialog(BookedActivity.this);
-storenav=findViewById(R.id.store);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -76,17 +74,6 @@ storenav=findViewById(R.id.store);
             }
         });
 
-
-
-        storenav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(BookedActivity.this,MedicineActivity.class));
-            }
-        });
-
     }
-    public void onBackPressed(){
-        startActivity(new Intent(BookedActivity.this,HomeActivity.class));
-    }
+
 }

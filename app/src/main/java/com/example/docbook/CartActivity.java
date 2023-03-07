@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.docbook.CartAdapter.Product;
+import com.example.docbook.RecyclerView.CartItemDecoration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +48,8 @@ storenav=findViewById(R.id.store);
         productList = new ArrayList<>();
         cartAdapter = new CartAdapter(this, productList);
         recyclerView.setAdapter(cartAdapter);
+        recyclerView.addItemDecoration(new CartItemDecoration(16));
+
         Dialog dialog = new Dialog(CartActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
         dialog.setCancelable(false);

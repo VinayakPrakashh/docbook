@@ -5,7 +5,9 @@
     android:focusable="true"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:background="@color/black">
+
+    android:background="@drawable/item_background"
+    >
 
     <TextView
         android:id="@+id/product_name"
