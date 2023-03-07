@@ -57,17 +57,17 @@ storenav=findViewById(R.id.store);
         DocumentReference appointmentRef = db.collection("appointments").document(uid);
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DocumentReference doctorRef = appointmentRef.collection(doctorName).document("appointment");
 
-        doctorRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+        appointmentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         // Appointment details exist, get the data
+                        String docname = document.getId();
                         String date = document.getString("date");
-                        String doctorName = document.getString("doctorName");
                         // Do something with the appointment data
                     } else {
                         // Appointment details do not exist
