@@ -158,8 +158,6 @@
         android:layout_width="64dp"
         android:layout_height="53dp"
         android:layout_marginStart="36dp"
-        app:layout_constraintEnd_toStartOf="@+id/datetex"
-        app:layout_constraintHorizontal_bias="0.187"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:srcCompat="@drawable/calendar" />
@@ -169,17 +167,16 @@
         android:layout_width="64dp"
         android:layout_height="53dp"
         android:layout_marginStart="36dp"
-        app:layout_constraintEnd_toStartOf="@+id/timetex"
-        app:layout_constraintHorizontal_bias="0.187"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10"
         app:srcCompat="@drawable/calendar" />
 
     <TextView
         android:id="@+id/datetex"
-        android:layout_width="227dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="68dp"
+        android:layout_width="228dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="52dp"
         android:text=""
         android:textColor="@color/white"
         android:textSize="24dp"
@@ -188,9 +185,10 @@
 
     <TextView
         android:id="@+id/timetex"
-        android:layout_width="227dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="68dp"
+        android:layout_width="229dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
         android:text=""
         android:textColor="@color/white"
         android:textSize="24dp"
