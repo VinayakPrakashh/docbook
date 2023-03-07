@@ -36,7 +36,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class booking extends AppCompatActivity {
 EditText name,reasons,contact,ages;
-public int val=3;
+public String val;
     private String[] genderOptions = {"Male", "Female", "Other"};
     private String[] timeslots=
             {"9 AM to 10 AM",
@@ -263,17 +263,14 @@ timetext=findViewById(R.id.timetex);
                             new SweetAlertDialog(booking.this)
                                     .setTitleText("This time slot is already booked.")
                                     .show();
-                            val=2;
+
                         } else {
                             // Document does not exist, create it
                             docRef2.set(new HashMap<>()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    // Success message
-                                    new SweetAlertDialog(booking.this)
-                                            .setTitleText("Time Slot Booked!")
-                                            .show();
-                                    val = 4;
+bookit();
+
                                 }
                             });
                         }
@@ -282,36 +279,48 @@ timetext=findViewById(R.id.timetex);
                     }
                 }
             });
+        }
 
-            if (val ==4) {
-                DocumentReference neurologistRef = db.collection("appointments").document(uid)
-                        .collection(spec).document("appointment");
+    private void bookit() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String uid = auth.getCurrentUser().getUid();
+        String nameauth = name.getText().toString();
+        int ageauth = Integer.parseInt(ages.getText().toString());
+        String contactauth = contact.getText().toString();
+        String reasonauth = reasons.getText().toString();
+        String dateinfo = datewrite2.getText().toString();
+        String time = timetext.getText().toString();
+
+        String genderselect = genders.getText().toString();
+        SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
+        String spec = sharedPreferences.getString("specialization", "").toString();
+
+        DocumentReference neurologistRef = db.collection("appointments").document(uid)
+                .collection(spec).document("appointment");
 
 
-                Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo, time, genderselect);
+        Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo, time, genderselect);
 
-                neurologistRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
+        neurologistRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
 
 
 // 1. Success message
-                        new SweetAlertDialog(booking.this)
-                                .setTitleText("Appointment Booked!")
-                                .show();
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Failed to add appointment", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
+                new SweetAlertDialog(booking.this)
+                        .setTitleText("Appointment Booked!")
+                        .show();
 
             }
-        }
-
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Failed to add appointment", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
     public class Appointment {
