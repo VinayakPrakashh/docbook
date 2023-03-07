@@ -32,8 +32,8 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
         holder.textViewProductName.setText(product.getName());
-        holder.textViewProductPrice.setText("Rs:"+product.getPrice());
-        holder.textViewProductQuantity.setText(" x "+product.getQuantity());
+        holder.textViewProductPrice.setText(product.getDate());
+
 
 
     }
@@ -58,24 +58,21 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
 
     public static class Product {
         private String name;
-        private String price;
-        private String quantity;
+        private String date;
 
-        public Product(String name, String price,String quantity) {
+        public Product(String name, String date) {
             this.name = name;
-            this.price = price;
-            this.quantity = quantity;
+            this.date =date;
+
         }
 
         public String getName() {
             return name;
         }
 
-        public String getPrice() {
-            return price;
+        public String getDate() {
+            return date;
         }
-        public String getQuantity() {
-            return quantity;
-        }
+
     }
 }

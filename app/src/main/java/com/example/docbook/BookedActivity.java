@@ -66,13 +66,12 @@ storenav=findViewById(R.id.store);
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         // Appointment details exist, get the data
-                        String docname = document.getId();
+                        String name = document.getId();
                         String date = document.getString("date");
                         // Do something with the appointment data
-                    } else {
-                        // Appointment details do not exist
+                        BookedAdapter.Product product = new BookedAdapter.Product(name,date);
+                        productList.add(product);
                     }
-                }
                             else{
 
                                 new SweetAlertDialog(BookedActivity.this, SweetAlertDialog.ERROR_TYPE)
