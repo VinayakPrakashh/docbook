@@ -1,10 +1,13 @@
 package com.example.docbook;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,12 +27,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -250,31 +253,35 @@ timetext=findViewById(R.id.timetex);
                                 .setTitleText("This time slot is already booked.")
                                 .show();
                     } else {
-                        // Document does not exist, create it
-                        docRef2.set(new HashMap<>()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                DocumentReference appointmentRef = db.collection("appointments").document(uid)
-                                        .collection(spec).document("appointment");
-
-                                appointmentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        String uid = auth.getCurrentUser().getUid();
+                        SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
+                        String spec = sharedPreferences.getString("specialization", "");
+                        String doctor= sharedPreferences.getString("doctor", "").toString();
+// Query appointments sub-collection to check if there is already an appointment booked for this user with the given specialization
+                        db.collection("appointments").document(uid).collection("item")
+                                .whereEqualTo("specialization", spec)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            if (document.exists()) {
-                                                // Appointment already exists for the user and doctor, handle accordingly
+                                            if (!task.getResult().isEmpty()) {
+                                                // User has already booked an appointment for this specialization, show error message
                                                 new SweetAlertDialog(booking.this)
-                                                        .setTitleText("You already have an appointment with this doctor.")
+                                                        .setTitleText("You Have Already Booked an appointment for Dr."+doctor)
                                                         .show();
                                             } else {
-                                                bookit();
+                                              bookit();;
                                             }
+                                        } else {
+                                            Log.d(TAG, "Error getting documents: ", task.getException());
                                         }
                                     }
                                 });
-                            }
-                        });
+
+
                     }
                 } else {
                     Toast.makeText(booking.this, "Error Getting Documents", Toast.LENGTH_SHORT).show();
