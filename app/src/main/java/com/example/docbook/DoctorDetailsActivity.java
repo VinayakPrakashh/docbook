@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -86,7 +87,8 @@ String photo=spec+".jpg";
                             if (document.exists()) {
 
                                 // Extract doctor details here
-                                String name = document.getString("name");
+                                String name = document.getString("  name");
+
                                 String specialization = document.getString("specialization");
                                 int experience = document.getLong("experience").intValue();
                                 String hospital = document.getString("hospital");

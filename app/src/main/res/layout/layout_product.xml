@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/product_name"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
@@ -17,6 +17,16 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/product_quantity"
+        android:layout_width="63dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text=""
+        android:textColor="#ffffcc"
+        android:textSize="16sp"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/product_price"
@@ -27,5 +37,6 @@
         android:textColor="#ffffcc"
         android:textSize="16sp"
         android:textStyle="italic" />
+
 
 </LinearLayout>

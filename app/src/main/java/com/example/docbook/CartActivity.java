@@ -68,8 +68,9 @@ storenav=findViewById(R.id.store);
 
                                 String name = document.getString("name");
                                 String price = document.getString("cost");
+                                String quantity=document.getString("quantity");
 
-                                Product product = new Product(name, price);
+                                Product product = new Product(name, price,quantity);
                                 productList.add(product);
 
                                 dialog.dismiss();

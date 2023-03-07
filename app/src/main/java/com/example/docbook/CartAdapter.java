@@ -33,6 +33,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         Product product = productList.get(position);
         holder.textViewProductName.setText(product.getName());
         holder.textViewProductPrice.setText("Rs:"+product.getPrice());
+        holder.textViewProductQuantity.setText(product.getQuantity());
 
 
     }
@@ -43,23 +44,27 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewProductName, textViewProductPrice;
+        TextView textViewProductName, textViewProductPrice,textViewProductQuantity;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textViewProductName = itemView.findViewById(R.id.product_name);
             textViewProductPrice = itemView.findViewById(R.id.product_price);
+            textViewProductQuantity = itemView.findViewById(R.id.product_quantity);
+
         }
     }
 
     public static class Product {
         private String name;
         private String price;
+        private String quantity;
 
-        public Product(String name, String price) {
+        public Product(String name, String price,String quantity) {
             this.name = name;
             this.price = price;
+            this.quantity = quantity;
         }
 
         public String getName() {
@@ -68,6 +73,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
 
         public String getPrice() {
             return price;
+        }
+        public String getQuantity() {
+            return quantity;
         }
     }
 }

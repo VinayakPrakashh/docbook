@@ -1,9 +1,12 @@
 package com.example.docbook;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,17 +51,27 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             @Override
             public void onClick(View view) {
 
-
+                // Create a new EditText view for quantity input
+                final EditText inputQuantity = new EditText(context);
+                inputQuantity.setTextColor(Color.BLACK);
+                inputQuantity.setHint("Enter quantity here");
+                inputQuantity.setHintTextColor(Color.GRAY);
+                inputQuantity.setInputType(InputType.TYPE_CLASS_NUMBER);
                 String prod=product.getName();
                 String price = String.valueOf(product.getPrice());
                 new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Order Now?")
+                        .setTitleText("Select Quantity")
                         .setContentText(prod+" at Rs:"+price)
+                        .setCustomView(inputQuantity)
                         .setConfirmText("ORDER")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
-
+String quantity2=inputQuantity.getText().toString();
+                                int quantity3=Integer.parseInt(quantity2);
+                                int price2=Double.valueOf(product.getPrice()).intValue();
+                                int tamount=(quantity3*price2);
+                                String totalamount = String.valueOf(tamount);
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -67,19 +80,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
 // Create a new subcollection for the item
                                 CollectionReference itemRef = userBookingRef.collection("itemdetails");
+                                String quantity = inputQuantity.getText().toString();
 
 // Create a new document with the item's name and cost
                                 Map<String, Object> itemData = new HashMap<>();
                                 itemData.put("name", prod);
-                                itemData.put("cost",price);
-
+                                itemData.put("cost",totalamount);
+                                itemData.put("quantity",quantity);
 // Use the item name as the document name within the subcollection
                                 itemRef.document(prod).set(itemData)
                                         .addOnSuccessListener(documentReference -> {
                                             // Item added successfully
-                                            // Item added successfully
+
+
                                             new SweetAlertDialog(context)
-                                                    .setTitleText("Order Placed")
+                                                    .setTitleText("Order Placed Total Amount: "+tamount)
                                                     .show();
                                             sDialog.dismissWithAnimation();
                                         })

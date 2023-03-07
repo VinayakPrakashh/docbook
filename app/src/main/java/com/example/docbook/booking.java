@@ -217,12 +217,6 @@ timetext=findViewById(R.id.timetex);
 
 
                         PerforAuth();
-                                // If all fields are valid, proceed with booking
-                                // ...
-
-
-
-
                     }
                 });
     }
