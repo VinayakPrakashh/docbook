@@ -16,7 +16,7 @@ public class AppointmentActivity extends AppCompatActivity {
 Button backs;
 FirebaseAuth mAuth;
     FirebaseUser mUser;
-    ImageView neuro,radio,pedia,cardi,ortho;
+    ImageView neuro,radio,pedia,cardi,ortho,booking;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,7 @@ neuro=findViewById(R.id.neurologist);
 pedia=findViewById(R.id.pediatrician);
 cardi=findViewById(R.id.cardiologist);
 ortho=findViewById(R.id.orthologist);
+booking=findViewById(R.id.bookings);
 
 radio.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -77,7 +78,12 @@ cardi.setOnClickListener(new View.OnClickListener() {
                 startActivity(new Intent(AppointmentActivity.this, DoctorDetailsActivity.class));
             }
         });
-
+booking.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(AppointmentActivity.this,BookedActivity.class));
+    }
+});
     }
 
 }

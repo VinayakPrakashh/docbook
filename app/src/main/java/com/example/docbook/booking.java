@@ -296,14 +296,14 @@ timetext=findViewById(R.id.timetex);
         String time = timetext.getText().toString();
         String genderselect = genders.getText().toString();
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
-        String spec = sharedPreferences.getString("specialization", "").toString();
+        String spec = sharedPreferences.getString("specialization", "");
+        String doctor= sharedPreferences.getString("doctor", "").toString();
+        DocumentReference appointmentRef = db.collection("appointments").document(uid)
+                .collection("item").document(spec);
 
-        DocumentReference neurologistRef = db.collection("appointments").document(uid)
-                .collection(spec).document("appointment");
+        Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo, time, genderselect,spec,doctor);
 
-        Appointment appointment = new Appointment(nameauth, ageauth, contactauth, reasonauth, dateinfo, time, genderselect);
-
-        neurologistRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
+        appointmentRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 // Success message
@@ -321,6 +321,7 @@ timetext=findViewById(R.id.timetex);
 
 
 
+
     public class Appointment {
         private String name;
         private int age;
@@ -329,10 +330,11 @@ timetext=findViewById(R.id.timetex);
         private String date;
         private String time;
         private String genderselect;
-
+        private String specialization;
+        private String doctor;
         public Appointment() {}
 
-        public Appointment(String name, int age, String phone, String reason, String date, String time, String gender) {
+        public Appointment(String name, int age, String phone, String reason, String date, String time, String gender,String specialization,String doctor) {
             this.name = name;
             this.age = age;
             this.phone = phone;
@@ -340,12 +342,26 @@ timetext=findViewById(R.id.timetex);
             this.date = date;
             this.time = time;
             this.genderselect = gender;
+            this.specialization = specialization;
+            this.doctor = doctor;
         }
 
         public String getName() {
             return name;
         }
+public String getSpecialization(){
+            return specialization;
 
+        }
+        public void setSpecialization(String specialization) {
+            this.specialization = specialization;
+        }public String getDoctor(){
+            return doctor;
+
+        }
+        public void setDoctor(String doctor) {
+            this.doctor = doctor;
+        }
         public void setName(String name) {
             this.name = name;
         }

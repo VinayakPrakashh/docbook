@@ -107,7 +107,9 @@ String photo=spec+".jpg";
                                 dexp2.setText("Experience: "+exp+" Years");
                                 doccontact2.setText("Contact No: "+dcon);
                                 dquali.setText("Qualification: "+qualification);
-
+                                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                myEdit.putString("doctor", name);
+                                myEdit.commit();
 
                             } else {
                                 Log.d(TAG, "No such document");

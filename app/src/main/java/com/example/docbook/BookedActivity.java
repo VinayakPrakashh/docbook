@@ -2,7 +2,6 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +16,10 @@ import com.example.docbook.BookedAdapter.Product;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -46,50 +46,37 @@ storenav=findViewById(R.id.store);
         productList = new ArrayList<>();
         bookedAdapter = new BookedAdapter(this, productList);
         recyclerView.setAdapter(bookedAdapter);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        String uid = auth.getCurrentUser().getUid();
-        Dialog dialog = new Dialog(BookedActivity.this);
-        dialog.setContentView(R.layout.loading_dialog);
-        dialog.setCancelable(false);
-        dialog.show();
+
+
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference appointmentRef = db.collection("appointments").document(uid);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String uid = auth.getCurrentUser().getUid();
 
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        CollectionReference itemRef = db.collection("appointments").document(uid).collection("item");
 
-        appointmentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        itemRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        // Appointment details exist, get the data
-                        String name = document.getId();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         String date = document.getString("date");
-                        // Do something with the appointment data
+                        String name= document.getString("doctor");
                         BookedAdapter.Product product = new BookedAdapter.Product(name,date);
                         productList.add(product);
+                        bookedAdapter.notifyDataSetChanged();
+
                     }
-                            else{
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
 
-                                new SweetAlertDialog(BookedActivity.this, SweetAlertDialog.ERROR_TYPE)
 
-                                        .setContentText("Your Cart is Empty!")
-                                        .show();
 
-                            }
-                           bookedAdapter.notifyDataSetChanged();
-                        } else {
-
-                            dialog.dismiss();
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-
-                        }
-                        dialog.dismiss();
-                    }
-                });
         storenav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
