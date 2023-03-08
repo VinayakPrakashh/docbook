@@ -273,11 +273,13 @@
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/white"
-        android:padding="16dp" />
+<com.google.android.material.navigation.NavigationView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/navigationview"
+    app:headerLayout="@layout/header_menu"
+    app:menu="@menu/main_menu"
+    android:fitsSystemWindows="true"
+    android:layout_gravity="start"
+    ></com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
