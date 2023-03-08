@@ -74,6 +74,7 @@ String photo=spec+".jpg";
         });
 
 
+
         db.collection("doctor")
                 .document(spec)
                 .get()

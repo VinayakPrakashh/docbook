@@ -6,8 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,22 +22,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class ProfileActivity extends AppCompatActivity {
-
-TextView uname,uage,uemail,uaddress,ucity,uphone;
+public class EditProfileActivity extends AppCompatActivity {
+EditText uname,uage,uaddress,uphone,ucity,uemail;
 ImageView uimageView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_edit_profile);
         uname=findViewById(R.id.name);
         uage=findViewById(R.id.age);
         uemail=findViewById(R.id.mail);
         uaddress=findViewById(R.id.address);
         ucity=findViewById(R.id.city);
-        uphone=findViewById(R.id.contact);
-        uimageView=findViewById(R.id.profile_photo);
+        uphone=findViewById(R.id.phone);
+        uimageView=findViewById(R.id.photo);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         String photo="Cardiologist.jpg";
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -84,9 +82,9 @@ ImageView uimageView;
                                 String phone=document.getString("contact");
                                 uname.setText(name);
                                 uage.setText("Age: "+age);
-                               uemail.setText("Mail address: "+mail);
+                                uemail.setText("Mail address: "+mail);
                                 ucity.setText("City: "+city);
-                               uphone.setText("Contact No: "+phone);
+                                uphone.setText("Contact No: "+phone);
                                 uaddress.setText("Address: "+address);
 
                             } else {
@@ -98,5 +96,4 @@ ImageView uimageView;
                     }
                 });
     }
-
 }
