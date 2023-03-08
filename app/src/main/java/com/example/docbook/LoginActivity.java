@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         treg=findViewById(R.id.tregister);
         mauth=FirebaseAuth.getInstance();
         mUser=mauth.getCurrentUser();
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

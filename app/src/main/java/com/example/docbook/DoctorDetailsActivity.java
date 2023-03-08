@@ -26,7 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class DoctorDetailsActivity extends AppCompatActivity {
-TextView docname2,docspec2,dochospital2,dexp2,doccontact2,dquali;
+TextView docname2,docspec2,dochospital2,dexp2,doccontact2,dquali,fees2;
 Button b1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ Button b1;
         dexp2=findViewById(R.id.dexp);
         doccontact2=findViewById(R.id.dcontact);
         dquali=findViewById(R.id.dqualification);
+        fees2=findViewById(R.id.fees);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 b1=findViewById(R.id.book_appointment_button);
         SharedPreferences sharedPreferences = getSharedPreferences("docselect",MODE_PRIVATE);
@@ -94,6 +95,7 @@ String photo=spec+".jpg";
                                 long contact = document.getLong("contact");
                                 String qualification=document.getString("qualification");
                                 String exp = Integer.toString(experience);
+                                String fees=document.getString("fees");
                                 // Update UI with doctor details
 
                                 String dcon= Long.toString(contact);
@@ -107,6 +109,9 @@ String photo=spec+".jpg";
                                 dexp2.setText("Experience: "+exp+" Years");
                                 doccontact2.setText("Contact No: "+dcon);
                                 dquali.setText("Qualification: "+qualification);
+                                fees2.setText("Appointment Fees: "+fees);
+
+
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                                 myEdit.putString("doctor", name);
                                 myEdit.commit();
