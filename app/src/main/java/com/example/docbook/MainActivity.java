@@ -2,6 +2,7 @@ package com.example.docbook;
 
 import static com.example.docbook.Connection.isNetworkAvailable;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -50,6 +51,7 @@ mUser=mauth.getCurrentUser();
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
+
                         startActivity(new Intent(MainActivity.this,HomeActivity.class));
                     }
                     else {
@@ -59,6 +61,7 @@ mUser=mauth.getCurrentUser();
             });
         }
      else {
+
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }
 
