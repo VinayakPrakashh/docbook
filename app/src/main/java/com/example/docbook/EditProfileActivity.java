@@ -88,8 +88,11 @@ ImageView uimageView;
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        new SweetAlertDialog(EditProfileActivity.this)
+                                .setTitleText("Profile Updated!")
+                                .show();
                         performauth();
-                        Toast.makeText(EditProfileActivity.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
