@@ -2,12 +2,18 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,14 +22,23 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class EditProfileActivity extends AppCompatActivity {
 EditText uname,uage,uaddress,uphone,ucity,uemail;
+Button save;
 ImageView uimageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +51,56 @@ ImageView uimageView;
         ucity=findViewById(R.id.city);
         uphone=findViewById(R.id.phone);
         uimageView=findViewById(R.id.photo);
+        save=findViewById(R.id.save);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bookit();
+            }
+        });
+      performauth();
+
+
+    }
+    private void bookit() {
+
+
+        String username=uname.getText().toString();
+        String age=uage.getText().toString();
+        String email=uemail.getText().toString();
+        String address=uaddress.getText().toString();
+        String contact=uphone.getText().toString();
+        String city=ucity.getText().toString();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        Map<String, Object> user = new HashMap<>();
+        user.put("username", username);
+        user.put("age", age);
+        user.put("email", email);
+        user.put("address", address);
+        user.put("contact", contact);
+        user.put("city", city);
+
+        db.collection("users").document(userUid)
+                .set(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        performauth();
+                        Toast.makeText(EditProfileActivity.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing user information to Firestore", e);
+                    }
+                });
+
+    }
+    private void performauth(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         String photo="Cardiologist.jpg";
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -81,11 +146,11 @@ ImageView uimageView;
                                 String mail = document.getString("email");
                                 String phone=document.getString("contact");
                                 uname.setText(name);
-                                uage.setText("Age: "+age);
-                                uemail.setText("Mail address: "+mail);
-                                ucity.setText("City: "+city);
-                                uphone.setText("Contact No: "+phone);
-                                uaddress.setText("Address: "+address);
+                                uage.setText(age);
+                                uemail.setText(mail);
+                                ucity.setText(city);
+                                uphone.setText(phone);
+                                uaddress.setText(address);
 
                             } else {
                                 Log.d(TAG, "No such document");
@@ -95,5 +160,6 @@ ImageView uimageView;
                         }
                     }
                 });
+
     }
 }

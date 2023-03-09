@@ -273,7 +273,7 @@ timetext=findViewById(R.id.timetex);
                                                         .setTitleText("You Have Already Booked an appointment for Dr."+doctor)
                                                         .show();
                                             } else {
-                                              bookit();;
+                                              bookit();
                                             }
                                         } else {
                                             Log.d(TAG, "Error getting documents: ", task.getException());

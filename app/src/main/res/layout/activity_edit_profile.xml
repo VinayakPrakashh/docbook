@@ -64,7 +64,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -79,7 +79,7 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_background"
+
             android:hint="Enter name"
             android:textColor="#ffffff"
             android:textColorHint="#aaaaaa"
@@ -107,7 +107,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+
             android:text="Address"
             android:textColor="#ffffff"
             android:textSize="16sp" />
@@ -122,7 +122,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+
             android:text="City"
             android:textColor="#ffffff"
             android:textSize="16sp" />
@@ -137,7 +137,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+
             android:text="Phone No"
             android:textColor="#ffffff"
             android:textSize="16sp" />
@@ -152,16 +152,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Phone No"
+            android:text="Mail id"
             android:textColor="#ffffff"
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/phone"
+            android:id="@+id/mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Phone No"
+            android:hint="Enter Email address"
             android:textColorHint="#aaaaaa" />
     </LinearLayout>
 
@@ -171,3 +170,4 @@
         android:layout_height="wrap_content"
         android:text="Save"
         android:textSize="16sp" />
+</LinearLayout>
