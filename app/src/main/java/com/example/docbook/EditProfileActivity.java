@@ -124,7 +124,7 @@ ImageView uimageView;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = auth.getCurrentUser().getUid();
 // Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child(photo);
+        StorageReference imageRef = storage.getReference().child("users/" + uid + "/image");
 
 // Download the image file into a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
