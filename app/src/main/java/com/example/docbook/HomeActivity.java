@@ -70,18 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         lgout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
-                // When the user clicks the logout button
-                FirebaseAuth.getInstance().signOut();
-                Context context = view.getContext();
-// Reset the value of toast_displayed to false
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-                SharedPreferences.Editor editors = prefs.edit();
-                editors.putBoolean("toast_displayed", false);
-                editors.apply();
-                startActivity(new Intent(HomeActivity.this, MainActivity.class));
+
 
             }
         });
@@ -106,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
         abouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, EditProfileActivity.class));
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             }
         });
         article.setOnClickListener(new View.OnClickListener() {
