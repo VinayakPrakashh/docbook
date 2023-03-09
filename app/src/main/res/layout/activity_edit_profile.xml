@@ -49,6 +49,8 @@
             <Button
                 android:id="@+id/uploadb"
                 android:layout_marginLeft="16dp"
+                android:backgroundTint="@color/green"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -171,6 +173,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:backgroundTint="@drawable/white"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/green"
         android:textSize="16sp" />
 </LinearLayout>
