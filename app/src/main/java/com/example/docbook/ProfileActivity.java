@@ -44,26 +44,29 @@ ImageView uimageView;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = auth.getCurrentUser().getUid();
 // Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child(photo);
+        // Get a reference to the Firebase Storage location where the image is stored
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + uid + "/image");
 
-// Download the image file into a byte array
+// Download the contents of the file as a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
             @Override
             public void onSuccess(byte[] bytes) {
-                // Convert the byte array into a Bitmap object
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-                // Set the Bitmap object in an ImageView
+                // Create a bitmap image from the byte array
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-                uimageView.setImageBitmap(bmp);
+                // Display the bitmap image in an ImageView
+
+                uimageView.setImageBitmap(bitmap);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors that occur during the download
-                Log.e("TAG", "Failed to download image", exception);
+                // Handle any errors that occur
             }
         });
+
         db.collection("users")
                 .document(uid)
                 .get()
