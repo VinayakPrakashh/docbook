@@ -105,7 +105,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
+lgout.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(HomeActivity.this,DoctorAppointmentActivity.class));
+    }
+});
     }
 
     @Override

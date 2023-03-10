@@ -1,25 +1,22 @@
 package com.example.docbook;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.docbook.RecyclerView.CartItemDecoration;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -54,70 +51,42 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String doctorName = "Cardiologist";
+        String doctorName = "Aslam";
 
-        db.collection("appointments")
-                .whereEqualTo("item." + doctorName + ".name", doctorName)
+        db.collectionGroup("item")
+                .whereEqualTo("doctor",doctorName)
+                .orderBy("date", Query.Direction.ASCENDING)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        // get the appointment details from the document snapshot
-                        String name = documentSnapshot.getString("name");
-                        String time = documentSnapshot.getString("item." + doctorName + ".time");
-                        String date = documentSnapshot.getString("item." + doctorName + ".date");
-                        DoctorAdapter.Product product = new DoctorAdapter.Product(name, time,date);
-                        productList.add(product);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.w(TAG, "Error getting appointments for " + doctorName, e);
-                });
-
-
-
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-// Create a reference to the "itemdetails" collection for the user
-        CollectionReference itemDetailsRef = db.collection("bookings").document(userId).collection("itemdetails");
-
-// Query the items for the user
-        itemDetailsRef.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (task.getResult().size() > 0) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
 
-                                    String name = document.getString("name");
-                                    String price = document.getString("cost");
-                                    String quantity=document.getString("quantity");
 
-                                    DoctorAdapter.Product product = new DoctorAdapter.Product(name, price,quantity);
-                                    productList.add(product);
+                            // access the name, time and date fields from the documentSnapshot
+                            String name = documentSnapshot.getString("name");
+                            String time = documentSnapshot.getString("time");
+                            String date = documentSnapshot.getString("date");
 
-                                    dialog.dismiss();
-                                }
-
-                            }
-                            else{
-
-                                new SweetAlertDialog(DoctorAppointmentActivity.this, SweetAlertDialog.ERROR_TYPE)
-
-                                        .setContentText("Your Cart is Empty!")
-                                        .show();
-
-                            }
-                            doctorAdapter.notifyDataSetChanged();
-                        } else {
+                            // display or process the appointment details
+                            DoctorAdapter.Product product = new DoctorAdapter.Product(name,time,date);
+                            productList.add(product);
+                           doctorAdapter.notifyDataSetChanged();
 
                             dialog.dismiss();
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-
                         }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
                         dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
+        dialog.dismiss();
         storenav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
