@@ -116,7 +116,8 @@ login=loginAsSpinner.getItemAtPosition(loginAsSpinner.getSelectedItemPosition())
                 if(Objects.equals(login, "Doctor")){
 
                     doctor();
-                } else if (login=="Patient") {
+                } else if (Objects.equals(login, "Patient")) {
+
                     user();
                 }
             }
@@ -213,6 +214,8 @@ if(Objects.equals(mail, email) && Objects.equals(pass, password) && Objects.equa
 
 // When the user clicks the login button
         dialog.show();
+        String email = mail.getText().toString();
+        String password = pass.getText().toString();
         mauth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
