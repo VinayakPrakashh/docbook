@@ -179,10 +179,17 @@ login=loginAsSpinner.getItemAtPosition(loginAsSpinner.getSelectedItemPosition())
 if(Objects.equals(mail, email) && Objects.equals(pass, password) && Objects.equals(special, specialization)){
     Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
     startActivity(new Intent(LoginActivity.this,DoctorHomeActivity.class));
-    SharedPreferences sharedPreferences = getSharedPreferences("doctor",MODE_PRIVATE);
+    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
     SharedPreferences.Editor myEdit = sharedPreferences.edit();
-    myEdit.putString("doctor", name);
+    myEdit.putString("login", login);
+    myEdit.putString("specialization", special);
+    myEdit.putString("mail", mail);
+    myEdit.putString("password",pass);
     myEdit.commit();
+    SharedPreferences sharedPreferences2 = getSharedPreferences("doctor",MODE_PRIVATE);
+    SharedPreferences.Editor myEdit2 = sharedPreferences2.edit();
+    myEdit2.putString("doctor", name);
+    myEdit2.commit();
 }else{
     Toast.makeText(LoginActivity.this, "Failed! Incorrect Email or Password", Toast.LENGTH_SHORT).show();
 }
@@ -213,6 +220,8 @@ if(Objects.equals(mail, email) && Objects.equals(pass, password) && Objects.equa
                     dialog.dismiss();
                     SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                    myEdit.putString("login", login);
+
                     myEdit.putString("mail", mail.getText().toString());
                     myEdit.putString("password",pass.getText().toString());
                     myEdit.commit();
