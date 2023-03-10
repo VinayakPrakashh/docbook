@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,7 +17,7 @@ public class AppointmentActivity extends AppCompatActivity {
 Button backs;
 FirebaseAuth mAuth;
     FirebaseUser mUser;
-    ImageView neuro,radio,pedia,cardi,ortho,booking;
+    CardView neuro,radio,pedia,cardi,ortho,booking;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -28,12 +28,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        lgout = findViewById(R.id.logout);
-        appointment = findViewById(R.id.doctor);
-        store = findViewById(R.id.medicine);
-        cart = findViewById(R.id.order);
-        abouts = findViewById(R.id.about);
-        article = findViewById(R.id.articles);
+        lgout = findViewById(R.id.bookings);
+        appointment = findViewById(R.id.pediatrician);
+        store = findViewById(R.id.orthologist);
+        cart = findViewById(R.id.cardiologist);
+        abouts = findViewById(R.id.neurologist);
+        article = findViewById(R.id.radiologist);
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);

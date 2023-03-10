@@ -84,7 +84,7 @@
         android:layout_height="1dp"
         android:background="#808080"/>
     <TextView
-        android:id="@+id/logout"
+        android:id="@+id/bookings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"

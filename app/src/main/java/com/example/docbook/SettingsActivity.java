@@ -20,7 +20,7 @@ TextView profile,editprofile,lgout;
         setContentView(R.layout.activity_settings);
         profile=findViewById(R.id.view_profile);
         editprofile=findViewById(R.id.edit_profile);
-        lgout=findViewById(R.id.logout);
+        lgout=findViewById(R.id.bookings);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
