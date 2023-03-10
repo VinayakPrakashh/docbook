@@ -22,9 +22,17 @@ CardView lgout,appointment;
 
         SharedPreferences sharedPreferences = getSharedPreferences("doctor", Context.MODE_PRIVATE);
         String displayname = sharedPreferences.getString("doctor", "").toString();
-        Toast.makeText(this, "Welcome Dr." +displayname, Toast.LENGTH_SHORT).show();
+
         lgout=findViewById(R.id.bookings);
         appointment=findViewById(R.id.appointments);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isToastDisplayed = prefs.getBoolean("toast_displayed", false);
+        if (!isToastDisplayed) {
+            Toast.makeText(this, "Welcome Dr." +displayname, Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("toast_displayed", true);
+            editor.apply();
+        }
         lgout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

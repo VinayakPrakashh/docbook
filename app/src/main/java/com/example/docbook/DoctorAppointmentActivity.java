@@ -54,7 +54,6 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("doctor",MODE_PRIVATE);
         String doctorName= sharedPreferences.getString("doctor","").toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Toast.makeText(this, doctorName, Toast.LENGTH_SHORT).show();
         db.collectionGroup("item")
                 .whereEqualTo("doctor",doctorName)
                 .orderBy("date", Query.Direction.ASCENDING)
