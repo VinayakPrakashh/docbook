@@ -62,14 +62,14 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/info" />
+                    android:layout_width="67dp"
+                    android:layout_height="52dp"
+                    android:src="@drawable/baseline_settings_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ABOUT"
+                    android:text="SETTINGS"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -99,9 +99,9 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/language" />
+                    android:layout_width="63dp"
+                    android:layout_height="54dp"
+                    android:src="@drawable/baseline_medical_services_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -173,9 +173,9 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/calendar" />
+                    android:layout_width="61dp"
+                    android:layout_height="61dp"
+                    android:src="@drawable/baseline_article_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -210,9 +210,9 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/widgets" />
+                    android:layout_width="67dp"
+                    android:layout_height="49dp"
+                    android:src="@drawable/baseline_production_quantity_limits_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -247,9 +247,9 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/info" />
+                    android:layout_width="55dp"
+                    android:layout_height="51dp"
+                    android:src="@drawable/baseline_logout_24" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -67,12 +69,18 @@ ImageView uimageView;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 bookit();
+
             }
         });
+        Dialog dialog = new Dialog(EditProfileActivity.this);
+        dialog.setContentView(R.layout.loading_dialog);
+        dialog.setCancelable(false);
+        dialog.show();
       performauth();
 
-
+        dialog.dismiss();
     }
 
     private void bookit() {
@@ -119,7 +127,7 @@ ImageView uimageView;
     }
     private void performauth(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        String photo="Cardiologist.jpg";
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = auth.getCurrentUser().getUid();
@@ -141,7 +149,7 @@ ImageView uimageView;
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors that occur during the download
-                Log.e("TAG", "Failed to download image", exception);
+                Toast.makeText(EditProfileActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
             }
         });
         db.collection("users")
@@ -180,6 +188,7 @@ ImageView uimageView;
 
     }
     private void uploadImageToFirebaseStorage(Uri imageUri) {
+
         // Get the user's UID
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
@@ -191,11 +200,46 @@ ImageView uimageView;
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Image upload successful
-                        // Get the download URL
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        String uid = auth.getCurrentUser().getUid();
+// Create a reference to the image file you want to download
+                        StorageReference imageRef = storage.getReference().child("users/" + uid + "/image");
+
+// Download the image file into a byte array
+                        Dialog dialog = new Dialog(EditProfileActivity.this);
+                        dialog.setContentView(R.layout.loading_dialog);
+                        dialog.setCancelable(false);
+                        dialog.show();
+                        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                // Convert the byte array into a Bitmap object
+                                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                                // Set the Bitmap object in an ImageView
+                                dialog.dismiss();
+                                uimageView.setImageBitmap(bmp);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors that occur during the download
+                                dialog.dismiss();
+                                Toast.makeText(EditProfileActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        dialog.dismiss();
+                        new SweetAlertDialog(EditProfileActivity.this)
+
+                                .setTitleText("Profile Picture Updated Successfully")
+                                .show();
                         imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
+                                dialog.dismiss();
                                 String imageURL = uri.toString();
                                 // Do something with the image URL, such as saving it to Firebase Realtime Database or Firestore
                             }
@@ -206,14 +250,22 @@ ImageView uimageView;
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // Image upload failed
+                        new SweetAlertDialog(EditProfileActivity.this)
+                                .setTitleText("Failed to upload Image")
+                                .show();
                     }
                 });
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_IMAGE_PICKER && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Dialog dialog = new Dialog(EditProfileActivity.this);
+            dialog.setContentView(R.layout.loading_dialog);
+            dialog.setCancelable(false);
+            dialog.show();
             Uri imageUri = data.getData();
             uploadImageToFirebaseStorage(imageUri);
             FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -231,7 +283,7 @@ ImageView uimageView;
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
                     // Display the bitmap image in an ImageView
-
+dialog.dismiss();
                     uimageView.setImageBitmap(bitmap);
                 }
             }).addOnFailureListener(new OnFailureListener() {
