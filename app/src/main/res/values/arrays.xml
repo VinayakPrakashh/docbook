@@ -9,4 +9,13 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+        <string-array name="user_types">
+            <item>Select</item>
+            <item>Doctor</item>
+            <item>Patient</item>
+            <item>Admin</item>
+        </string-array>
+
+
 </resources>
