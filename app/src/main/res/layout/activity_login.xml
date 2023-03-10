@@ -68,7 +68,7 @@
         android:id="@+id/username"
         android:layout_width="317dp"
         android:layout_height="51dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/input_bg"
         android:ems="10"
         android:hint="Email id"
@@ -77,7 +77,7 @@
         android:textColorHint="#818181"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/specialization" />
 
     <Button
         android:id="@+id/b1"
@@ -90,13 +90,25 @@
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="174dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="72dp"
+        android:id="@+id/loginas"
+        android:layout_width="145dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="76dp"
         android:background="@drawable/input_bg"
         android:entries="@array/user_types"
+        android:prompt="@string/select_user_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textv" />
+
+    <Spinner
+        android:id="@+id/specialization"
+        android:layout_width="145dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="76dp"
+        android:background="@drawable/input_bg"
+        android:entries="@array/spec_types"
         android:prompt="@string/select_user_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textv" />
@@ -105,13 +117,29 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="8dp"
+        android:text="Specialization:"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/loginas"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textv" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="108dp"
         android:layout_marginEnd="8dp"
         android:text="Login as: "
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintEnd_toStartOf="@+id/loginas"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textv" />
 

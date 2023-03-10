@@ -17,5 +17,13 @@
             <item>Admin</item>
         </string-array>
 
+    <string-array name="spec_types">
+        <item>Select</item>
+        <item>Cardiologist</item>
+        <item>Radiologist</item>
+        <item>Neurologist</item>
+        <item>Orthologist</item>
+        <item>Pediatrician</item>
+    </string-array>
 
 </resources>
