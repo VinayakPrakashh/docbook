@@ -2,6 +2,7 @@ package com.example.docbook;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,9 +51,10 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.loading_dialog);
         dialog.setCancelable(false);
         dialog.show();
+        SharedPreferences sharedPreferences = getSharedPreferences("doctor",MODE_PRIVATE);
+        String doctorName= sharedPreferences.getString("doctor","").toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String doctorName = "Aslam";
-
+        Toast.makeText(this, doctorName, Toast.LENGTH_SHORT).show();
         db.collectionGroup("item")
                 .whereEqualTo("doctor",doctorName)
                 .orderBy("date", Query.Direction.ASCENDING)
@@ -96,6 +98,6 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
 
     }
     public void onBackPressed(){
-        startActivity(new Intent(DoctorAppointmentActivity.this,HomeActivity.class));
+        startActivity(new Intent(DoctorAppointmentActivity.this,DoctorHomeActivity.class));
     }
 }

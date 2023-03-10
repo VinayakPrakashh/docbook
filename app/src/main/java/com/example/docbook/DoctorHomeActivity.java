@@ -14,7 +14,7 @@ import androidx.cardview.widget.CardView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class DoctorHomeActivity extends AppCompatActivity {
-CardView lgout;
+CardView lgout,appointment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +24,7 @@ CardView lgout;
         String displayname = sharedPreferences.getString("doctor", "").toString();
         Toast.makeText(this, "Welcome Dr." +displayname, Toast.LENGTH_SHORT).show();
         lgout=findViewById(R.id.bookings);
+        appointment=findViewById(R.id.appointments);
         lgout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,6 +41,12 @@ CardView lgout;
                 editors.putBoolean("toast_displayed", false);
                 editors.apply();
                 startActivity(new Intent(DoctorHomeActivity.this, MainActivity.class));
+            }
+        });
+        appointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DoctorHomeActivity.this,DoctorAppointmentActivity.class));
             }
         });
     }

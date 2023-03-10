@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +27,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ProductVie
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Toast.makeText(context, "2", Toast.LENGTH_SHORT).show();
+
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.layout_product, parent, false);
@@ -37,7 +36,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ProductVie
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Toast.makeText(context, "3", Toast.LENGTH_SHORT).show();
+
         Product product = productList.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewtime.setText(product.getTime());

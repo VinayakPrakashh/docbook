@@ -104,13 +104,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, ImageSliderActvity.class));
             }
         });
-
-lgout.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        startActivity(new Intent(HomeActivity.this,DoctorAppointmentActivity.class));
-    }
-});
     }
 
     @Override
