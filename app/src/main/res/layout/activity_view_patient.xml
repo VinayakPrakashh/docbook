@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Profile"
+        android:text="View Patient Profile"
         android:background="@color/material_blue_grey_90"
         android:textAlignment="center"
         android:textColor="#ffffff"
