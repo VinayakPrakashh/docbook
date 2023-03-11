@@ -24,6 +24,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -182,6 +184,7 @@ public void delete(){
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+
                     new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Patient Data Cleared")
                             .setConfirmText("OK")
@@ -189,6 +192,7 @@ public void delete(){
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     // Start the new activity
+                               deleteimage();
                                     Intent intent = new Intent(context, DoctorPatientsActivity.class);
                                     context.startActivity(intent);
                                     // Dismiss the dialog
@@ -210,5 +214,23 @@ public void delete(){
 
 }
 
+public void deleteimage(){
+    SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref",MODE_PRIVATE);
+    String specialization = sharedPreferences.getString("specialization", "").toString();
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference().child("patients/"+specialization+"/"+value+"/image");
 
+    storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        @Override
+        public void onSuccess(Void aVoid) {
+            // File deleted successfully
+        }
+    }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception exception) {
+            // Uh-oh, an error occurred!
+        }
+    });
+
+}
 }

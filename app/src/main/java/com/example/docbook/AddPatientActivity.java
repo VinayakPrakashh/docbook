@@ -218,7 +218,7 @@ name=uname.getText().toString();
 
     }
     private void uploadImageToFirebaseStorage(Uri imageUri) {
-
+name=uname.getText().toString();
 
 
         // Create a new StorageReference with the user's UID as the file name
@@ -262,7 +262,7 @@ name=uname.getText().toString();
                         dialog.dismiss();
                         new SweetAlertDialog(AddPatientActivity.this)
 
-                                .setTitleText("Profile Picture Updated Successfully")
+                                .setTitleText("Profile Picture Updated Successfully \n Now Click On Add Patient")
                                 .show();
                         imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override

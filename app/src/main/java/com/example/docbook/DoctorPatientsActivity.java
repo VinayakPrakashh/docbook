@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +30,7 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DoctorPatientsActivity extends AppCompatActivity {
-    Button storenav;
+   TextView storenav;
     SweetAlertDialog sDialog;
     private RecyclerView recyclerView;
     private PatientAdapter patientadapter;
@@ -86,7 +86,7 @@ public class DoctorPatientsActivity extends AppCompatActivity {
       storenav.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              showBottomDialog();
+              startActivity(new Intent(DoctorPatientsActivity.this,AddPatientActivity.class));
           }
       });
 

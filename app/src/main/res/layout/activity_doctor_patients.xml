@@ -30,16 +30,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9"
         app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/layout_product" />
-    <Button
+
+    <TextView
         android:id="@+id/store"
-        android:layout_width="144dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="132dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginEnd="161dp"
         android:layout_marginBottom="16dp"
-        android:text="Go to Store"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/teal_200"
+        android:background="@drawable/round_button"
+        android:gravity="center"
+        android:text="+"
+        android:textColor="#0964FF"
+        android:textSize="34dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
