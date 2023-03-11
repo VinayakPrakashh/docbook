@@ -36,11 +36,7 @@
             android:name=".ProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".CheckoutActivity"
-            android:exported="false"
-            android:label="@string/title_activity_checkout"
-            android:theme="@style/Theme.Docbook" /> <!-- This element is required to enable Google Pay in your app. -->
+        <!-- This element is required to enable Google Pay in your app. -->
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />

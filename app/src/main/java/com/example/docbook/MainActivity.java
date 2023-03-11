@@ -102,7 +102,7 @@ public  String emailAUTH,passwordAUT,loginAUTH,specAUTH;
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
 
-                        startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                        startActivity(new Intent(MainActivity.this, com.example.docbook.HomeActivity.class));
                     }
                     else {
 
@@ -142,7 +142,7 @@ public  String emailAUTH,passwordAUT,loginAUTH,specAUTH;
 
                                 if(Objects.equals(mail, emailAUTH) && Objects.equals(pass, passwordAUT) && Objects.equals(special, specAUTH)){
 
-                                    startActivity(new Intent(MainActivity.this,DoctorHomeActivity.class));
+                                    startActivity(new Intent(MainActivity.this, com.example.docbook.DoctorHomeActivity.class));
 
                                 }
                             } else {

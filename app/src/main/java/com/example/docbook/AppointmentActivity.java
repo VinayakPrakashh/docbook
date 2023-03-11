@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -36,7 +35,7 @@ radio.setOnClickListener(new View.OnClickListener() {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putString("specialization", "Radiologist");
         myEdit.commit();
-        startActivity(new Intent(AppointmentActivity.this,DoctorDetailsActivity.class));
+        startActivity(new Intent(AppointmentActivity.this, DoctorDetailsActivity.class));
     }
 });
 neuro.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +45,7 @@ neuro.setOnClickListener(new View.OnClickListener() {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putString("specialization", "Neurologist");
         myEdit.commit();
-        startActivity(new Intent(AppointmentActivity.this, DoctorDetailsActivity.class));
+        startActivity(new Intent(AppointmentActivity.this,DoctorDetailsActivity.class));
     }
 });
 cardi.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +81,7 @@ cardi.setOnClickListener(new View.OnClickListener() {
 booking.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(AppointmentActivity.this,BookedActivity.class));
+        startActivity(new Intent(AppointmentActivity.this, BookedActivity.class));
     }
 });
     }

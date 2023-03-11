@@ -26,31 +26,31 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class DoctorDetailsActivity extends AppCompatActivity {
-TextView docname2,docspec2,dochospital2,dexp2,doccontact2,dquali,fees2;
-Button b1;
+    TextView docname2, docspec2, dochospital2, dexp2, doccontact2, dquali, fees2;
+    Button b1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_details);
 
 
-
         setContentView(R.layout.activity_doctor_details);
-        docname2=findViewById(R.id.dname);
-        docspec2=findViewById(R.id.dspec);
-        dochospital2=findViewById(R.id.dhospital);
-        dexp2=findViewById(R.id.dexp);
-        doccontact2=findViewById(R.id.dcontact);
-        dquali=findViewById(R.id.dqualification);
-        fees2=findViewById(R.id.contact);
+        docname2 = findViewById(R.id.dname);
+        docspec2 = findViewById(R.id.dspec);
+        dochospital2 = findViewById(R.id.dhospital);
+        dexp2 = findViewById(R.id.dexp);
+        doccontact2 = findViewById(R.id.dcontact);
+        dquali = findViewById(R.id.dqualification);
+        fees2 = findViewById(R.id.contact);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-b1=findViewById(R.id.book_appointment_button);
-        SharedPreferences sharedPreferences = getSharedPreferences("docselect",MODE_PRIVATE);
-        String spec= sharedPreferences.getString("specialization","").toString();
+        b1 = findViewById(R.id.book_appointment_button);
+        SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
+        String spec = sharedPreferences.getString("specialization", "").toString();
 
         // Get a reference to the Firebase Storage instance
         FirebaseStorage storage = FirebaseStorage.getInstance();
-String photo=spec+".jpg";
+        String photo = spec + ".jpg";
 // Create a reference to the image file you want to download
         StorageReference imageRef = storage.getReference().child(photo);
 
@@ -74,7 +74,6 @@ String photo=spec+".jpg";
         });
 
 
-
         db.collection("doctor")
                 .document(spec)
                 .get()
@@ -94,23 +93,21 @@ String photo=spec+".jpg";
                                 int experience = document.getLong("experience").intValue();
                                 String hospital = document.getString("hospital");
                                 long contact = document.getLong("contact");
-                                String qualification=document.getString("qualification");
+                                String qualification = document.getString("qualification");
                                 String exp = Integer.toString(experience);
-                                String fees=document.getString("fees");
+                                String fees = document.getString("fees");
                                 // Update UI with doctor details
 
-                                String dcon= Long.toString(contact);
+                                String dcon = Long.toString(contact);
 
 
-
-
-                                docname2.setText("Name: "+name);
-                                docspec2.setText("Specialization: "+specialization);
-                                dochospital2.setText("Hospital: "+hospital);
-                                dexp2.setText("Experience: "+exp+" Years");
-                                doccontact2.setText("Contact No: "+dcon);
-                                dquali.setText("Qualification: "+qualification);
-                                fees2.setText("Appointment Fees: "+fees);
+                                docname2.setText("Name: " + name);
+                                docspec2.setText("Specialization: " + specialization);
+                                dochospital2.setText("Hospital: " + hospital);
+                                dexp2.setText("Experience: " + exp + " Years");
+                                doccontact2.setText("Contact No: " + dcon);
+                                dquali.setText("Qualification: " + qualification);
+                                fees2.setText("Appointment Fees: " + fees);
 
 
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
