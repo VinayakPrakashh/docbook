@@ -48,17 +48,7 @@
 
             </FrameLayout>
 
-            <Button
-                android:id="@+id/uploadb"
-                android:layout_marginLeft="16dp"
-                android:backgroundTint="@color/green"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Upload Photo"
 
-                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -82,198 +72,145 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="699dp"
             android:orientation="vertical"
-            android:padding="1dp">
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            >
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:textColor="#ffffff"
-                android:textSize="16sp" />
-
-            <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:hint="Enter name"
+                android:text="Name"
                 android:textColor="#ffffff"
-                android:textColorHint="#aaaaaa"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Age"
-                android:textColor="#ffffff"
-                android:textSize="16sp" />
-
-            <EditText
-
                 android:id="@+id/age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Age"
+                android:text="Age"
                 android:textColor="#ffffff"
-                android:textColorHint="#aaaaaa"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
             <!-- Age -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gender"
-                android:textColor="#ffffff"
-                android:textSize="16sp" />
-
-            <EditText
-
                 android:id="@+id/gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Select Gender"
+                android:text="Gender"
                 android:textColor="#ffffff"
-                android:textColorHint="#aaaaaa"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Patient No"
-                android:textColor="#ffffff"
-                android:textSize="16sp" />
-
-            <EditText
-
                 android:id="@+id/pnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Patient Number"
+                android:text="Patient No"
                 android:textColor="#ffffff"
-                android:textColorHint="#aaaaaa"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+
 
             <!-- Address -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="Ward No"
-                android:textColor="#ffffff"
-                android:textSize="16sp" />
-
-            <EditText
                 android:id="@+id/ward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Ward Number"
-                android:textColorHint="#aaaaaa" />
+                android:text="Ward No"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/reason"
 
                 android:text="Reason"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
 
-            <EditText
-                android:id="@+id/reason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Reason for Admitting"
-                android:textColorHint="#aaaaaa" />
+
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/admission"
 
                 android:text="Admission Date"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
 
-            <EditText
-                android:id="@+id/admission"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="DD-MM-YY"
-                android:textColorHint="#aaaaaa" />
+
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/discharge"
+                android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:text="Discharging Date"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
 
-            <EditText
-                android:id="@+id/discharge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="DD-MM-YY"
-                android:textColorHint="#aaaaaa" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/occupation"
+                android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:text="Occupation"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
 
-            <EditText
-                android:id="@+id/occupation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Occupation"
-                android:textColorHint="#aaaaaa" />
+
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/contact"
+                android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:text="Contact No"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
 
-            <EditText
-                android:id="@+id/contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Contact No"
-                android:textColorHint="#aaaaaa" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:text="Address"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
 
-            <EditText
-                android:id="@+id/address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Address"
-                android:textColorHint="#aaaaaa" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/mail"
+                android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:text="Email id"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"
+                />
 
-            <EditText
-                android:id="@+id/mail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Address"
-                android:textColorHint="#aaaaaa" />
-            <Button
-                android:id="@+id/add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Email Address"
-                android:textColor="@color/black"
-                android:backgroundTint="@color/green"
-                android:textSize="16sp" />
+
         </LinearLayout>
 
     </ScrollView>
