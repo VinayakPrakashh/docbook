@@ -38,7 +38,7 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class AddPatientActivity extends AppCompatActivity {
+public class EditPatientActivity extends AppCompatActivity {
     ScrollView scrollView;
     public String name,name2,specialization;
 EditText uname,uage,ugender,upnumber,uward,ureason,uadmission,udischarge,uoccupation,uaddress,uphone,uemail;
@@ -52,7 +52,7 @@ ImageView uimageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_patient);
+        setContentView(R.layout.activity_edit_patient);
         scrollView=findViewById(R.id.scroll);
         uname=scrollView.findViewById(R.id.name);
         uage=scrollView.findViewById(R.id.age);
@@ -88,7 +88,13 @@ name2="patientname";
 
             }
         });
+        Dialog dialog = new Dialog(EditPatientActivity.this);
+        dialog.setContentView(R.layout.loading_dialog);
+        dialog.setCancelable(false);
+        dialog.show();
+      performauth();
 
+        dialog.dismiss();
     }
 
     private void addpatient() {
@@ -128,7 +134,7 @@ name2="patientname";
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        new SweetAlertDialog(AddPatientActivity.this)
+                        new SweetAlertDialog(EditPatientActivity.this)
                                 .setTitleText("Patient Added")
                                 .show();
                         performauth();
@@ -169,7 +175,7 @@ name2="patientname";
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors that occur during the download
-                Toast.makeText(AddPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
             }
         });
         db.collection("doctor").document(specialization).collection("patient").document(name2)
@@ -238,7 +244,7 @@ name2="patientname";
                         StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(name2).child("image");
 
 // Download the image file into a byte array
-                        Dialog dialog = new Dialog(AddPatientActivity.this);
+                        Dialog dialog = new Dialog(EditPatientActivity.this);
                         dialog.setContentView(R.layout.loading_dialog);
                         dialog.setCancelable(false);
                         dialog.show();
@@ -257,11 +263,11 @@ name2="patientname";
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(AddPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
                             }
                         });
                         dialog.dismiss();
-                        new SweetAlertDialog(AddPatientActivity.this)
+                        new SweetAlertDialog(EditPatientActivity.this)
 
                                 .setTitleText("Profile Picture Updated Successfully")
                                 .show();
@@ -280,7 +286,7 @@ name2="patientname";
                     public void onFailure(@NonNull Exception e) {
                         // Image upload failed
 
-                        new SweetAlertDialog(AddPatientActivity.this)
+                        new SweetAlertDialog(EditPatientActivity.this)
                                 .setTitleText("Failed to upload Image")
                                 .show();
                     }
@@ -292,7 +298,7 @@ name2="patientname";
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_IMAGE_PICKER && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Dialog dialog = new Dialog(AddPatientActivity.this);
+            Dialog dialog = new Dialog(EditPatientActivity.this);
             dialog.setContentView(R.layout.loading_dialog);
             dialog.setCancelable(false);
             dialog.show();

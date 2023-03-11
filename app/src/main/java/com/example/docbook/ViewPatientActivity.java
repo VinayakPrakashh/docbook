@@ -33,12 +33,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class AddPatientActivity extends AppCompatActivity {
+public class ViewPatientActivity extends AppCompatActivity {
     ScrollView scrollView;
     public String name,name2,specialization;
 EditText uname,uage,ugender,upnumber,uward,ureason,uadmission,udischarge,uoccupation,uaddress,uphone,uemail;
@@ -52,7 +49,7 @@ ImageView uimageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_patient);
+        setContentView(R.layout.activity_edit_patient);
         scrollView=findViewById(R.id.scroll);
         uname=scrollView.findViewById(R.id.name);
         uage=scrollView.findViewById(R.id.age);
@@ -80,69 +77,17 @@ name2="patientname";
                 startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
             }
         });
-       addp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-               addpatient();
+        Dialog dialog = new Dialog(ViewPatientActivity.this);
+        dialog.setContentView(R.layout.loading_dialog);
+        dialog.setCancelable(false);
+        dialog.show();
+      performauth();
 
-            }
-        });
-
+        dialog.dismiss();
     }
 
-    private void addpatient() {
 
-
-        String name=uname.getText().toString();
-        String age=uage.getText().toString();
-        String email=uemail.getText().toString();
-        String address=uaddress.getText().toString();
-        String pnumber=upnumber.getText().toString();
-        String ward=uward.getText().toString();
-        String admission=uadmission.getText().toString();
-        String discharge=udischarge.getText().toString();
-        String gender=ugender.getText().toString();
-        String occupation=uoccupation.getText().toString();
-        String contact=uphone.getText().toString();
-        String reason=ureason.getText().toString();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
-        Map<String, Object> user = new HashMap<>();
-        user.put("name", name);
-        user.put("age", age);
-        user.put("email", email);
-        user.put("address", address);
-        user.put("contact", contact);
-        user.put("occupation",occupation);
-        user.put("reason",reason);
-        user.put("gender", gender);
-        user.put("discharge", discharge);
-        user.put("admission", admission);
-        user.put("ward", ward);
-        user.put("pnumber", pnumber);
-
-        db.collection("doctor").document(specialization).collection("patient").document(name2)
-                .set(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        new SweetAlertDialog(AddPatientActivity.this)
-                                .setTitleText("Patient Added")
-                                .show();
-                        performauth();
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing user information to Firestore", e);
-                    }
-                });
-
-    }
     private void performauth(){
 
 
@@ -169,7 +114,7 @@ name2="patientname";
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors that occur during the download
-                Toast.makeText(AddPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ViewPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
             }
         });
         db.collection("doctor").document(specialization).collection("patient").document(name2)
@@ -238,7 +183,7 @@ name2="patientname";
                         StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(name2).child("image");
 
 // Download the image file into a byte array
-                        Dialog dialog = new Dialog(AddPatientActivity.this);
+                        Dialog dialog = new Dialog(ViewPatientActivity.this);
                         dialog.setContentView(R.layout.loading_dialog);
                         dialog.setCancelable(false);
                         dialog.show();
@@ -257,11 +202,11 @@ name2="patientname";
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(AddPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ViewPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
                             }
                         });
                         dialog.dismiss();
-                        new SweetAlertDialog(AddPatientActivity.this)
+                        new SweetAlertDialog(ViewPatientActivity.this)
 
                                 .setTitleText("Profile Picture Updated Successfully")
                                 .show();
@@ -280,7 +225,7 @@ name2="patientname";
                     public void onFailure(@NonNull Exception e) {
                         // Image upload failed
 
-                        new SweetAlertDialog(AddPatientActivity.this)
+                        new SweetAlertDialog(ViewPatientActivity.this)
                                 .setTitleText("Failed to upload Image")
                                 .show();
                     }
@@ -292,7 +237,7 @@ name2="patientname";
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_IMAGE_PICKER && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Dialog dialog = new Dialog(AddPatientActivity.this);
+            Dialog dialog = new Dialog(ViewPatientActivity.this);
             dialog.setContentView(R.layout.loading_dialog);
             dialog.setCancelable(false);
             dialog.show();

@@ -33,7 +33,7 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".AddPatientActivity"
+            android:name=".EditPatientActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
