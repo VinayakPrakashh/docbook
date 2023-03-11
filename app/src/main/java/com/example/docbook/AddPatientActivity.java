@@ -324,6 +324,10 @@ dialog.dismiss();
             dialog.dismiss();
         }
     }
-
+    @Override
+    public void onBackPressed() {
+       startActivity(new Intent(AddPatientActivity.this,DoctorPatientsActivity.class));
+        super.onBackPressed();
+    }
 
 }

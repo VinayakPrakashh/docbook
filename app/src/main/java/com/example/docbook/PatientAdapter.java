@@ -1,8 +1,11 @@
 package com.example.docbook;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -16,7 +19,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductViewHolder> {
     private Context context;
@@ -31,6 +42,7 @@ public  String value;
 
 
     }
+
 
     @NonNull
     @Override
@@ -128,8 +140,10 @@ public  String value;
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+dialog.dismiss();
 
-                Toast.makeText(context, "soon!!!", Toast.LENGTH_SHORT).show();
+             delete();
+
 
             }
         });
@@ -150,6 +164,51 @@ public  String value;
         dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+public void delete(){
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref",MODE_PRIVATE);
+    String specialization = sharedPreferences.getString("specialization", "").toString();
+// Get a reference to the parent document
+    DocumentReference parentDocRef = db.collection("doctor").document(specialization);
+
+// Get a reference to the subcollection
+    CollectionReference subcollectionRef = parentDocRef.collection("patient");
+
+// Get a reference to the document to be deleted
+    DocumentReference docRef = subcollectionRef.document(value);
+
+// Delete the document
+    docRef.delete()
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("Patient Data Cleared")
+                            .setConfirmText("OK")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    // Start the new activity
+                                    Intent intent = new Intent(context, DoctorPatientsActivity.class);
+                                    context.startActivity(intent);
+                                    // Dismiss the dialog
+                                    sweetAlertDialog.dismiss();
+                                }
+                            })
+                            .show();
+
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    new SweetAlertDialog(context)
+                            .setTitleText("Failed to Clear Data")
+                            .show();
+                }
+            });
+
+}
 
 
 }
