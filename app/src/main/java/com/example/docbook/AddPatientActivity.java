@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +27,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -37,28 +38,41 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class EditPatientActivity extends AppCompatActivity {
-EditText uname,uage,uaddress,uphone,ucity,uemail;
-Button save;
+public class AddPatientActivity extends AppCompatActivity {
+    ScrollView scrollView;
+    public String name,name2,specialization;
+EditText uname,uage,ugender,upnumber,uward,ureason,uadmission,udischarge,uoccupation,uaddress,uphone,uemail;
+
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     private static final int REQUEST_CODE_IMAGE_PICKER = 1;
 ImageView uimageView;
-    Button upload;
+    Button upload,addp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_patient);
-        uname=findViewById(R.id.name);
-        uage=findViewById(R.id.spec);
-        uemail=findViewById(R.id.feeses);
-        uaddress=findViewById(R.id.quali);
-        ucity=findViewById(R.id.exp);
-        uphone=findViewById(R.id.phone);
+        setContentView(R.layout.activity_add_patient);
+        scrollView=findViewById(R.id.scroll);
+        uname=scrollView.findViewById(R.id.name);
+        uage=scrollView.findViewById(R.id.age);
+     ugender=scrollView.findViewById(R.id.gender);
+     uemail=scrollView.findViewById(R.id.mail);
+        uaddress=scrollView.findViewById(R.id.address);
+        uward=scrollView.findViewById(R.id.ward);
+        uphone=scrollView.findViewById(R.id.contact);
         uimageView=findViewById(R.id.photo);
-        save=findViewById(R.id.save);
+        addp=scrollView.findViewById(R.id.add);
         upload=findViewById(R.id.uploadb);
+        upnumber=scrollView.findViewById(R.id.pnumber);
+        ureason=scrollView.findViewById(R.id.reason);
+        uadmission=scrollView.findViewById(R.id.admission);
+      udischarge=scrollView.findViewById(R.id.discharge);
+uoccupation=scrollView.findViewById(R.id.occupation);
+name=uname.getText().toString();
+name2="patientname";
+        SharedPreferences sharedPreferences2 = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        specialization = sharedPreferences2.getString("specialization", "").toString();
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,15 +80,15 @@ ImageView uimageView;
                 startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
             }
         });
-        save.setOnClickListener(new View.OnClickListener() {
+       addp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                bookit();
+               addpatient();
 
             }
         });
-        Dialog dialog = new Dialog(EditPatientActivity.this);
+        Dialog dialog = new Dialog(AddPatientActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
         dialog.setCancelable(false);
         dialog.show();
@@ -83,35 +97,45 @@ ImageView uimageView;
         dialog.dismiss();
     }
 
-    private void bookit() {
+    private void addpatient() {
 
 
-        String username=uname.getText().toString();
+        String name=uname.getText().toString();
         String age=uage.getText().toString();
         String email=uemail.getText().toString();
         String address=uaddress.getText().toString();
+        String pnumber=upnumber.getText().toString();
+        String ward=uward.getText().toString();
+        String admission=uadmission.getText().toString();
+        String discharge=udischarge.getText().toString();
+        String gender=ugender.getText().toString();
+        String occupation=uoccupation.getText().toString();
         String contact=uphone.getText().toString();
-        String city=ucity.getText().toString();
-
-
+        String reason=ureason.getText().toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
         Map<String, Object> user = new HashMap<>();
-        user.put("username", username);
+        user.put("name", name);
         user.put("age", age);
         user.put("email", email);
         user.put("address", address);
         user.put("contact", contact);
-        user.put("city", city);
+        user.put("occupation",occupation);
+        user.put("reason",reason);
+        user.put("gender", gender);
+        user.put("discharge", discharge);
+        user.put("admission", admission);
+        user.put("ward", ward);
+        user.put("pnumber", pnumber);
 
-        db.collection("users").document(userUid)
+        db.collection("doctor").document(specialization).collection("patient").document(name2)
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        new SweetAlertDialog(EditPatientActivity.this)
-                                .setTitleText("Profile Updated!")
+                        new SweetAlertDialog(AddPatientActivity.this)
+                                .setTitleText("Patient Added")
                                 .show();
                         performauth();
 
@@ -126,6 +150,9 @@ ImageView uimageView;
 
     }
     private void performauth(){
+
+
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -148,11 +175,10 @@ ImageView uimageView;
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors that occur during the download
-                Toast.makeText(EditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
             }
         });
-        db.collection("users")
-                .document("uid")
+        db.collection("doctor").document(specialization).collection("patient").document(name2)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -166,15 +192,27 @@ ImageView uimageView;
                                 String name = document.getString("username");
                                 String age = document.getString("age");
                                 String address = document.getString("address");
-                                String city=document.getString("city");
                                 String mail = document.getString("email");
-                                String phone=document.getString("contact");
+                                String pnumber=document.getString("pnumber");
+                                String ward=document.getString("ward");
+                                String admission=document.getString("admission");
+                                String discharge=document.getString("discharge");
+                                String gender=document.getString("gender");
+                                String occupation=document.getString("occupation");
+                                String contact=document.getString("contact");
+                                String reason=document.getString("reason");
                                 uname.setText(name);
                                 uage.setText(age);
                                 uemail.setText(mail);
-                                ucity.setText(city);
-                                uphone.setText(phone);
+                                upnumber.setText(pnumber);
                                 uaddress.setText(address);
+                                uward.setText(ward);
+                                uadmission.setText(admission);
+                                ugender.setText(gender);
+                                uoccupation.setText(occupation);
+                                uphone.setText(contact);
+                                ureason.setText(reason);
+                                udischarge.setText(discharge);
 
                             } else {
                                 Log.d(TAG, "No such document");
@@ -188,12 +226,10 @@ ImageView uimageView;
     }
     private void uploadImageToFirebaseStorage(Uri imageUri) {
 
-        // Get the user's UID
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
+
 
         // Create a new StorageReference with the user's UID as the file name
-        StorageReference imageRef = storageRef.child("users/" + uid + "/image");
+        StorageReference imageRef = storageRef.child("patients").child(specialization).child(name2).child("image");
 
         imageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -203,12 +239,12 @@ ImageView uimageView;
 
                         FirebaseAuth auth = FirebaseAuth.getInstance();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        String uid = auth.getCurrentUser().getUid();
+
 // Create a reference to the image file you want to download
-                        StorageReference imageRef = storage.getReference().child("users/" + uid + "/image");
+                        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(name2).child("image");
 
 // Download the image file into a byte array
-                        Dialog dialog = new Dialog(EditPatientActivity.this);
+                        Dialog dialog = new Dialog(AddPatientActivity.this);
                         dialog.setContentView(R.layout.loading_dialog);
                         dialog.setCancelable(false);
                         dialog.show();
@@ -227,11 +263,11 @@ ImageView uimageView;
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(EditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
                             }
                         });
                         dialog.dismiss();
-                        new SweetAlertDialog(EditPatientActivity.this)
+                        new SweetAlertDialog(AddPatientActivity.this)
 
                                 .setTitleText("Profile Picture Updated Successfully")
                                 .show();
@@ -249,7 +285,8 @@ ImageView uimageView;
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // Image upload failed
-                        new SweetAlertDialog(EditPatientActivity.this)
+
+                        new SweetAlertDialog(AddPatientActivity.this)
                                 .setTitleText("Failed to upload Image")
                                 .show();
                     }
@@ -261,7 +298,7 @@ ImageView uimageView;
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_IMAGE_PICKER && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Dialog dialog = new Dialog(EditPatientActivity.this);
+            Dialog dialog = new Dialog(AddPatientActivity.this);
             dialog.setContentView(R.layout.loading_dialog);
             dialog.setCancelable(false);
             dialog.show();
@@ -269,8 +306,8 @@ ImageView uimageView;
             uploadImageToFirebaseStorage(imageUri);
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            String uid = auth.getCurrentUser().getUid();
-            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + uid + "/image");
+
+            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(specialization).child(name2).child("image");
 
 // Download the contents of the file as a byte array
             imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -291,6 +328,7 @@ dialog.dismiss();
                     // Handle any errors that occur
                 }
             });
+            dialog.dismiss();
         }
     }
 

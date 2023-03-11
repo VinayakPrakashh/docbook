@@ -67,7 +67,7 @@ editprofile=findViewById(R.id.orthologist);
         editprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DoctorHomeActivity.this, EditPatientActivity.class));
+                startActivity(new Intent(DoctorHomeActivity.this, AddPatientActivity.class));
             }
         });
     }
