@@ -33,6 +33,10 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".EditDoctorProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".ProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>

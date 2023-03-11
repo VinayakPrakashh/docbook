@@ -49,7 +49,7 @@ ImageView uimageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_edit_doctor_profile);
         uname=findViewById(R.id.name);
         uage=findViewById(R.id.spec);
         uemail=findViewById(R.id.feeses);
@@ -130,9 +130,8 @@ ImageView uimageView;
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String uid = auth.getCurrentUser().getUid();
 // Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("users/" + uid + "/image");
+        StorageReference imageRef = storage.getReference().child("Cardiologist");
 
 // Download the image file into a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -153,7 +152,7 @@ ImageView uimageView;
             }
         });
         db.collection("users")
-                .document(uid)
+                .document("uid")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
