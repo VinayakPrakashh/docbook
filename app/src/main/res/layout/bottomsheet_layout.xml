@@ -19,23 +19,87 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="viewStart"
-            android:text="Add"
+            android:text="Options"
             android:textSize="25sp"
             android:padding="8dp"
             android:textColor="@color/lavender"
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_marginTop="10dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:src="@drawable/ic_baseline_email_24"/>
+            android:src="@drawable/baseline_remove_red_eye_24"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="testing"
-            android:textColor="@color/lavender"
-            android:layout_marginLeft="30dp"
+            android:text="View Patient Profile"
+            android:textColor="#5B5BE0"
+            android:layout_marginLeft="15dp"
             android:textSize="16sp"/>
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_mode_edit_outline_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Patient Profile"
+            android:textColor="#5B5BE0"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/delete"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_delete_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove Patient"
+            android:textColor="#5B5BE0"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/add"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_person_add_alt_1_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Patient"
+            android:textColor="#5B5BE0"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"/>
+    </LinearLayout>
 </LinearLayout>

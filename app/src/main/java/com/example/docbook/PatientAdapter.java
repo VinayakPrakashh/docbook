@@ -1,10 +1,17 @@
 package com.example.docbook;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +20,7 @@ import java.util.List;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductViewHolder> {
     private Context context;
+public  String value;
     private List<Product> productList;
 
     public PatientAdapter(Context context, List<Product> productList) {
@@ -40,7 +48,15 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductV
         Product product = productList.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewNumber.setText(product.getNumber());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            value=product.getName();
+                Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
+                showBottomDialog();
 
+            }
+        });
 
 
     }
@@ -81,4 +97,59 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductV
             return number;
         }
     }
+    public void  showBottomDialog(){
+        final Dialog dialog=new Dialog(context);
+        dialog.setContentView(R.layout.bottomsheet_layout);
+        LinearLayout video=dialog.findViewById(R.id.layoutShorts);
+        LinearLayout view=dialog.findViewById(R.id.view);
+        LinearLayout edit=dialog.findViewById(R.id.edit);
+        LinearLayout delete=dialog.findViewById(R.id.delete);
+        LinearLayout add=dialog.findViewById(R.id.add);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(context,AddPatientActivity.class);
+                context.startActivity(intent);
+
+            }
+        });
+       edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(context,EditPatientActivity.class);
+                intent.putExtra("key", value);
+                context.startActivity(intent);
+
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(context, "soon!!!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent=new Intent(context,ViewPatientActivity.class);
+                intent.putExtra("key", value);
+                context.startActivity(intent);
+
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
+
 }

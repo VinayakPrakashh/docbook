@@ -40,7 +40,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AddPatientActivity extends AppCompatActivity {
     ScrollView scrollView;
-    public String name,name2,specialization;
+    public String name,specialization;
 EditText uname,uage,ugender,upnumber,uward,ureason,uadmission,udischarge,uoccupation,uaddress,uphone,uemail;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -70,7 +70,6 @@ ImageView uimageView;
       udischarge=scrollView.findViewById(R.id.discharge);
 uoccupation=scrollView.findViewById(R.id.occupation);
 name=uname.getText().toString();
-name2="patientname";
         SharedPreferences sharedPreferences2 = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         specialization = sharedPreferences2.getString("specialization", "").toString();
         upload.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +82,7 @@ name2="patientname";
        addp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                name=uname.getText().toString();
                addpatient();
 
             }
@@ -123,7 +122,7 @@ name2="patientname";
         user.put("ward", ward);
         user.put("pnumber", pnumber);
 
-        db.collection("doctor").document(specialization).collection("patient").document(name2)
+        db.collection("doctor").document(specialization).collection("patient").document(name)
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -152,7 +151,7 @@ name2="patientname";
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 // Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(name2).child("image");
+        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(name).child("image");
 
 // Download the image file into a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -172,7 +171,7 @@ name2="patientname";
                 Toast.makeText(AddPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
             }
         });
-        db.collection("doctor").document(specialization).collection("patient").document(name2)
+        db.collection("doctor").document(specialization).collection("patient").document(name)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -223,7 +222,7 @@ name2="patientname";
 
 
         // Create a new StorageReference with the user's UID as the file name
-        StorageReference imageRef = storageRef.child("patients").child(specialization).child(name2).child("image");
+        StorageReference imageRef = storageRef.child("patients").child(specialization).child(name).child("image");
 
         imageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -235,7 +234,7 @@ name2="patientname";
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 // Create a reference to the image file you want to download
-                        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(name2).child("image");
+                        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(name).child("image");
 
 // Download the image file into a byte array
                         Dialog dialog = new Dialog(AddPatientActivity.this);
@@ -301,7 +300,7 @@ name2="patientname";
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(specialization).child(name2).child("image");
+            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(specialization).child(name).child("image");
 
 // Download the contents of the file as a byte array
             imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

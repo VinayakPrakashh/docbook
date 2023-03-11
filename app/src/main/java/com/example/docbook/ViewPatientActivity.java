@@ -3,6 +3,7 @@ package com.example.docbook;
 import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,7 +30,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class ViewPatientActivity extends AppCompatActivity {
     ScrollView scrollView;
-    public String name,name2,specialization;
+    public String name,specialization,keyname;
 TextView uname,uage,ugender,upnumber,uward,ureason,uadmission,udischarge,uoccupation,uaddress,uphone,uemail;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -59,7 +60,9 @@ ImageView uimageView;
       udischarge=scrollView.findViewById(R.id.discharge);
 uoccupation=scrollView.findViewById(R.id.occupation);
 name=uname.getText().toString();
-name2="patientname";
+        Intent intent = getIntent();
+    keyname = intent.getStringExtra("key");
+
         SharedPreferences sharedPreferences2 = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         specialization = sharedPreferences2.getString("specialization", "").toString();
 
@@ -75,7 +78,7 @@ name2="patientname";
 
 
     private void performauth(){
-
+        Toast.makeText(this, keyname+"   "+specialization, Toast.LENGTH_SHORT).show();
 
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -83,7 +86,7 @@ name2="patientname";
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 // Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(name2).child("image");
+        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(keyname).child("image");
 
 // Download the image file into a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -103,7 +106,7 @@ name2="patientname";
                 Toast.makeText(ViewPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
             }
         });
-        db.collection("doctor").document(specialization).collection("patient").document(name2)
+        db.collection("doctor").document(specialization).collection("patient").document(keyname)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
