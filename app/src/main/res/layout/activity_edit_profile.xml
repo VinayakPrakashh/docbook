@@ -99,7 +99,7 @@
 
         <EditText
 
-            android:id="@+id/age"
+            android:id="@+id/spec"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter age"
@@ -117,7 +117,7 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/address"
+            android:id="@+id/quali"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter address"
@@ -132,7 +132,7 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/city"
+            android:id="@+id/exp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter city"
@@ -161,7 +161,7 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/mail"
+            android:id="@+id/feeses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Email address"

@@ -35,7 +35,7 @@ TextView login;
         pass=findViewById(R.id.password);
         cpass=findViewById(R.id.cpassword);
 
-        mail=findViewById(R.id.mail);
+        mail=findViewById(R.id.feeses);
         b1=findViewById(R.id.b1);
         login=findViewById(R.id.tregister);
        mauth=FirebaseAuth.getInstance();

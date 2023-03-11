@@ -42,7 +42,7 @@ Button b1;
         dexp2=findViewById(R.id.dexp);
         doccontact2=findViewById(R.id.dcontact);
         dquali=findViewById(R.id.dqualification);
-        fees2=findViewById(R.id.fees);
+        fees2=findViewById(R.id.contact);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 b1=findViewById(R.id.book_appointment_button);
         SharedPreferences sharedPreferences = getSharedPreferences("docselect",MODE_PRIVATE);

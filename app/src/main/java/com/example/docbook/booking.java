@@ -62,7 +62,7 @@ TextView genders,timetext;
 name=findViewById(R.id.fname);
 reasons=findViewById(R.id.reason);
 contact=findViewById(R.id.contactnumber);
-ages=findViewById(R.id.age);
+ages=findViewById(R.id.spec);
 b1=findViewById(R.id.book);
 genders=findViewById(R.id.gender);
 timeslot=findViewById(R.id.time);

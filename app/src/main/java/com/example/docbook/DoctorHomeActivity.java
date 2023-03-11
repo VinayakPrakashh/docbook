@@ -14,12 +14,12 @@ import androidx.cardview.widget.CardView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class DoctorHomeActivity extends AppCompatActivity {
-CardView lgout,appointment;
+CardView lgout,appointment,profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_home);
-
+profile=findViewById(R.id.radiologist);
         SharedPreferences sharedPreferences = getSharedPreferences("doctor", Context.MODE_PRIVATE);
         String displayname = sharedPreferences.getString("doctor", "").toString();
 
@@ -57,5 +57,12 @@ CardView lgout,appointment;
                 startActivity(new Intent(DoctorHomeActivity.this,DoctorAppointmentActivity.class));
             }
         });
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DoctorHomeActivity.this,DoctorProfileActivity.class));
+            }
+        });
     }
+
 }

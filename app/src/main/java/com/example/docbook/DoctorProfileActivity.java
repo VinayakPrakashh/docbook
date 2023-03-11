@@ -2,12 +2,15 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,30 +25,30 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class ProfileActivity extends AppCompatActivity {
+public class DoctorProfileActivity extends AppCompatActivity {
 
-TextView uname,uage,uemail,uaddress,ucity,uphone;
+TextView uname,uspec,ufees,uqualification,uexp,uhospital,ucontact,mail;
 ImageView uimageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_doctor_profile);
         uname=findViewById(R.id.name);
-        uage=findViewById(R.id.spec);
-        uemail=findViewById(R.id.feeses);
-        uaddress=findViewById(R.id.quali);
-        ucity=findViewById(R.id.exp);
-        uphone=findViewById(R.id.hospital);
+        uspec=findViewById(R.id.spec);
+        ufees=findViewById(R.id.feeses);
+        uqualification=findViewById(R.id.quali);
+        uexp=findViewById(R.id.exp);
+        uhospital=findViewById(R.id.hospital);
+        ucontact=findViewById(R.id.contact);
+        mail=findViewById(R.id.emails);
         uimageView=findViewById(R.id.profile_photo);
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        String photo="Cardiologist.jpg";
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        String uid = auth.getCurrentUser().getUid();
-// Create a reference to the image file you want to download
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        String spec= sharedPreferences.getString("specialization","").toString();
         // Get a reference to the Firebase Storage location where the image is stored
-        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + uid + "/image");
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child(spec+".jpg");
 
 // Download the contents of the file as a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -63,12 +66,13 @@ ImageView uimageView;
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors that occur
+                Toast.makeText(DoctorProfileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
 
-        db.collection("users")
-                .document(uid)
+
+        db.collection("doctor")
+                .document("Cardiologist")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -79,25 +83,35 @@ ImageView uimageView;
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
-                                String name = document.getString("username");
-                                String age = document.getString("age");
-                                String address = document.getString("address");
-                                String city=document.getString("city");
-                                String mail = document.getString("email");
-                                String phone=document.getString("contact");
-                                uname.setText(name);
-                                uage.setText("Age: "+age);
-                               uemail.setText("Mail address: "+mail);
-                                ucity.setText("City: "+city);
-                               uphone.setText("Contact No: "+phone);
-                                uaddress.setText("Address: "+address);
+                                String name = document.getString("name");
+                                String specialization = document.getString("specialization");
+                                String qualification = document.getString("qualification");
+String experience=document.getString("experience");
 
+                                String hospital = document.getString("hospital");
+                                String phone=document.getString("contact");
+                                String fees=document.getString("fees");
+                                String email=document.getString("email");
+                                uname.setText(name);
+                                uspec.setText("Specialization: "+specialization);
+                               uqualification.setText("Qualification: "+qualification);
+uexp.setText("Experience: "+experience);
+                               uhospital.setText("Hospital: "+hospital);
+                                ucontact.setText("Phone: "+phone);
+                                ufees.setText("Appointment Fees: "+fees);
+                                mail.setText("Mail id: "+email);
                             } else {
                                 Log.d(TAG, "No such document");
                             }
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
                         }
+                    }
+
+                }) .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(DoctorProfileActivity.this, "fail", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
