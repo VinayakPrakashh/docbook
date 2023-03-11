@@ -37,6 +37,14 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".ViewPatientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AddPatientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".ProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>

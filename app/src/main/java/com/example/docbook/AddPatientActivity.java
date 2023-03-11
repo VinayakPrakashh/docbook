@@ -152,7 +152,7 @@ name2="patientname";
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 // Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("Cardiologist");
+        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(name2).child("image");
 
 // Download the image file into a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -183,7 +183,7 @@ name2="patientname";
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
-                                String name = document.getString("username");
+                                String name = document.getString("name");
                                 String age = document.getString("age");
                                 String address = document.getString("address");
                                 String mail = document.getString("email");
