@@ -3,9 +3,15 @@ package com.example.docbook;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,15 +83,31 @@ public class DoctorPatientsActivity extends AppCompatActivity {
 
 
         dialog.dismiss();
-        storenav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(DoctorPatientsActivity.this,MedicineActivity.class));
-            }
-        });
+      storenav.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              showBottomDialog();
+          }
+      });
 
     }
     public void onBackPressed(){
         startActivity(new Intent(DoctorPatientsActivity.this,DoctorHomeActivity.class));
+    }public void  showBottomDialog(){
+        final Dialog dialog=new Dialog(this);
+        dialog.setContentView(R.layout.bottomsheet_layout);
+        LinearLayout video=dialog.findViewById(R.id.layoutShorts);
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Toast.makeText(DoctorPatientsActivity.this, "okda", Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 }
