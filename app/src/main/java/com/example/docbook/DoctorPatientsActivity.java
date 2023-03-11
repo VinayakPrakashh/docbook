@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -101,7 +100,7 @@ public class DoctorPatientsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                Toast.makeText(DoctorPatientsActivity.this, "okda", Toast.LENGTH_SHORT).show();
+
             }
         });
         dialog.show();
