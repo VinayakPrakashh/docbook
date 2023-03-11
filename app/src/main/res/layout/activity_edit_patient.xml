@@ -101,7 +101,6 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#aaaaaa"
                 android:textSize="16sp" />
-            <!-- Age -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -115,7 +114,40 @@
                 android:id="@+id/spec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter age"
+                android:hint="Enter Age"
+                android:textColor="#ffffff"
+                android:textColorHint="#aaaaaa"
+                android:textSize="16sp" />
+            <!-- Age -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+            <EditText
+
+                android:id="@+id/gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Gender"
+                android:textColor="#ffffff"
+                android:textColorHint="#aaaaaa"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Patient No"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+            <EditText
+
+                android:id="@+id/pnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Patient Number"
                 android:textColor="#ffffff"
                 android:textColorHint="#aaaaaa"
                 android:textSize="16sp" />
@@ -125,87 +157,87 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Address"
+                android:text="Ward No"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/quali"
+                android:id="@+id/ward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter address"
+                android:hint="Enter Ward Number"
                 android:textColorHint="#aaaaaa" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="City"
+                android:text="Reason"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/exp"
+                android:id="@+id/reason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter city"
+                android:hint="Enter Reason of Admitting"
                 android:textColorHint="#aaaaaa" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Phone No"
+                android:text="Admission Date"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/phone"
+                android:id="@+id/admission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Phone No"
+                android:hint="Enter Admission Date"
                 android:textColorHint="#aaaaaa" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mail id"
+                android:text="Discharging Date"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/feeses4"
+                android:id="@+id/discharge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Email address"
+                android:hint="Enter Discharging Date"
                 android:textColorHint="#aaaaaa" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mail id"
+                android:text="Occupation"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/feeses2"
+                android:id="@+id/occupation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Email address"
+                android:hint="Enter Occupation"
                 android:textColorHint="#aaaaaa" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mail id"
+                android:text="Contact No"
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/feeses3"
+                android:id="@+id/contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Email address"
+                android:hint="Enter Contact No"
                 android:textColorHint="#aaaaaa" />
             <Button
                 android:id="@+id/save"

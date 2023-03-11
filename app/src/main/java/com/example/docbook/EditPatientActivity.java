@@ -37,7 +37,7 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class EditDoctorProfileActivity extends AppCompatActivity {
+public class EditPatientActivity extends AppCompatActivity {
 EditText uname,uage,uaddress,uphone,ucity,uemail;
 Button save;
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -49,7 +49,7 @@ ImageView uimageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_doctor_profile);
+        setContentView(R.layout.activity_edit_patient);
         uname=findViewById(R.id.name);
         uage=findViewById(R.id.spec);
         uemail=findViewById(R.id.feeses);
@@ -74,7 +74,7 @@ ImageView uimageView;
 
             }
         });
-        Dialog dialog = new Dialog(EditDoctorProfileActivity.this);
+        Dialog dialog = new Dialog(EditPatientActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
         dialog.setCancelable(false);
         dialog.show();
@@ -110,7 +110,7 @@ ImageView uimageView;
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        new SweetAlertDialog(EditDoctorProfileActivity.this)
+                        new SweetAlertDialog(EditPatientActivity.this)
                                 .setTitleText("Profile Updated!")
                                 .show();
                         performauth();
@@ -148,7 +148,7 @@ ImageView uimageView;
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors that occur during the download
-                Toast.makeText(EditDoctorProfileActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
             }
         });
         db.collection("users")
@@ -208,7 +208,7 @@ ImageView uimageView;
                         StorageReference imageRef = storage.getReference().child("users/" + uid + "/image");
 
 // Download the image file into a byte array
-                        Dialog dialog = new Dialog(EditDoctorProfileActivity.this);
+                        Dialog dialog = new Dialog(EditPatientActivity.this);
                         dialog.setContentView(R.layout.loading_dialog);
                         dialog.setCancelable(false);
                         dialog.show();
@@ -227,11 +227,11 @@ ImageView uimageView;
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(EditDoctorProfileActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
                             }
                         });
                         dialog.dismiss();
-                        new SweetAlertDialog(EditDoctorProfileActivity.this)
+                        new SweetAlertDialog(EditPatientActivity.this)
 
                                 .setTitleText("Profile Picture Updated Successfully")
                                 .show();
@@ -249,7 +249,7 @@ ImageView uimageView;
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // Image upload failed
-                        new SweetAlertDialog(EditDoctorProfileActivity.this)
+                        new SweetAlertDialog(EditPatientActivity.this)
                                 .setTitleText("Failed to upload Image")
                                 .show();
                     }
@@ -261,7 +261,7 @@ ImageView uimageView;
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_IMAGE_PICKER && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Dialog dialog = new Dialog(EditDoctorProfileActivity.this);
+            Dialog dialog = new Dialog(EditPatientActivity.this);
             dialog.setContentView(R.layout.loading_dialog);
             dialog.setCancelable(false);
             dialog.show();
