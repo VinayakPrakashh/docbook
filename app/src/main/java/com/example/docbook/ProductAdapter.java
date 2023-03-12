@@ -2,8 +2,11 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,8 +16,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,11 +34,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private Context context;
-    public String prod;
+    public String prod,name,price,manufacturer,quantity,item,expiry,direction;
     private List<Product> productList;
 
     public ProductAdapter(Context context, List<Product> productList) {
@@ -100,7 +110,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public void  showBottomDialog(){
-
+        Toast.makeText(context, "dss", Toast.LENGTH_SHORT).show();
+      String[] quantityOptions = {"1", "2", "3","4","5"};
 
         final Dialog dialog=new Dialog(context);
         dialog.setContentView(R.layout.bottomsheet_medicine);
@@ -112,6 +123,94 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         TextView pquantity=dialog.findViewById(R.id.stripTextView);
         TextView pdirection=dialog.findViewById(R.id.discription);
         TextView pmanufacturer=dialog.findViewById(R.id.manufacturerTextView);
+        TextView qselects=dialog.findViewById(R.id.qselect);
+        Button place=dialog.findViewById(R.id.placeorder);
+        EditText pincode=dialog.findViewById(R.id.pin);
+        EditText address=dialog.findViewById(R.id.addr);
+
+
+        place.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pin=pincode.getText().toString();
+                String addresses=address.getText().toString();
+                int amount=Integer.parseInt((qselects.getText().toString()));
+                int cost=Integer.parseInt(price);
+                int famount=amount*cost;
+                String finalamount=String.valueOf(famount);
+                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Confirm Purchase?")
+                        .setContentText("Total Amount: "+finalamount)
+                        .setConfirmText("Confirm")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                                String uname = sharedPreferences.getString("name", "").toString();
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                Map<String, Object> data = new HashMap<>();
+                                data.put("cost", finalamount);
+                                data.put("direction", direction);
+                                data.put("expiry", expiry);
+                                data.put("item", item);
+                                data.put("quantity", quantity);
+                                data.put("name", name);
+                                data.put("manufacturer", manufacturer);
+                                data.put("pincode", pin);
+                                data.put("address", addresses);
+                                data.put("user", uname);
+
+                                db.collection("bookings").document(uname).collection("itemdetails").document(prod)
+                                        .set(data)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                new SweetAlertDialog(context)
+                                                        .setTitleText("Order Placed.")
+                                                        .show();
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Handle any errors here
+                                            }
+                                        });
+
+                                // perform action on confirm button click
+                                sDialog.dismissWithAnimation();
+                            }
+                        })
+                        .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                // perform action on cancel button click
+                                sDialog.dismissWithAnimation();
+                            }
+                        })
+                        .show();
+
+
+            }
+        });
+       qselects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Select");
+                builder.setSingleChoiceItems(quantityOptions, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle gender selection here
+                        String selectedquantity = quantityOptions[which];
+                        qselects.setText(selectedquantity);
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
+        });
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Get a reference to the Firebase Storage instance
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -144,13 +243,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                    String name = documentSnapshot.getString("name");
-                    String price = documentSnapshot.getString("cost");
-                    String expiry = documentSnapshot.getString("expiry");
-                    String item = documentSnapshot.getString("item");
-                    String manufacturer = documentSnapshot.getString("manufacturer");
-                    String direction = documentSnapshot.getString("direction");
-                    String quantity = documentSnapshot.getString("quantity");
+                     name = documentSnapshot.getString("name");
+                     price = documentSnapshot.getString("cost");
+                     expiry = documentSnapshot.getString("expiry");
+                     item = documentSnapshot.getString("item");
+                     manufacturer = documentSnapshot.getString("manufacturer");
+                     direction = documentSnapshot.getString("direction");
+                     quantity = documentSnapshot.getString("quantity");
 
                     // Do something with the data, e.g. update UI
                     pname.setText(name);

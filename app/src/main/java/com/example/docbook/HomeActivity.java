@@ -1,11 +1,14 @@
 package com.example.docbook;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,10 +16,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -34,6 +42,33 @@ public class HomeActivity extends AppCompatActivity {
         cart = findViewById(R.id.cardiologist);
         abouts = findViewById(R.id.neurologist);
         article = findViewById(R.id.radiologist);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+            String uid2 = currentUser.getUid();
+
+        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+        DocumentReference docRef2 = db2.collection("users").document(uid2);
+
+        docRef2.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    String username = documentSnapshot.getString("username");
+                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                    myEdit.putString("name", username);
+                    myEdit.commit();
+                } else {
+                    Log.d(TAG, "No such document");
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Error getting document: " + e);
+            }
+        });
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
