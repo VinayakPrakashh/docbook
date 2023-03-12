@@ -68,6 +68,9 @@ public class LoginActivity extends AppCompatActivity {
                     // Step 4: If the selected item is "Doctor", then set the specialization TextView and Spinner visibility to View.VISIBLE
                     specializationTextView.setVisibility(View.VISIBLE);
                     specializationSpinner.setVisibility(View.VISIBLE);
+                } else if (selectedLoginAs.equals("Admin")) {
+                    specializationTextView.setVisibility(View.INVISIBLE);
+                    specializationSpinner.setVisibility(View.INVISIBLE);
                 } else {
                     // Otherwise, set their visibility to View.INVISIBLE
                     specializationTextView.setVisibility(View.INVISIBLE);
@@ -116,6 +119,8 @@ login=loginAsSpinner.getItemAtPosition(loginAsSpinner.getSelectedItemPosition())
                 if(Objects.equals(login, "Doctor")){
 
                     doctor();
+                } else if (Objects.equals(login,"Admin")) {
+
                 } else if (Objects.equals(login, "Patient")) {
 
                     user();
@@ -237,5 +242,53 @@ if(Objects.equals(mail, email) && Objects.equals(pass, password) && Objects.equa
                 }
             }
         });
+
+    }
+    public void admin(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("admin")
+                .document("vinayak")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                String email = mail.getText().toString();
+                                String password = pass.getText().toString();
+                                // Extract doctor details here
+                                String name = document.getString("name");
+                                String pass= document.getString("password");
+                                String mail= document.getString("email");
+                                // Update UI with doctor details
+
+                                if(Objects.equals(mail, email) && Objects.equals(pass, password)){
+                                    Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(LoginActivity.this,DoctorHomeActivity.class));
+                                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                    myEdit.putString("login", login);
+                            myEdit.putString("name",name);
+                                    myEdit.putString("mail", mail);
+                                    myEdit.putString("password",pass);
+                                    myEdit.commit();
+
+                                }else{
+                                    Toast.makeText(LoginActivity.this, "Failed! Incorrect Email or Password", Toast.LENGTH_SHORT).show();
+                                }
+
+
+
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
     }
 }
