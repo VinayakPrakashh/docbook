@@ -4,13 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,7 +77,7 @@ public class MedicineActivity extends AppCompatActivity {
         cartnav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-showBottomDialog();
+startActivity(new Intent(MedicineActivity.this,CartActivity.class));
             }
         });
 
@@ -90,15 +86,5 @@ showBottomDialog();
     public void onBackPressed(){
         startActivity(new Intent(MedicineActivity.this,HomeActivity.class));
     }
-    public void  showBottomDialog(){
-        final Dialog dialog=new Dialog(MedicineActivity.this);
-        dialog.setContentView(R.layout.bottomsheet_medicine);
 
-
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-    }
 }
