@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/titlehome">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/news"
+            android:id="@+id/about"
             android:layout_width="132dp"
             android:layout_height="wrap_content"
 
@@ -62,14 +62,14 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="67dp"
-                    android:layout_height="52dp"
-                    android:src="@drawable/baseline_settings_24" />
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/baseline_info_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SETTINGS"
+                    android:text="ABOUT"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -99,9 +99,9 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="63dp"
-                    android:layout_height="54dp"
-                    android:src="@drawable/baseline_manage_accounts_24" />
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/patients" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -173,8 +173,8 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="61dp"
-                    android:layout_height="61dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:src="@drawable/baseline_account_circle_24" />
 
                 <TextView
@@ -210,14 +210,14 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="67dp"
-                    android:layout_height="49dp"
-                    android:src="@drawable/baseline_production_quantity_limits_24" />
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/add_patient" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="YOUR ORDERS"
+                    android:text="ADD PATIENT"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -247,14 +247,14 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="55dp"
-                    android:layout_height="51dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:src="@drawable/baseline_logout_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Logout"
+                    android:text="LOGOUT"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />

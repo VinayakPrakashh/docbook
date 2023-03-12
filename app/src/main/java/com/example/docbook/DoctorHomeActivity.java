@@ -1,6 +1,7 @@
 package com.example.docbook;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,19 +9,21 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class DoctorHomeActivity extends AppCompatActivity {
-CardView lgout,appointment,profile,editprofile;
+CardView lgout,appointment,profile,editprofile,aboutsel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_home);
 profile=findViewById(R.id.radiologist);
 editprofile=findViewById(R.id.orthologist);
+       aboutsel =findViewById(R.id.about);
         SharedPreferences sharedPreferences = getSharedPreferences("doctor", Context.MODE_PRIVATE);
         String displayname = sharedPreferences.getString("doctor", "").toString();
 
@@ -70,6 +73,29 @@ editprofile=findViewById(R.id.orthologist);
                 startActivity(new Intent(DoctorHomeActivity.this, DoctorPatientsActivity.class));
             }
         });
+        aboutsel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DoctorHomeActivity.this,AboutActivity.class));
+            }
+        });
+    }
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Exit app")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        finishAffinity(); // Close all activities
+                        System.exit(0); // Exit the app
+                       DoctorHomeActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
 }
