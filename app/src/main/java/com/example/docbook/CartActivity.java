@@ -3,7 +3,9 @@ package com.example.docbook;
 import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,9 +57,10 @@ storenav=findViewById(R.id.store);
         dialog.show();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        String uname = sharedPreferences.getString("name", "").toString();
 // Create a reference to the "itemdetails" collection for the user
-        CollectionReference itemDetailsRef = db.collection("bookings").document(userId).collection("itemdetails");
+        CollectionReference itemDetailsRef = db.collection("bookings").document(uname).collection("itemdetails");
 
 // Query the items for the user
         itemDetailsRef.get()
@@ -70,7 +73,7 @@ storenav=findViewById(R.id.store);
 
                                 String name = document.getString("name");
                                 String price = document.getString("cost");
-                                String quantity=document.getString("quantity");
+                                String quantity=document.getString("numberofitems");
 
                                 Product product = new Product(name, price,quantity);
                                 productList.add(product);

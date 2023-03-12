@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -110,7 +109,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public void  showBottomDialog(){
-        Toast.makeText(context, "dss", Toast.LENGTH_SHORT).show();
+
       String[] quantityOptions = {"1", "2", "3","4","5"};
 
         final Dialog dialog=new Dialog(context);
@@ -134,6 +133,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             public void onClick(View view) {
                 String pin=pincode.getText().toString();
                 String addresses=address.getText().toString();
+                String numberofitems=qselects.getText().toString();
                 int amount=Integer.parseInt((qselects.getText().toString()));
                 int cost=Integer.parseInt(price);
                 int famount=amount*cost;
@@ -159,6 +159,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                                 data.put("pincode", pin);
                                 data.put("address", addresses);
                                 data.put("user", uname);
+                                data.put("numberofitems",numberofitems);
 
                                 db.collection("bookings").document(uname).collection("itemdetails").document(prod)
                                         .set(data)
