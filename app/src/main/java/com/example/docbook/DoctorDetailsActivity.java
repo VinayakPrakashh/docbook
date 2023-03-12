@@ -90,15 +90,15 @@ public class DoctorDetailsActivity extends AppCompatActivity {
                                 String name = document.getString("name");
 
                                 String specialization = document.getString("specialization");
-                                int experience = document.getLong("experience").intValue();
+                             String exp = document.getString("experience");
                                 String hospital = document.getString("hospital");
-                                long contact = document.getLong("contact");
+                                String dcon = document.getString("contact");
                                 String qualification = document.getString("qualification");
-                                String exp = Integer.toString(experience);
+
                                 String fees = document.getString("fees");
                                 // Update UI with doctor details
 
-                                String dcon = Long.toString(contact);
+
 
 
                                 docname2.setText("Name: " + name);

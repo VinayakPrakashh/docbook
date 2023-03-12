@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="viewStart"
-            android:text="Options"
+            android:text="Buy Medicine"
             android:textSize="25sp"
             android:padding="8dp"
             android:textColor="@color/lavender"
@@ -38,20 +38,20 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/family_physicians" />
+            />
 
         <TextView
             android:id="@+id/product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="28dp"
+            android:layout_marginStart="44dp"
             android:layout_toEndOf="@+id/product_image"
             android:gravity="center"
             android:padding="8dp"
             android:text="Product Name"
             android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
@@ -59,105 +59,192 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#CCCCCC" />
-
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        >
 
-        <TextView
-            android:id="@+id/priceTextView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="$19.99"
-            android:textSize="16sp" />
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/priceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$19.99"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/inStockTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="In Stock"
-            android:textColor="#FFFFFF"
-            android:background="#21D528"
-            android:padding="4dp"
-            android:textSize="12sp" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/inStockTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="In Stock"
+                    android:textColor="#FFFFFF"
+                    android:background="#21D528"
+                    android:padding="4dp"
+                    android:textSize="12sp"
+                    />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="item"
+                android:textSize="18sp"
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
-        <TextView
-            android:id="@+id/quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Quantity"
-            android:textSize="16sp"
-            android:paddingStart="8dp" />
-        <Spinner
-            android:id="@+id/quantitySpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/quantity_options" />
+                android:padding="16dp"
+                android:textColor="@color/black"/>
+            <!-- First LinearLayout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-        <TextView
-            android:id="@+id/stripTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Strip"
-            android:textSize="16sp"
-            android:paddingStart="8dp" />
+                <TextView
+                    android:id="@+id/quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Quantity"
+                    android:textSize="16sp"
+                    android:paddingStart="8dp"
+                    android:textColor="@color/black"/>
+                <Spinner
+                    android:id="@+id/quantitySpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/password_toggle_color"
+                    android:entries="@array/quantity_options"
+                    android:tint="@color/lavender"/>
 
-    </LinearLayout>
-    <TextView
-        android:id="@+id/manufacturerTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Manufacturer Name"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:padding="16dp" />
-    <TextView
-        android:id="@+id/exp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Expiry Date"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:padding="16dp" />
+                <TextView
+                    android:id="@+id/stripTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Strip"
+                    android:textSize="16sp"
+                    android:paddingStart="8dp"
+                    android:textColor="@color/black"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_marginTop="10dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_person_add_alt_1_24"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Patient"
-            android:textColor="#5B5BE0"
-            android:layout_marginLeft="15dp"
-            android:textSize="16sp"/>
 
-    </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/manufacturerTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Manufacturer Name"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/exp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Expiry Date"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Directions for Use"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textDecoration="underline"
+                android:padding="16dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/discription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Directions for Use"
+                android:textSize="18sp"
 
+                android:padding="16dp"
+                android:textColor="@color/black"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#CCCCCC" />
+            <!-- Second LinearLayout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pincode:"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="Enter pincode"
+                    android:backgroundTint="#000000"
+                    android:textColor="@color/black"/>
+                <!-- Views for second LinearLayout go here -->
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+                <TextView
+                    android:id="@+id/addressTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address:"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:id="@+id/addressEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:inputType="text"
+                    android:backgroundTint="#000000"
+                    android:hint="Enter your address"
+                    android:imeOptions="actionNext"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Place Order"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/green"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:layout_gravity="bottom"
+                />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
