@@ -78,7 +78,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/orthologist"
-            android:layout_width="wrap_content"
+            android:layout_width="142dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_rowWeight="1"
@@ -106,7 +106,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="EDIT PROFILE"
+                    android:text="MY PATIENTS"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
