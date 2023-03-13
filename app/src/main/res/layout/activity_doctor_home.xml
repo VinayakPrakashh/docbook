@@ -114,7 +114,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/appointments"
+            android:id="@+id/doctors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="1"
@@ -143,7 +143,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DOCTORS"
+                    android:text="APPOINTMENTS"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />

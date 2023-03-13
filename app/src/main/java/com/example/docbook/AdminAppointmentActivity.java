@@ -35,7 +35,7 @@ radio.setOnClickListener(new View.OnClickListener() {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putString("specialization", "Radiologist");
         myEdit.commit();
-        startActivity(new Intent(AdminAppointmentActivity.this, DoctorDetailsActivity.class));
+        startActivity(new Intent(AdminAppointmentActivity.this, AdminDoctorDetailsActivity.class));
     }
 });
 neuro.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +45,7 @@ neuro.setOnClickListener(new View.OnClickListener() {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putString("specialization", "Neurologist");
         myEdit.commit();
-        startActivity(new Intent(AdminAppointmentActivity.this,DoctorDetailsActivity.class));
+        startActivity(new Intent(AdminAppointmentActivity.this,AdminDoctorDetailsActivity.class));
     }
 });
 cardi.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,7 @@ cardi.setOnClickListener(new View.OnClickListener() {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
         myEdit.putString("specialization", "Cardiologist");
         myEdit.commit();
-        startActivity(new Intent(AdminAppointmentActivity.this, DoctorDetailsActivity.class));
+        startActivity(new Intent(AdminAppointmentActivity.this, AdminDoctorDetailsActivity.class));
     }
 });
         ortho.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ cardi.setOnClickListener(new View.OnClickListener() {
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                 myEdit.putString("specialization", "Orthologist");
                 myEdit.commit();
-                startActivity(new Intent(AdminAppointmentActivity.this, DoctorDetailsActivity.class));
+                startActivity(new Intent(AdminAppointmentActivity.this, AdminDoctorDetailsActivity.class));
             }
         });
         pedia.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +75,7 @@ cardi.setOnClickListener(new View.OnClickListener() {
                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
                 myEdit.putString("specialization", "Pediatrician");
                 myEdit.commit();
-                startActivity(new Intent(AdminAppointmentActivity.this, DoctorDetailsActivity.class));
+                startActivity(new Intent(AdminAppointmentActivity.this, AdminDoctorDetailsActivity.class));
             }
         });
 booking.setOnClickListener(new View.OnClickListener() {

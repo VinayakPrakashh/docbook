@@ -113,7 +113,7 @@ public  String value;
     public void  showBottomDialog(){
         final Dialog dialog=new Dialog(context);
         dialog.setContentView(R.layout.bottomsheet_layout);
-        LinearLayout video=dialog.findViewById(R.id.layoutShorts);
+
         LinearLayout view=dialog.findViewById(R.id.view);
         LinearLayout edit=dialog.findViewById(R.id.edit);
         LinearLayout delete=dialog.findViewById(R.id.delete);

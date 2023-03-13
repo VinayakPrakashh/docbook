@@ -29,7 +29,7 @@ editprofile=findViewById(R.id.orthologist);
         String displayname = sharedPreferences.getString("doctor", "").toString();
 
         lgout=findViewById(R.id.bookings);
-        appointment=findViewById(R.id.appointments);
+        appointment=findViewById(R.id.doctors);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isToastDisplayed = prefs.getBoolean("toast_displayed", false);
         if (!isToastDisplayed) {

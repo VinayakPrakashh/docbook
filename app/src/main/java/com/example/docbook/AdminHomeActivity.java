@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,28 +15,19 @@ import androidx.cardview.widget.CardView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminHomeActivity extends AppCompatActivity {
-CardView lgout,appointment,profile,editprofile,aboutsel,patientadd;
+CardView lgout,appointment,profile,dallpatients,ddoctors,daddpatient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_home);
+        setContentView(R.layout.activity_admin_home);
 profile=findViewById(R.id.radiologist);
-editprofile=findViewById(R.id.orthologist);
-        patientadd=findViewById(R.id.addpatient);
-       aboutsel =findViewById(R.id.about);
-        SharedPreferences sharedPreferences = getSharedPreferences("doctor", Context.MODE_PRIVATE);
-        String displayname = sharedPreferences.getString("doctor", "").toString();
+dallpatients=findViewById(R.id.allpatients);
+        daddpatient=findViewById(R.id.addpatient);
+       ddoctors =findViewById(R.id.doctors);
 
         lgout=findViewById(R.id.bookings);
-        appointment=findViewById(R.id.appointments);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isToastDisplayed = prefs.getBoolean("toast_displayed", false);
-        if (!isToastDisplayed) {
-            Toast.makeText(this, "Welcome Dr." +displayname, Toast.LENGTH_SHORT).show();
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("toast_displayed", true);
-            editor.apply();
-        }
+        appointment=findViewById(R.id.doctors);
+
         lgout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,19 +58,19 @@ editprofile=findViewById(R.id.orthologist);
                 startActivity(new Intent(AdminHomeActivity.this,DoctorProfileActivity.class));
             }
         });
-        editprofile.setOnClickListener(new View.OnClickListener() {
+        dallpatients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(AdminHomeActivity.this, DoctorPatientsActivity.class));
             }
         });
-        aboutsel.setOnClickListener(new View.OnClickListener() {
+        ddoctors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AdminHomeActivity.this,AboutActivity.class));
+                startActivity(new Intent(AdminHomeActivity.this,AdminAppointmentActivity.class));
             }
         });
-        patientadd.setOnClickListener(new View.OnClickListener() {
+        daddpatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(AdminHomeActivity.this,AddPatientActivity.class));

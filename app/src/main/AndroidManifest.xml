@@ -22,6 +22,18 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".AdminHomeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminAppointmentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminDoctorDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".DoctorProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
