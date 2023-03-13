@@ -1,0 +1,133 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#000000">
+
+    <!-- Doctor Details Heading -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Doctor Details"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Doctor Photo, Name, and Specialization -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Doctor Photo -->
+        <ImageView
+            android:id="@+id/dphoto"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+
+            android:contentDescription="Doctor Photo"/>
+
+        <!-- Doctor Name and Specialization -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Doctor Name -->
+            <TextView
+                android:id="@+id/dname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <!-- Doctor Specialization -->
+            <TextView
+                android:id="@+id/dspec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:textColor="#ffffff"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/dqualification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:textColor="#ffffff"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Doctor Details -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#333333">
+
+        <!-- Hospital Name -->
+        <TextView
+            android:id="@+id/dhospital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textColor="#ffffff"
+            android:textSize="16sp"/>
+
+        <!-- Experience -->
+        <TextView
+            android:id="@+id/dexp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Contact Number -->
+        <TextView
+            android:id="@+id/dcontact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+        <TextView
+            android:id="@+id/contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+
+    <!-- Book Appointment Button -->
+
+
+    <Button
+        android:id="@+id/book_appointment_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/green"
+
+        android:text="Edit"
+
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

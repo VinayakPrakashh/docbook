@@ -8,21 +8,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgmain"
+    android:background="@drawable/bg4"
     tools:context=".HomeActivity">
 
     <TextView
         android:id="@+id/titlehome"
-        android:layout_width="238dp"
-        android:layout_height="50dp"
+        android:layout_width="295dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:paddingStart="9dp"
-        android:text="  DOCBOOK"
+        android:shadowColor="#000000"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="7"
+        android:text="FIND DOCTOR"
         android:textColor="#FAFAFA"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.681"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,12 +38,13 @@
         android:layout_margin="20dp"
         android:columnCount="2"
         android:rowCount="3"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titlehome">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/about"
+            android:id="@+id/neurologist"
             android:layout_width="132dp"
             android:layout_height="wrap_content"
 
@@ -62,14 +67,14 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:src="@drawable/baseline_info_24" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/neuro" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PRODUCTS"
+                    android:text="NEUROLOGIST"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -78,14 +83,15 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/orthologist"
-            android:layout_width="142dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_rowWeight="1"
             android:layout_column="1"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            app:cardBackgroundColor="@color/white"
+            android:backgroundTint="@color/white"
+            app:cardBackgroundColor="@color/black"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true">
@@ -99,14 +105,15 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:src="@drawable/patients" />
+                    android:layout_width="162dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ortho" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ALL PATIENTS"
+                    android:text="ORTHOLOGIST"
+
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -114,7 +121,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/appointments"
+            android:id="@+id/pediatrician"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="1"
@@ -138,12 +145,12 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/chat" />
+                    android:src="@drawable/pedia" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DOCTORS"
+                    android:text="PEDIATRICIAN"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -173,14 +180,14 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:src="@drawable/baseline_account_circle_24" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/radio" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ORDERS"
+                    android:text="RADIOLOGIST"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -188,15 +195,17 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/addpatient"
-            android:layout_width="wrap_content"
+            android:id="@+id/cardiologist"
+            android:layout_width="149dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_rowWeight="1"
             android:layout_column="0"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            app:cardBackgroundColor="@color/white"
+            android:backgroundTint="@color/white"
+
+            android:background="@drawable/bg4"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true">
@@ -210,14 +219,14 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:src="@drawable/add_patient" />
+                    android:layout_width="162dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cardio" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ADD PATIENT"
+                    android:text="CARDIOLOGIST"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -247,14 +256,14 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:src="@drawable/baseline_logout_24" />
+                    android:layout_width="137dp"
+                    android:layout_height="98dp"
+                    android:src="@drawable/appointment" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LOGOUT"
+                    android:text="BOOKED APPOINTMENTS"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
