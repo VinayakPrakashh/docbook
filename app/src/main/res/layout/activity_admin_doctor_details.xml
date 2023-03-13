@@ -118,7 +118,7 @@
 
 
     <Button
-        android:id="@+id/book_appointment_button"
+        android:id="@+id/savebutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

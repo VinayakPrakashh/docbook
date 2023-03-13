@@ -37,6 +37,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminDoctorDetailsActivity extends AppCompatActivity {
@@ -48,9 +51,6 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_doctor_details);
-
-
-        setContentView(R.layout.activity_doctor_details);
         docname2 = findViewById(R.id.dname);
         docspec2 = findViewById(R.id.dspec);
         dochospital2 = findViewById(R.id.dhospital);
@@ -59,7 +59,7 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
         dquali = findViewById(R.id.dqualification);
         fees2 = findViewById(R.id.contact);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        b1 = findViewById(R.id.book_appointment_button);
+        b1 = findViewById(R.id.savebutton);
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
         String spec = sharedPreferences.getString("specialization", "").toString();
 
@@ -236,6 +236,46 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String name=pname.getText().toString();
+                String specialization=pspec.getText().toString();
+                String contact=pcontact.getText().toString();
+                String hospital=phospital.getText().toString();
+                String experience=pexp.getText().toString();
+                String qualification=pqualification.getText().toString();
+                String fees=pfees.getText().toString();
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+                Map<String, Object> user = new HashMap<>();
+                user.put("name", name);
+                user.put("specialization", specialization);
+                user.put("hospital", hospital);
+                user.put("address", experience);
+                user.put("contact", contact);
+                user.put("qualification",qualification);
+                user.put("fees",fees);
+
+                db.collection("doctor").document(specialization)
+                        .set(user)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                new SweetAlertDialog(AdminDoctorDetailsActivity.this)
+                                        .setTitleText("Doctor Profile Updated")
+                                        .show();
+
+                                dialog.dismiss();
+                                performauth();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing user information to Firestore", e);
+                            }
+                        });
+
             }
         });
 upload.setOnClickListener(new View.OnClickListener() {
@@ -361,5 +401,75 @@ upload.setOnClickListener(new View.OnClickListener() {
             });
             dialog.dismiss();
         }
+    }
+    private void performauth(){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
+        String spec = sharedPreferences.getString("specialization", "").toString();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        StorageReference imageRef = storage.getReference().child(spec+"");
+
+// Download the image file into a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Convert the byte array into a Bitmap object
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Set the Bitmap object in an ImageView
+                ImageView imageView = findViewById(R.id.dphoto);
+                imageView.setImageBitmap(bmp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors that occur during the download
+                Toast.makeText(AdminDoctorDetailsActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+            }
+        });
+        db.collection("doctor").document(spec)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                // Extract doctor details here
+                                String name = document.getString("name");
+
+                                String specialization = document.getString("specialization");
+                                String exp = document.getString("experience");
+                                String hospital = document.getString("hospital");
+                                String dcon = document.getString("contact");
+                                String qualification = document.getString("qualification");
+
+                                String fees = document.getString("fees");
+                                docname2.setText("Name: " + name);
+                                docspec2.setText("Specialization: " + specialization);
+                                dochospital2.setText("Hospital: " + hospital);
+                                dexp2.setText("Experience: " + exp + " Years");
+                                doccontact2.setText("Contact No: " + dcon);
+                                dquali.setText("Qualification: " + qualification);
+                                fees2.setText("Appointment Fees: " + fees);
+
+                                Toast.makeText(AdminDoctorDetailsActivity.this, "Profile Updated", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
     }
 }

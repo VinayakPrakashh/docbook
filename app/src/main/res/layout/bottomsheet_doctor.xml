@@ -89,7 +89,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:hint="Enter Name"
                     android:backgroundTint="#000000"
                     android:textColor="@color/black"/>
@@ -191,7 +191,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:hint="Enter Experience"
                     android:backgroundTint="#000000"
                     android:textColor="@color/black"/>
@@ -216,7 +216,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:hint="Enter Contact No"
                     android:backgroundTint="#000000"
                     android:textColor="@color/black"/>
@@ -241,7 +241,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:hint="Enter Appointment Fees"
                     android:backgroundTint="#000000"
                     android:textColor="@color/black"/>
