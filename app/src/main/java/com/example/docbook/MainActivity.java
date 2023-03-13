@@ -53,7 +53,12 @@ public  String emailAUTH,passwordAUT,loginAUTH,specAUTH;
             }
             else if(Objects.equals(loginAUTH, "Patient")){
                 user();
-            }else {
+            }
+            else if (Objects.equals(loginAUTH, "Admin")){
+
+                admin();
+            }
+            else {
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
             }
         } else {
@@ -85,7 +90,10 @@ public  String emailAUTH,passwordAUT,loginAUTH,specAUTH;
            }
            else if(Objects.equals(loginAUTH, "Patient")){
                user();
-           }else {
+           }else if(Objects.equals(loginAUTH, "Admin")){
+               user();
+           }
+           else {
                startActivity(new Intent(MainActivity.this,LoginActivity.class));
            }
         } else {
@@ -157,5 +165,44 @@ public  String emailAUTH,passwordAUT,loginAUTH,specAUTH;
 
     }
 
+    public void admin(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("admin")
+                .document("vinayak")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
+
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+
+
+
+
+                                String pass= document.getString("password");
+
+                                String mail= document.getString("email");
+                                String name=document.getString("name");
+                                // Update UI with doctor details
+
+                                if(Objects.equals(mail, emailAUTH) && Objects.equals(pass, passwordAUT) ){
+
+                                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+
+                                }
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+
+    }
 }
