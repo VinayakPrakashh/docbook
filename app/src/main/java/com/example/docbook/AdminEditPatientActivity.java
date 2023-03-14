@@ -39,7 +39,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminEditPatientActivity extends AppCompatActivity {
     ScrollView scrollView;
-    public String name,specialization,keyname;
+    public String name,keyname,special;
 EditText uname,uage,ugender,upnumber,uward,ureason,uadmission,udischarge,uspecialization,uoccupation,uaddress,uphone,uemail;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -133,7 +133,7 @@ name=uname.getText().toString();
         user.put("pnumber", pnumber);
         user.put("specialization",special);
 
-        db.collection("doctor").document(specialization).collection("patient").document(keyname)
+        db.collection("patients").document(keyname)
                 .update(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -156,33 +156,10 @@ name=uname.getText().toString();
     private void performauth(){
 
 
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-// Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(keyname).child("image");
 
-// Download the image file into a byte array
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                // Convert the byte array into a Bitmap object
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                // Set the Bitmap object in an ImageView
-
-                uimageView.setImageBitmap(bmp);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors that occur during the download
-                Toast.makeText(AdminEditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
-            }
-        });
-        db.collection("doctor").document(specialization).collection("patient").document(keyname)
+        db.collection("patients").document(keyname)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -205,6 +182,7 @@ name=uname.getText().toString();
                                 String occupation=document.getString("occupation");
                                 String contact=document.getString("contact");
                                 String reason=document.getString("reason");
+                              special=document.getString("specialization");
                                 uname.setText(name);
                                 uage.setText(age);
                                 uemail.setText(mail);
@@ -217,7 +195,8 @@ name=uname.getText().toString();
                                 uphone.setText(contact);
                                 ureason.setText(reason);
                                 udischarge.setText(discharge);
-
+uspecialization.setText(special);
+image();
                             } else {
                                 Log.d(TAG, "No such document");
                             }
@@ -227,13 +206,14 @@ name=uname.getText().toString();
                     }
                 });
 
+
     }
     private void uploadImageToFirebaseStorage(Uri imageUri) {
 
 
 
         // Create a new StorageReference with the user's UID as the file name
-        StorageReference imageRef = storageRef.child("patients").child(specialization).child(keyname).child("image");
+        StorageReference imageRef = storageRef.child("patients").child(special).child(keyname);
 
         imageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -245,7 +225,7 @@ name=uname.getText().toString();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 // Create a reference to the image file you want to download
-                        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(keyname).child("image");
+                        StorageReference imageRef = storage.getReference().child("patients").child(special).child(keyname);
 
 // Download the image file into a byte array
                         Dialog dialog = new Dialog(AdminEditPatientActivity.this);
@@ -311,7 +291,7 @@ name=uname.getText().toString();
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(specialization).child(keyname).child("image");
+            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(special).child(keyname);
 
 // Download the contents of the file as a byte array
             imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -336,6 +316,32 @@ dialog.dismiss();
         }
     }
 
+private void image(){
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+
+
+// Create a reference to the image file you want to download
+    StorageReference imageRef = storage.getReference().child("patients").child(special).child(keyname);
+
+// Download the image file into a byte array
+    imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        @Override
+        public void onSuccess(byte[] bytes) {
+            // Convert the byte array into a Bitmap object
+            Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+            // Set the Bitmap object in an ImageView
+
+            uimageView.setImageBitmap(bmp);
+        }
+    }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception exception) {
+            // Handle any errors that occur during the download
+            Toast.makeText(AdminEditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+        }
+    });
+}
 
 
 }
