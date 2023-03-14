@@ -51,7 +51,8 @@ ImageView uimageView;
         StorageReference imageRef = FirebaseStorage.getInstance().getReference().child(spec+".jpg");
         SharedPreferences sharedPreferences2 = getSharedPreferences("doctor", Context.MODE_PRIVATE);
         String docname= sharedPreferences2.getString("doctor","").toString();
-// Download the contents of the file as a byte array
+
+
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
 
             @Override
@@ -73,7 +74,7 @@ ImageView uimageView;
 
 
         db.collection("doctor")
-                .document(docname)
+                .document(spec)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 

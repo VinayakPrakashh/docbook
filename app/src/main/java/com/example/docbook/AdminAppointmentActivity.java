@@ -26,7 +26,7 @@ neuro=findViewById(R.id.neurologist);
 pedia=findViewById(R.id.pediatrician);
 cardi=findViewById(R.id.cardiologist);
 ortho=findViewById(R.id.orthologist);
-booking=findViewById(R.id.bookings);
+
 
 radio.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -78,12 +78,7 @@ cardi.setOnClickListener(new View.OnClickListener() {
                 startActivity(new Intent(AdminAppointmentActivity.this, AdminDoctorDetailsActivity.class));
             }
         });
-booking.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        startActivity(new Intent(AdminAppointmentActivity.this, BookedActivity.class));
-    }
-});
+
     }
 
 }

@@ -25,7 +25,7 @@ dallpatients=findViewById(R.id.allpatients);
         daddpatient=findViewById(R.id.addpatient);
        ddoctors =findViewById(R.id.doctors);
 
-        lgout=findViewById(R.id.bookings);
+        lgout=findViewById(R.id.logout);
         appointment=findViewById(R.id.doctors);
 
         lgout.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +61,7 @@ dallpatients=findViewById(R.id.allpatients);
         dallpatients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AdminHomeActivity.this, DoctorPatientsActivity.class));
+                startActivity(new Intent(AdminHomeActivity.this, AdminPatientsActivity.class));
             }
         });
         ddoctors.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,7 @@ dallpatients=findViewById(R.id.allpatients);
         daddpatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AdminHomeActivity.this,AddPatientActivity.class));
+                startActivity(new Intent(AdminHomeActivity.this,AdminAddPatientActivity.class));
             }
         });
     }

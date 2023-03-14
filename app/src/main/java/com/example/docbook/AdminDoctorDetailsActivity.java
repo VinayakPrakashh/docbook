@@ -220,7 +220,7 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
                                 pname.setText(name);
                                 pspec.setText(specialization);
                                 phospital.setText(hospital);
-                                pexp.setText(exp +" Years");
+                                pexp.setText(exp);
                                 pcontact.setText(dcon);
                                 pqualification.setText(qualification);
                                 pfees.setText(fees);
@@ -251,13 +251,13 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
                 user.put("name", name);
                 user.put("specialization", specialization);
                 user.put("hospital", hospital);
-                user.put("address", experience);
+                user.put("experience", experience);
                 user.put("contact", contact);
                 user.put("qualification",qualification);
                 user.put("fees",fees);
 
                 db.collection("doctor").document(specialization)
-                        .set(user)
+                        .update(user)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

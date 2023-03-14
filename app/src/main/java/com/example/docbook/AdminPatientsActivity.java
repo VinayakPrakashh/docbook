@@ -1,23 +1,26 @@
 package com.example.docbook;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -27,66 +30,67 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class DoctorPatientsActivity extends AppCompatActivity {
+public class AdminPatientsActivity extends AppCompatActivity {
    TextView storenav;
     SweetAlertDialog sDialog;
     private RecyclerView recyclerView;
-    private PatientAdapter patientadapter;
-    private List<PatientAdapter.Product> productList;
+    private AdminPatientAdapter adminpatientadapter;
+    private List<AdminPatientAdapter.Product> productList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_patients);
-        sDialog = new SweetAlertDialog(DoctorPatientsActivity.this);
+        setContentView(R.layout.activity_admin_patients);
+        sDialog = new SweetAlertDialog(AdminPatientsActivity.this);
         storenav=findViewById(R.id.store);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         productList = new ArrayList<>();
-        patientadapter = new PatientAdapter(this, productList);
-        recyclerView.setAdapter(patientadapter);
+        adminpatientadapter = new AdminPatientAdapter(this, productList);
+        recyclerView.setAdapter(adminpatientadapter);
         recyclerView.addItemDecoration(new CartItemDecoration(16));
 
-        Dialog dialog = new Dialog(DoctorPatientsActivity.this);
+        Dialog dialog = new Dialog(AdminPatientsActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
         dialog.setCancelable(false);
         dialog.show();
-        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
-        String specialization= sharedPreferences.getString("specialization","").toString();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        Toast.makeText(this, specialization, Toast.LENGTH_SHORT).show();
+// Replace "patients" with the name of the patient collection
+        db.collection("patients").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Retrieve patient name and phone number
+                                String patientName = document.getId();
+                                String pnumber = document.getString("pnumber");
 
-
-        db.collection("patients")
-                .whereEqualTo("specialization", specialization).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot querySnapshot) {
-                for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
-                    String patientName = documentSnapshot.getString("name");
-                    String pnumber = documentSnapshot.getString("pnumber");
-                    PatientAdapter.Product product = new PatientAdapter.Product(patientName,pnumber);
-                    productList.add(product);
-                    patientadapter.notifyDataSetChanged();
-                    // Do something with patientName and patientPhone
-                }
-            }
-        });
-
-
+                                // Do something with the patient details
+                                AdminPatientAdapter.Product product = new AdminPatientAdapter.Product(patientName,pnumber);
+                                productList.add(product);
+                                adminpatientadapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting patient collection", task.getException());
+                        }
+                    }
+                });
 
 
         dialog.dismiss();
       storenav.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              startActivity(new Intent(DoctorPatientsActivity.this,AddPatientActivity.class));
+              startActivity(new Intent(AdminPatientsActivity.this,AddPatientActivity.class));
           }
       });
 
     }
     public void onBackPressed(){
-        startActivity(new Intent(DoctorPatientsActivity.this,DoctorHomeActivity.class));
+        startActivity(new Intent(AdminPatientsActivity.this,AdminHomeActivity.class));
     }public void  showBottomDialog(){
         final Dialog dialog=new Dialog(this);
         dialog.setContentView(R.layout.bottomsheet_layout);
