@@ -1,27 +1,30 @@
 package com.example.docbook;
 
-import static android.content.Context.MODE_PRIVATE;
+import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -32,7 +35,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapter.ProductViewHolder> {
     private Context context;
-public  String value;
+public  String value,special;
     private List<Product> productList;
 
     public AdminPatientAdapter(Context context, List<Product> productList) {
@@ -168,57 +171,73 @@ dialog.dismiss();
     }
 public void delete(){
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref",MODE_PRIVATE);
-    String specialization = sharedPreferences.getString("specialization", "").toString();
-// Get a reference to the parent document
-    DocumentReference parentDocRef = db.collection("doctor").document(specialization);
 
-// Get a reference to the subcollection
-    CollectionReference subcollectionRef = parentDocRef.collection("patient");
+    db.collection("patients").document(value)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
-// Get a reference to the document to be deleted
-    DocumentReference docRef = subcollectionRef.document(value);
+
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+
+                            special=document.getString("specialization");
+                            DocumentReference parentDocRef = db.collection("patients").document(value);
+
 
 // Delete the document
-    docRef.delete()
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
+                            parentDocRef.delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
 
-                    new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-                            .setTitleText("Patient Data Cleared")
-                            .setConfirmText("OK")
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    // Start the new activity
-                               deleteimage();
-                                    Intent intent = new Intent(context, AdminPatientsActivity.class);
-                                    context.startActivity(intent);
-                                    // Dismiss the dialog
-                                    sweetAlertDialog.dismiss();
-                                }
-                            })
-                            .show();
+                                            new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                                                    .setTitleText("Patient Data Cleared")
+                                                    .setConfirmText("OK")
+                                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                        @Override
+                                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                            // Start the new activity
+                                                            deleteimage();
+                                                            Intent intent = new Intent(context, AdminPatientsActivity.class);
+                                                            context.startActivity(intent);
+                                                            // Dismiss the dialog
+                                                            sweetAlertDialog.dismiss();
+                                                        }
+                                                    })
+                                                    .show();
 
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    new SweetAlertDialog(context)
-                            .setTitleText("Failed to Clear Data")
-                            .show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            new SweetAlertDialog(context)
+                                                    .setTitleText("Failed to Clear Data")
+                                                    .show();
+                                        }
+                                    });
+
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
                 }
             });
+
+
+
 
 }
 
 public void deleteimage(){
-    SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref",MODE_PRIVATE);
-    String specialization = sharedPreferences.getString("specialization", "").toString();
+    Toast.makeText(context, special+" "+value, Toast.LENGTH_SHORT).show();
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference().child("patients/"+specialization+"/"+value+"/image");
+    StorageReference storageRef = storage.getReference().child("patients/"+special+"/"+value);
 
     storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
         @Override

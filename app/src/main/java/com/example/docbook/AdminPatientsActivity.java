@@ -84,7 +84,7 @@ public class AdminPatientsActivity extends AppCompatActivity {
       storenav.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              startActivity(new Intent(AdminPatientsActivity.this,AddPatientActivity.class));
+              startActivity(new Intent(AdminPatientsActivity.this,AdminAddPatientActivity.class));
           }
       });
 
