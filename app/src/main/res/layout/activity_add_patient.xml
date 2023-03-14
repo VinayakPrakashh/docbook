@@ -168,7 +168,20 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter Ward Number"
                 android:textColorHint="#aaaaaa" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
+                android:text="Specialization of Doctor"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/specialization"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Specialization of Doctor"
+                android:textColorHint="#aaaaaa" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
