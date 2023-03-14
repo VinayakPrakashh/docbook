@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,8 +27,8 @@ import com.google.firebase.storage.StorageReference;
 
 public class AdminViewPatientActivity extends AppCompatActivity {
     ScrollView scrollView;
-    public String name,specialization,keyname;
-TextView uname,uage,ugender,upnumber,uward,ureason,uadmission,udischarge,uoccupation,uaddress,uphone,uemail;
+    public String name,specialization,keyname,special;
+TextView uname,uage,ugender,upnumber,uward,ureason,uadmission,uspecialization,udischarge,uoccupation,uaddress,uphone,uemail;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
@@ -52,8 +50,8 @@ ImageView uimageView;
         uphone=scrollView.findViewById(R.id.contact);
         uimageView=findViewById(R.id.photo);
         addp=scrollView.findViewById(R.id.add);
-
-        upnumber=scrollView.findViewById(R.id.pnumber);
+uspecialization=findViewById(R.id.specialization);
+upnumber=scrollView.findViewById(R.id.pnumber);
         ureason=scrollView.findViewById(R.id.reason);
         uadmission=scrollView.findViewById(R.id.admission);
       udischarge=scrollView.findViewById(R.id.discharge);
@@ -74,35 +72,10 @@ name=uname.getText().toString();
 
 
     private void performauth(){
-        Toast.makeText(this, keyname+"   "+specialization, Toast.LENGTH_SHORT).show();
-
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 // Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(keyname).child("image");
 
-// Download the image file into a byte array
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                // Convert the byte array into a Bitmap object
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                // Set the Bitmap object in an ImageView
-
-                uimageView.setImageBitmap(bmp);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors that occur during the download
-                Toast.makeText(AdminViewPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
-            }
-        });
-        db.collection("doctor").document(specialization).collection("patient").document(keyname)
+        db.collection("patients").document(keyname)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -125,6 +98,8 @@ name=uname.getText().toString();
                                 String occupation=document.getString("occupation");
                                 String contact=document.getString("contact");
                                 String reason=document.getString("reason");
+                                 special=document.getString("specialization");
+
                                 uname.setText("Name: " +name);
                                 uage.setText("Age: "+age);
                                 uemail.setText("Email id"+mail);
@@ -137,7 +112,8 @@ name=uname.getText().toString();
                                 uphone.setText("Phone No: "+contact);
                                 ureason.setText("Reason For Admitting: "+reason);
                                 udischarge.setText("Discharge Date: "+discharge);
-
+uspecialization.setText("Specialization of Doctor: "+special);
+                                searchForImage();
                             } else {
                                 Log.d(TAG, "No such document");
                             }
@@ -148,7 +124,25 @@ name=uname.getText().toString();
                 });
 
     }
+    private void searchForImage() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        String imageName = keyname; // replace with your image name
 
+        storageRef.child("patients/"+special+"/" + imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                uimageView.setImageBitmap(bmp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "Error getting image from Firebase Storage", e);
+            }
+        });
+
+    }
 
     }
 

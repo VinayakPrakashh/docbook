@@ -38,6 +38,14 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".AdminViewPatientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminEditPatientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".AdminPatientsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

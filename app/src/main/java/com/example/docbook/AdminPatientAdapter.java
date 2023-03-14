@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,12 +61,12 @@ public  String value;
         Product product = productList.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewNumber.setText(product.getNumber());
-        value=product.getName();
-        Toast.makeText(context, "value", Toast.LENGTH_SHORT).show();
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                value=product.getName();
                 showBottomDialog();
 
             }
@@ -125,7 +124,7 @@ public  String value;
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(context,AddPatientActivity.class);
+                Intent intent=new Intent(context,AdminAddPatientActivity.class);
                 context.startActivity(intent);
 
             }
@@ -134,7 +133,7 @@ public  String value;
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(context,EditPatientActivity.class);
+                Intent intent=new Intent(context,AdminEditPatientActivity.class);
                 intent.putExtra("key", value);
                 context.startActivity(intent);
 
@@ -155,7 +154,7 @@ dialog.dismiss();
             public void onClick(View view) {
 
 
-                Intent intent=new Intent(context,ViewPatientActivity.class);
+                Intent intent=new Intent(context,AdminViewPatientActivity.class);
                 intent.putExtra("key", value);
                 context.startActivity(intent);
 
