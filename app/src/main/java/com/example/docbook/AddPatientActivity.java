@@ -70,9 +70,12 @@ ImageView uimageView;
       udischarge=scrollView.findViewById(R.id.discharge);
 uoccupation=scrollView.findViewById(R.id.occupation);
 uspecialization=scrollView.findViewById(R.id.specialization);
+
 name=uname.getText().toString();
         SharedPreferences sharedPreferences2 = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         specialization = sharedPreferences2.getString("specialization", "").toString();
+        uspecialization.setText(specialization);
+        uspecialization.setEnabled(false);
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +124,7 @@ name=uname.getText().toString();
         user.put("admission", admission);
         user.put("ward", ward);
         user.put("pnumber", pnumber);
-user.put("specialization",specialization);
+
         db.collection("patients").document(name)
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -170,16 +169,10 @@ public void delete(){
     SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref",MODE_PRIVATE);
     String specialization = sharedPreferences.getString("specialization", "").toString();
 // Get a reference to the parent document
-    DocumentReference parentDocRef = db.collection("doctor").document(specialization);
+    DocumentReference parentDocRef = db.collection("patients").document(value);
 
-// Get a reference to the subcollection
-    CollectionReference subcollectionRef = parentDocRef.collection("patient");
 
-// Get a reference to the document to be deleted
-    DocumentReference docRef = subcollectionRef.document(value);
-
-// Delete the document
-    docRef.delete()
+parentDocRef.delete()
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -217,7 +210,7 @@ public void deleteimage(){
     SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref",MODE_PRIVATE);
     String specialization = sharedPreferences.getString("specialization", "").toString();
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference().child("patients/"+specialization+"/"+value+"/image");
+    StorageReference storageRef = storage.getReference().child("patients/"+specialization+"/"+value);
 
     storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
         @Override

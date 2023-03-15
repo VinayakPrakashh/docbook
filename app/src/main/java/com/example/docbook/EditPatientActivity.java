@@ -69,6 +69,7 @@ ImageView uimageView;
         uadmission=scrollView.findViewById(R.id.admission);
       udischarge=scrollView.findViewById(R.id.discharge);
 uoccupation=scrollView.findViewById(R.id.occupation);
+
 name=uname.getText().toString();
         Intent intent = getIntent();
       keyname = intent.getStringExtra("key");
@@ -132,8 +133,8 @@ name=uname.getText().toString();
         user.put("ward", ward);
         user.put("pnumber", pnumber);
 
-        db.collection("doctor").document(specialization).collection("patient").document(keyname)
-                .set(user)
+        db.collection("patients").document(keyname)
+                .update(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -161,7 +162,7 @@ name=uname.getText().toString();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 // Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(keyname).child("image");
+        StorageReference imageRef = storage.getReference().child("patients").child(specialization).child(keyname);
 
 // Download the image file into a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -181,7 +182,7 @@ name=uname.getText().toString();
                 Toast.makeText(EditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
             }
         });
-        db.collection("doctor").document(specialization).collection("patient").document(keyname)
+        db.collection("patients").document(keyname)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -204,6 +205,7 @@ name=uname.getText().toString();
                                 String occupation=document.getString("occupation");
                                 String contact=document.getString("contact");
                                 String reason=document.getString("reason");
+
                                 uname.setText(name);
                                 uage.setText(age);
                                 uemail.setText(mail);
@@ -232,7 +234,7 @@ name=uname.getText().toString();
 
 
         // Create a new StorageReference with the user's UID as the file name
-        StorageReference imageRef = storageRef.child("patients").child(specialization).child(keyname).child("image");
+        StorageReference imageRef = storageRef.child("patients").child(specialization).child(keyname);
 
         imageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -310,7 +312,7 @@ name=uname.getText().toString();
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(specialization).child(keyname).child("image");
+            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(specialization).child(keyname);
 
 // Download the contents of the file as a byte array
             imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

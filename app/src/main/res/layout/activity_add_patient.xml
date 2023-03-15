@@ -180,6 +180,7 @@
                 android:id="@+id/specialization"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:editable="false"
                 android:hint="Enter Specialization of Doctor"
                 android:textColorHint="#aaaaaa" />
             <TextView
