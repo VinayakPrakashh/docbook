@@ -3,17 +3,11 @@ package com.example.docbook;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,9 +22,10 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DoctorPatientsActivity extends AppCompatActivity {
-   TextView storenav;
+
     SweetAlertDialog sDialog;
     private RecyclerView recyclerView;
+
     private PatientAdapter patientadapter;
     private List<PatientAdapter.Product> productList;
     @Override
@@ -38,7 +33,6 @@ public class DoctorPatientsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_patients);
         sDialog = new SweetAlertDialog(DoctorPatientsActivity.this);
-        storenav=findViewById(R.id.store);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -46,7 +40,19 @@ public class DoctorPatientsActivity extends AppCompatActivity {
         patientadapter = new PatientAdapter(this, productList);
         recyclerView.setAdapter(patientadapter);
         recyclerView.addItemDecoration(new CartItemDecoration(16));
+SearchView searchView=findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                patientadapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         Dialog dialog = new Dialog(DoctorPatientsActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
         dialog.setCancelable(false);
@@ -65,7 +71,9 @@ public class DoctorPatientsActivity extends AppCompatActivity {
                 for (QueryDocumentSnapshot documentSnapshot : querySnapshot) {
                     String patientName = documentSnapshot.getString("name");
                     String pnumber = documentSnapshot.getString("pnumber");
-                    PatientAdapter.Product product = new PatientAdapter.Product(patientName,pnumber);
+                    String ward=documentSnapshot.getString("ward");
+
+                    PatientAdapter.Product product = new PatientAdapter.Product(patientName,pnumber,specialization,ward);
                     productList.add(product);
                     patientadapter.notifyDataSetChanged();
                     // Do something with patientName and patientPhone
@@ -77,31 +85,9 @@ public class DoctorPatientsActivity extends AppCompatActivity {
 
 
         dialog.dismiss();
-      storenav.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              startActivity(new Intent(DoctorPatientsActivity.this,AddPatientActivity.class));
-          }
-      });
 
     }
     public void onBackPressed(){
         startActivity(new Intent(DoctorPatientsActivity.this,DoctorHomeActivity.class));
-    }public void  showBottomDialog(){
-        final Dialog dialog=new Dialog(this);
-        dialog.setContentView(R.layout.bottomsheet_layout);
-        LinearLayout video=dialog.findViewById(R.id.layoutShorts);
-        video.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 }

@@ -70,7 +70,7 @@ public String specialization;
         holder.textViewward.setText("Ward No: "+product.getWard());
         specialization=product.getSpecialization();
         value=product.getName();
-        Toast.makeText(context, specialization+" "+value, Toast.LENGTH_SHORT).show();
+
         StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(specialization).child(value);
 
 // Download the contents of the file as a byte array

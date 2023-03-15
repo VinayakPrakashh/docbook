@@ -6,12 +6,17 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,21 +30,23 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductViewHolder> {
+public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductViewHolder>implements Filterable {
     private Context context;
-public  String value;
+public  String value,specialization;
     private List<Product> productList;
+    private List<PatientAdapter.Product> productListFiltered;
 
     public PatientAdapter(Context context, List<Product> productList) {
 
 
         this.context = context;
         this.productList = productList;
-
+        this.productListFiltered = productList;
 
     }
 
@@ -50,7 +57,7 @@ public  String value;
 
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.layout_product, parent, false);
+        View view = inflater.inflate(R.layout.layout_patient, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -59,7 +66,33 @@ public  String value;
 
         Product product = productList.get(position);
         holder.textViewname.setText(product.getName());
-        holder.textViewNumber.setText(product.getNumber());
+        holder.textViewNumber.setText("No: "+ product.getNumber());
+        holder.textViewward.setText("Ward No: "+product.getWard());
+        specialization=product.getSpecialization();
+        value=product.getName();
+
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(specialization).child(value);
+
+// Download the contents of the file as a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
+            @Override
+            public void onSuccess(byte[] bytes) {
+
+                // Create a bitmap image from the byte array
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Display the bitmap image in an ImageView
+
+                holder.imageView.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors that occur
+            }
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,29 +108,31 @@ public  String value;
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return productListFiltered.size();
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewname,textViewNumber;
-
+        TextView textViewname,textViewNumber,textViewward;
+ImageView imageView;
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            textViewname = itemView.findViewById(R.id.product_name);
-            textViewNumber = itemView.findViewById(R.id.product_price);
+            imageView =itemView.findViewById(R.id.image_view);
+            textViewname = itemView.findViewById(R.id.name_text_view);
+            textViewNumber = itemView.findViewById(R.id.number_text_view);
+            textViewward=itemView.findViewById(R.id.ward_text_view);
 
         }
     }
 
     public static class Product {
         private String name;
+        private String number,ward,special;
 
-        private String number;
-
-        public Product(String name,String number) {
+        public Product(String name,String number,String special,String ward) {
             this.name = name;
             this.number = number;
+            this.ward=ward;
+            this.special=special;
         }
 
         public String getName() {
@@ -108,6 +143,45 @@ public  String value;
         public String getNumber() {
             return number;
         }
+        public String getWard() {
+            return ward;
+        }
+        public String getSpecialization() {
+            return special;
+        }
+    }
+@Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String searchText = charSequence.toString().toLowerCase().trim();
+
+                if (searchText.isEmpty()) {
+                    productListFiltered = productList;
+                } else {
+                    List<PatientAdapter.Product> filteredList = new ArrayList<>();
+
+                    for (PatientAdapter.Product product : productList) {
+                        if (product.getName().toLowerCase().contains(searchText)) {
+                            filteredList.add(product);
+                        }
+                    }
+
+                    productListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = productListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                productListFiltered = (List<PatientAdapter.Product>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
     public void  showBottomDialog(){
         final Dialog dialog=new Dialog(context);

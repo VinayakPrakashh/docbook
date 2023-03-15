@@ -60,10 +60,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".DoctorHomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SettingsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".EditProfileActivity"
             android:exported="false"
@@ -83,6 +85,7 @@
         <activity
             android:name=".DoctorPatientsActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity"
