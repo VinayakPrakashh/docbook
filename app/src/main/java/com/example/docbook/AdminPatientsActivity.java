@@ -76,10 +76,12 @@ public class AdminPatientsActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // Retrieve patient name and phone number
                                 String patientName = document.getId();
+                                String special=document.getString("specialization");
+                                String ward=document.getString("ward");
                                 String pnumber = document.getString("pnumber");
 
                                 // Do something with the patient details
-                                AdminPatientAdapter.Product product = new AdminPatientAdapter.Product(patientName,pnumber);
+                                AdminPatientAdapter.Product product = new AdminPatientAdapter.Product(patientName,pnumber,special,ward);
                                 productList.add(product);
                                 adminpatientadapter.notifyDataSetChanged();
                             }

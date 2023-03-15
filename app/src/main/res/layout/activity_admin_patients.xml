@@ -29,6 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/layout_product" />
+        tools:listitem="@layout/layout_patient" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

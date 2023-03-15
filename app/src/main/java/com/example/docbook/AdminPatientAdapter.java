@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +45,7 @@ public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapte
     public String value, special;
     private List<Product> productList;
     private List<Product> productListFiltered;
-
+public String specialization;
 
     public AdminPatientAdapter(Context context, List<Product> productList) {
         this.context = context;
@@ -55,7 +58,7 @@ public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapte
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.layout_product, parent, false);
+        View view = inflater.inflate(R.layout.layout_patient, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -64,6 +67,30 @@ public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapte
         Product product = productListFiltered.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewNumber.setText(product.getNumber());
+        specialization=product.getSpecialization();
+        value=product.getName();
+        Toast.makeText(context, specialization+" "+value, Toast.LENGTH_SHORT).show();
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(specialization).child(value);
+
+// Download the contents of the file as a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
+            @Override
+            public void onSuccess(byte[] bytes) {
+
+                // Create a bitmap image from the byte array
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Display the bitmap image in an ImageView
+
+               holder.imageView.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors that occur
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,23 +108,28 @@ public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapte
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewname,textViewNumber;
-
+        TextView textViewname,textViewNumber,textViewward;
+ImageView imageView;
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
+             imageView =itemView.findViewById(R.id.image_view);
+            textViewname = itemView.findViewById(R.id.name_text_view);
+            textViewNumber = itemView.findViewById(R.id.number_text_view);
+            textViewward=itemView.findViewById(R.id.ward_text_view);
 
-            textViewname = itemView.findViewById(R.id.product_name);
-            textViewNumber = itemView.findViewById(R.id.product_price);
         }
     }
 
     public static class Product {
         private String name;
-        private String number;
+        private String number,ward,special;
 
-        public Product(String name,String number) {
+
+        public Product(String name,String number,String special,String ward) {
             this.name = name;
             this.number = number;
+            this.ward=ward;
+            this.special=special;
         }
 
         public String getName() {
@@ -106,6 +138,12 @@ public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapte
 
         public String getNumber() {
             return number;
+        }
+        public String getWard() {
+            return ward;
+        }
+        public String getSpecialization() {
+            return special;
         }
     }
 
