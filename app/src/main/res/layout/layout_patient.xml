@@ -2,21 +2,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="95dp"
-    android:padding="16dp"
+    android:padding="8dp"
     android:orientation="horizontal"
     android:background="@color/white"
     android:clickable="true"
     android:focusable="true"
+    android:layout_margin="4dp"
+    android:elevation="8dp"
+android:outlineSpotShadowColor="@color/black"
+    android:shadowDx="5"
+    android:shadowDy="5"
+    android:shadowRadius="7"
 
     >
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="96dp"
+        android:layout_height="match_parent"
 
 
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical" />
 
     <LinearLayout
         android:layout_width="185dp"
@@ -39,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Number"
-
+android:textColor="@color/black"
             android:textSize="14sp" />
 
     </LinearLayout>

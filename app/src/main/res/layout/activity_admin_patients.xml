@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back2">
+    android:background="#05A0E8"
+    >
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="684dp"
         android:background="@drawable/search_view_bg"
+        android:textColor="@color/black"
         app:iconifiedByDefault="false"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:queryHint="Search Patient" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="Search Patient..." />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="685dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/layout_patient" />
+        tools:listitem="@layout/layout_patient"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

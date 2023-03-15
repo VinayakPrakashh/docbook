@@ -47,6 +47,7 @@ public class AdminPatientsActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new CartItemDecoration(16));
 
         SearchView searchView = findViewById(R.id.searchView);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
