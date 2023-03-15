@@ -15,12 +15,12 @@ import androidx.cardview.widget.CardView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminHomeActivity extends AppCompatActivity {
-CardView lgout,appointment,profile,dallpatients,ddoctors,daddpatient;
+CardView lgout,appointment,profile,dallpatients,ddoctors,daddpatient,orders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
-profile=findViewById(R.id.radiologist);
+orders=findViewById(R.id.allorders);
 dallpatients=findViewById(R.id.allpatients);
         daddpatient=findViewById(R.id.addpatient);
        ddoctors =findViewById(R.id.doctors);
@@ -52,10 +52,10 @@ dallpatients=findViewById(R.id.allpatients);
                 startActivity(new Intent(AdminHomeActivity.this,DoctorAppointmentActivity.class));
             }
         });
-        profile.setOnClickListener(new View.OnClickListener() {
+        orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AdminHomeActivity.this,DoctorProfileActivity.class));
+                startActivity(new Intent(AdminHomeActivity.this,AdminMedicineActivity.class));
             }
         });
         dallpatients.setOnClickListener(new View.OnClickListener() {

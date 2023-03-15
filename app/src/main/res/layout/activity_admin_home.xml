@@ -151,7 +151,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/radiologist"
+            android:id="@+id/allorders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="1"
@@ -180,7 +180,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PROFILE"
+                    android:text="ALL ORDERS"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />

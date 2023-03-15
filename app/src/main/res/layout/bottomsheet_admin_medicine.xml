@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bkg">
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_remove_24"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutShorts"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:text="Order Details"
+            android:textSize="25sp"
+            android:padding="8dp"
+            android:textColor="@color/lavender"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="158dp"
+            android:layout_height="158dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            />
+
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="44dp"
+            android:layout_toEndOf="@+id/product_image"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Product Name"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCCCC" />
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Amount: "
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="Enter price"
+                    android:backgroundTint="#000000"
+                    android:textColor="@color/black"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+            <!-- First LinearLayout -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#CCCCCC" />
+            <!-- Second LinearLayout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ordered Quantity: "
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/quantity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="Enter Quantity"
+                    android:backgroundTint="#000000"
+                    android:textColor="@color/black"/>
+                <!-- Views for second LinearLayout go here -->
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order Placed By: "
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/user"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="Enter name"
+                    android:backgroundTint="#000000"
+                    android:textColor="@color/black"/>
+                <!-- Views for second LinearLayout go here -->
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pincode: "
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/pin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="Enter pincode"
+                    android:backgroundTint="#000000"
+                    android:textColor="@color/black"/>
+                <!-- Views for second LinearLayout go here -->
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+                <TextView
+                    android:id="@+id/addressTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address: "
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/addr"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:inputType="text"
+                    android:backgroundTint="#000000"
+                    android:hint="Enter your address"
+                    android:imeOptions="actionNext"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delivered"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/green"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:layout_gravity="bottom"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
