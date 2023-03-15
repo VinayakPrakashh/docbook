@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -21,8 +22,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -32,9 +35,11 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapter.ProductViewHolder> {
     private Context context;
-    public String prod,name,price,quantity,uuser,addr,pin,prodname,uname;
+    public String prod, name, price, quantity, uuser, addr, pin, prodname, uname;
     private List<Product> productList;
 
     public AdminProductAdapter(Context context, List<Product> productList) {
@@ -61,8 +66,8 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
             @Override
             public void onClick(View view) {
 
-                prod=product.getName();
-                uuser=product.getPrice();
+                prod = product.getName();
+                uuser = product.getPrice();
 
                 showBottomDialog();
             }
@@ -104,25 +109,25 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
         }
     }
 
-    public void  showBottomDialog(){
+    public void showBottomDialog() {
 
 
-        final Dialog dialog=new Dialog(context);
+        final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.bottomsheet_admin_medicine);
-       TextView pname=dialog.findViewById(R.id.product_name);
-        ImageView imageView=dialog.findViewById(R.id.product_image);
-       TextView  pprice=dialog.findViewById(R.id.price);
-        TextView username=dialog.findViewById(R.id.user);
+        TextView pname = dialog.findViewById(R.id.product_name);
+        ImageView imageView = dialog.findViewById(R.id.product_image);
+        TextView pprice = dialog.findViewById(R.id.price);
+        TextView username = dialog.findViewById(R.id.user);
 
-        TextView pquantity=dialog.findViewById(R.id.quantity);
-
-
-        Button status=dialog.findViewById(R.id.status);
-        TextView pincode=dialog.findViewById(R.id.pin);
-        TextView address=dialog.findViewById(R.id.addr);
+        TextView pquantity = dialog.findViewById(R.id.quantity);
 
 
-       status.setOnClickListener(new View.OnClickListener() {
+        Button status = dialog.findViewById(R.id.status);
+        TextView pincode = dialog.findViewById(R.id.pin);
+        TextView address = dialog.findViewById(R.id.addr);
+
+
+        status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -157,23 +162,23 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
         Toast.makeText(context, uuser, Toast.LENGTH_SHORT).show();
         CollectionReference usersRef = db.collection("bookings");
         DocumentReference docRef = usersRef.document(uuser);
-        DocumentReference docRef2=docRef.collection("itemdetails").document(prod);
+        DocumentReference docRef2 = docRef.collection("itemdetails").document(prod);
         docRef2.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                     prodname = documentSnapshot.getString("name");
-                     uname=documentSnapshot.getString("user");
-                     price = documentSnapshot.getString("cost");
-                     quantity = documentSnapshot.getString("numberofitems");
-                     pin=documentSnapshot.getString("pincode");
-                    addr=documentSnapshot.getString("address");
+                    prodname = documentSnapshot.getString("name");
+                    uname = documentSnapshot.getString("user");
+                    price = documentSnapshot.getString("cost");
+                    quantity = documentSnapshot.getString("numberofitems");
+                    pin = documentSnapshot.getString("pincode");
+                    addr = documentSnapshot.getString("address");
                     // Do something with the data, e.g. update UI
                     pname.setText(prodname);
                     pprice.setText(price);
                     username.setText(uname);
-pincode.setText(pin);
-address.setText(addr);
+                    pincode.setText(pin);
+                    address.setText(addr);
 
                     pquantity.setText(quantity);
 
@@ -183,12 +188,58 @@ address.setText(addr);
         });
 
 
-
-
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+
+    public void delete() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        DocumentReference parentDocRef = db.collection("bookings").document(uuser).collection("itemdetails").document(prod);
+        parentDocRef.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                parentDocRef.delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                                                        .setTitleText("Status Set to Delivered")
+                                                        .setConfirmText("OK")
+                                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                            @Override
+                                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                                Intent intent = new Intent(context, AdminMedicineActivity.class);
+                                                                context.startActivity(intent);
+                                                                sweetAlertDialog.dismiss();
+                                                            }
+                                                        })
+                                                        .show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                new SweetAlertDialog(context)
+                                                        .setTitleText("Failed to Clear Data")
+                                                        .show();
+                                            }
+                                        });
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+    }
 }
+
