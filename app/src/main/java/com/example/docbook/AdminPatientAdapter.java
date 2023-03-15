@@ -12,6 +12,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,30 +31,29 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapter.ProductViewHolder> {
+public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapter.ProductViewHolder> implements Filterable {
     private Context context;
-public  String value,special;
+    private AdminPatientsActivity activity;
+    public String value, special;
     private List<Product> productList;
+    private List<Product> productListFiltered;
+
 
     public AdminPatientAdapter(Context context, List<Product> productList) {
-
-
         this.context = context;
         this.productList = productList;
-
+        this.productListFiltered = productList;
 
     }
-
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.layout_product, parent, false);
         return new ProductViewHolder(view);
@@ -60,27 +61,23 @@ public  String value,special;
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-
-        Product product = productList.get(position);
+        Product product = productListFiltered.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewNumber.setText(product.getNumber());
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                value=product.getName();
-                showBottomDialog();
+                value = product.getName();
+              showBottomDialog();
 
             }
         });
-
-
     }
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return productListFiltered.size();
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
@@ -91,13 +88,11 @@ public  String value,special;
 
             textViewname = itemView.findViewById(R.id.product_name);
             textViewNumber = itemView.findViewById(R.id.product_price);
-
         }
     }
 
     public static class Product {
         private String name;
-
         private String number;
 
         public Product(String name,String number) {
@@ -109,11 +104,45 @@ public  String value,special;
             return name;
         }
 
-
         public String getNumber() {
             return number;
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String searchText = charSequence.toString().toLowerCase().trim();
+
+                if (searchText.isEmpty()) {
+                    productListFiltered = productList;
+                } else {
+                    List<Product> filteredList = new ArrayList<>();
+
+                    for (Product product : productList) {
+                        if (product.getName().toLowerCase().contains(searchText)) {
+                            filteredList.add(product);
+                        }
+                    }
+
+                    productListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = productListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                productListFiltered = (List<Product>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
     public void  showBottomDialog(){
         final Dialog dialog=new Dialog(context);
         dialog.setContentView(R.layout.bottomsheet_layout);
@@ -132,10 +161,10 @@ public  String value,special;
 
             }
         });
-       edit.setOnClickListener(new View.OnClickListener() {
+        edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(context,AdminEditPatientActivity.class);
                 intent.putExtra("key", value);
                 context.startActivity(intent);
@@ -145,9 +174,9 @@ public  String value,special;
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-dialog.dismiss();
+                dialog.dismiss();
 
-             delete();
+                delete();
 
 
             }
@@ -169,87 +198,90 @@ dialog.dismiss();
         dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
-public void delete(){
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public void delete(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    db.collection("patients").document(value)
-            .get()
-            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("patients").document(value)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
 
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
 
-                            special=document.getString("specialization");
-                            DocumentReference parentDocRef = db.collection("patients").document(value);
+                                special=document.getString("specialization");
+                                DocumentReference parentDocRef = db.collection("patients").document(value);
 
 
 // Delete the document
-                            parentDocRef.delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
+                                parentDocRef.delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
 
-                                            new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-                                                    .setTitleText("Patient Data Cleared")
-                                                    .setConfirmText("OK")
-                                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                        @Override
-                                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                            // Start the new activity
-                                                            deleteimage();
-                                                            Intent intent = new Intent(context, AdminPatientsActivity.class);
-                                                            context.startActivity(intent);
-                                                            // Dismiss the dialog
-                                                            sweetAlertDialog.dismiss();
-                                                        }
-                                                    })
-                                                    .show();
+                                                new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                                                        .setTitleText("Patient Data Cleared")
+                                                        .setConfirmText("OK")
+                                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                            @Override
+                                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                                // Start the new activity
+                                                                deleteimage();
+                                                                Intent intent = new Intent(context, AdminPatientsActivity.class);
+                                                                context.startActivity(intent);
+                                                                // Dismiss the dialog
+                                                                sweetAlertDialog.dismiss();
+                                                            }
+                                                        })
+                                                        .show();
 
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            new SweetAlertDialog(context)
-                                                    .setTitleText("Failed to Clear Data")
-                                                    .show();
-                                        }
-                                    });
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                new SweetAlertDialog(context)
+                                                        .setTitleText("Failed to Clear Data")
+                                                        .show();
+                                            }
+                                        });
 
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
                         } else {
-                            Log.d(TAG, "No such document");
+                            Log.d(TAG, "get failed with ", task.getException());
                         }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                }
-            });
+                });
 
 
 
 
+    }
+
+    public void deleteimage(){
+        Toast.makeText(context, special+" "+value, Toast.LENGTH_SHORT).show();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference().child("patients/"+special+"/"+value);
+
+        storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Uh-oh, an error occurred!
+            }
+        });
+
+    }
 }
 
-public void deleteimage(){
-    Toast.makeText(context, special+" "+value, Toast.LENGTH_SHORT).show();
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference().child("patients/"+special+"/"+value);
 
-    storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-        @Override
-        public void onSuccess(Void aVoid) {
-            // File deleted successfully
-        }
-    }).addOnFailureListener(new OnFailureListener() {
-        @Override
-        public void onFailure(@NonNull Exception exception) {
-            // Uh-oh, an error occurred!
-        }
-    });
 
-}
-}

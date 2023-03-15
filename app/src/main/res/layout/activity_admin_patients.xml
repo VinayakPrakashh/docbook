@@ -6,45 +6,29 @@
     android:layout_height="match_parent"
     android:background="@drawable/back2">
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="ALL PATIENTS"
-        android:textColor="@color/white"
-        android:textSize="34sp"
-        android:textStyle="bold"
+        android:layout_marginBottom="684dp"
+        android:background="@drawable/search_view_bg"
+        app:iconifiedByDefault="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:queryHint="Search Patient" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="410dp"
-        android:layout_height="595dp"
+        android:layout_width="413dp"
+        android:layout_height="685dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/layout_product" />
-
-    <TextView
-        android:id="@+id/store"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginEnd="161dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/round_button"
-        android:gravity="center"
-        android:text="+"
-        android:textColor="#0964FF"
-        android:textSize="34dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

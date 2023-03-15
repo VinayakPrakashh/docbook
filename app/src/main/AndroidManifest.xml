@@ -51,6 +51,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminPatientsActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

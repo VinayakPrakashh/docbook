@@ -4,18 +4,12 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,24 +25,40 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminPatientsActivity extends AppCompatActivity {
-   TextView storenav;
+
     SweetAlertDialog sDialog;
     private RecyclerView recyclerView;
     private AdminPatientAdapter adminpatientadapter;
     private List<AdminPatientAdapter.Product> productList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_patients);
         sDialog = new SweetAlertDialog(AdminPatientsActivity.this);
-        storenav=findViewById(R.id.store);
+
         recyclerView = findViewById(R.id.recyclerView);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         productList = new ArrayList<>();
         adminpatientadapter = new AdminPatientAdapter(this, productList);
         recyclerView.setAdapter(adminpatientadapter);
         recyclerView.addItemDecoration(new CartItemDecoration(16));
+
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adminpatientadapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         Dialog dialog = new Dialog(AdminPatientsActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
@@ -81,31 +91,10 @@ public class AdminPatientsActivity extends AppCompatActivity {
 
 
         dialog.dismiss();
-      storenav.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              startActivity(new Intent(AdminPatientsActivity.this,AdminAddPatientActivity.class));
-          }
-      });
+
 
     }
     public void onBackPressed(){
         startActivity(new Intent(AdminPatientsActivity.this,AdminHomeActivity.class));
-    }public void  showBottomDialog(){
-        final Dialog dialog=new Dialog(this);
-        dialog.setContentView(R.layout.bottomsheet_layout);
-        LinearLayout video=dialog.findViewById(R.id.layoutShorts);
-        video.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 }
