@@ -332,10 +332,4 @@ dialog.dismiss();
             dialog.dismiss();
         }
     }
-    @Override
-    public void onBackPressed() {
-       startActivity(new Intent(AdminAddPatientActivity.this,AdminPatientsActivity.class));
-        super.onBackPressed();
-    }
-
 }

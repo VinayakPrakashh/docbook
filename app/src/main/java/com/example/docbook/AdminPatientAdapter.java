@@ -66,8 +66,8 @@ public String specialization;
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productListFiltered.get(position);
         holder.textViewname.setText(product.getName());
-        holder.textViewNumber.setText(product.getNumber());
-        holder.textViewward.setText(product.getWard());
+        holder.textViewNumber.setText("No: "+ product.getNumber());
+        holder.textViewward.setText("Ward No: "+product.getWard());
         specialization=product.getSpecialization();
         value=product.getName();
         Toast.makeText(context, specialization+" "+value, Toast.LENGTH_SHORT).show();
