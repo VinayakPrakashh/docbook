@@ -6,8 +6,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +24,9 @@ import java.util.List;
 
 public class AdminMedicineActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
+
     private AdminProductAdapter adminproductAdapter;
+    Button b1;
     private List<Product> productList;
 
     @Override
@@ -36,7 +41,8 @@ public class AdminMedicineActivity extends AppCompatActivity {
         productList = new ArrayList<>();
         adminproductAdapter = new AdminProductAdapter(this, productList);
         recyclerView.setAdapter(adminproductAdapter);
-
+b1=findViewById(R.id.button);
+        SearchView searchView = findViewById(R.id.searchView);
         // Add the DividerItemDecoration
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this);
         recyclerView.addItemDecoration(dividerItemDecoration);
@@ -44,8 +50,25 @@ public class AdminMedicineActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.loading_dialog);
         dialog.setCancelable(false);
         dialog.show();
-        // Add the DividerItemDecoration
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adminproductAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        // Add the DividerItemDecoration
+b1.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(AdminMedicineActivity.this,AdminHomeActivity.class));
+    }
+});
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Query itemDetailsRef =db.collectionGroup("itemdetails");
 

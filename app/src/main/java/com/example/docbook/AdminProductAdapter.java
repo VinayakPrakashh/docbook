@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,18 +34,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapter.ProductViewHolder> {
     private Context context;
-    public String prod, name, price, quantity, uuser, addr, pin, prodname, uname,pprice;
+    public String prod, name, price, quantity, uuser, addr, pin, prodname, uname, pprice;
     private List<Product> productList;
+    private List<Product> productListFiltered;
 
     public AdminProductAdapter(Context context, List<Product> productList) {
         this.context = context;
         this.productList = productList;
+        this.productListFiltered = productList;
     }
 
     @NonNull
@@ -57,8 +61,8 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+        Product product = productListFiltered.get(position);
 
-        Product product = productList.get(position);
         holder.textViewProductName.setText(product.getName());
         holder.textViewProductUser.setText(product.getUser());
         holder.textViewProductPrice.setText(product.getAmount());
@@ -97,7 +101,7 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
 
                 uuser = product.getUser();
 
-pprice=product.getAmount();
+                pprice = product.getAmount();
 
                 showBottomDialog();
             }
@@ -106,34 +110,69 @@ pprice=product.getAmount();
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return productListFiltered.size();
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView textViewProductName, textViewProductPrice,textViewProductUser;
+        TextView textViewProductName, textViewProductPrice, textViewProductUser;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textViewProductName = itemView.findViewById(R.id.product_name);
             textViewProductUser = itemView.findViewById(R.id.product_user);
-            textViewProductPrice =itemView.findViewById(R.id.product_price);
-            imageView=itemView.findViewById(R.id.product_image);
+            textViewProductPrice = itemView.findViewById(R.id.product_price);
+            imageView = itemView.findViewById(R.id.product_image);
 
         }
+    }
+
+
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String searchText = charSequence.toString().toLowerCase().trim();
+
+                if (searchText.isEmpty()) {
+                    productListFiltered = productList;
+                } else {
+                    List<Product> filteredList = new ArrayList<>();
+
+                    for (Product product : productList) {
+                        if (product.getName().toLowerCase().contains(searchText)) {
+                            filteredList.add(product);
+                        }
+                    }
+
+                    productListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = productListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                productListFiltered = (List<Product>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public static class Product {
         private String name;
         private String user;
-         private String amount;
+        private String amount;
 
-        public Product(String name, String user,String amount) {
+        public Product(String name, String user, String amount) {
             this.name = name;
             this.user = user;
-            this.amount=amount;
+            this.amount = amount;
         }
+
 
         public String getName() {
             return name;
@@ -142,10 +181,13 @@ pprice=product.getAmount();
         public String getUser() {
             return user;
         }
-        public String getAmount(){
+
+        public String getAmount() {
             return amount;
         }
     }
+
+
 
     public void showBottomDialog() {
 
@@ -168,19 +210,17 @@ pprice=product.getAmount();
         status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+delete();
             }
         });
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Get a reference to the Firebase Storage instance
         FirebaseStorage storage = FirebaseStorage.getInstance();
-
 // Create a reference to the image file
         String imagePath = "medicine/" + prod + "/image.jpg";
         StorageReference imageRef = storage.getReference().child(imagePath);
 
-// Download the image into a byte array
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -197,7 +237,7 @@ pprice=product.getAmount();
                 Log.e(TAG, "Error downloading image", exception);
             }
         });
-        Toast.makeText(context, uuser, Toast.LENGTH_SHORT).show();
+
         CollectionReference usersRef = db.collection("bookings");
         DocumentReference docRef = usersRef.document(uuser);
         DocumentReference docRef2 = docRef.collection("itemdetails").document(prod);
@@ -205,6 +245,7 @@ pprice=product.getAmount();
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
+
                     prodname = documentSnapshot.getString("name");
                     uname = documentSnapshot.getString("user");
                     price = documentSnapshot.getString("cost");
@@ -217,10 +258,7 @@ pprice=product.getAmount();
                     username.setText(uname);
                     pincode.setText(pin);
                     address.setText(addr);
-
                     pquantity.setText(quantity);
-
-
                 }
             }
         });
@@ -234,16 +272,19 @@ pprice=product.getAmount();
     }
 
     public void delete() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Toast.makeText(context, uuser, Toast.LENGTH_SHORT).show();
         DocumentReference parentDocRef = db.collection("bookings").document(uuser).collection("itemdetails").document(prod);
         parentDocRef.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
+
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
+
                                 parentDocRef.delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -279,5 +320,6 @@ pprice=product.getAmount();
                     }
                 });
     }
+
 }
 

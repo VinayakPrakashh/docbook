@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,11 +34,11 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductViewHolder>implements Filterable {
+public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductViewHolder> {
     private Context context;
 public  String value,specialization;
     private List<Product> productList;
-    private List<PatientAdapter.Product> productListFiltered;
+    private List<Product> productListFiltered;
 
     public PatientAdapter(Context context, List<Product> productList) {
 
@@ -63,8 +62,7 @@ public  String value,specialization;
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-
-        Product product = productList.get(position);
+        Product product = productListFiltered.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewNumber.setText("No: "+ product.getNumber());
         holder.textViewward.setText("Ward No: "+product.getWard());
@@ -150,7 +148,6 @@ ImageView imageView;
             return special;
         }
     }
-@Override
     public Filter getFilter() {
         return new Filter() {
             @Override
@@ -160,9 +157,9 @@ ImageView imageView;
                 if (searchText.isEmpty()) {
                     productListFiltered = productList;
                 } else {
-                    List<PatientAdapter.Product> filteredList = new ArrayList<>();
+                    List<Product> filteredList = new ArrayList<>();
 
-                    for (PatientAdapter.Product product : productList) {
+                    for (Product product : productList) {
                         if (product.getName().toLowerCase().contains(searchText)) {
                             filteredList.add(product);
                         }
@@ -178,7 +175,7 @@ ImageView imageView;
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                productListFiltered = (List<PatientAdapter.Product>) filterResults.values;
+                productListFiltered = (List<Product>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
