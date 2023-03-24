@@ -22,12 +22,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -76,13 +73,101 @@ name=uname.getText().toString();
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
+                String namecheck=uname.getText().toString();
+                if (namecheck.equals("")){
+                    Toast.makeText(AdminAddPatientActivity.this, "Please Enter Name before Uploading image", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
+                }
             }
         });
        addp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String nname = uname.getText().toString().trim();
+                String age = uage.getText().toString().trim();
+                String gender = ugender.getText().toString().trim();
+                String patientNo = upnumber.getText().toString().trim();
+                String ward = uward.getText().toString().trim();
+                String specialization = uspecialization.getText().toString().trim();
+                String reason = ureason.getText().toString().trim();
+                String admission = uadmission.getText().toString().trim();
+                String discharge = udischarge.getText().toString().trim();
+                String occupation = uoccupation.getText().toString().trim();
+                String contactNumber = uphone.getText().toString().trim();
+                String address = uaddress.getText().toString().trim();
+
+
+
+
+                // Validate the user input
+                if (nname.isEmpty()) {
+                    uname.setError("Name is required.");
+                    uname.requestFocus();
+                    return;
+                }
+
+                if (age.isEmpty()) {
+                    uage.setError("Age is required.");
+                    uage.requestFocus();
+                    return;
+                }
+
+                if (gender.isEmpty()) {
+                    ugender.setError("Gender is required.");
+                    ugender.requestFocus();
+                    return;
+                }
+
+                if (patientNo.isEmpty()) {
+                    upnumber.setError("Patient number is required.");
+                    upnumber.requestFocus();
+                    return;
+                }
+
+                if (ward.isEmpty()) {
+                    uward.setError("Ward number is required.");
+                    uward.requestFocus();
+                    return;
+                }
+
+                if (specialization.isEmpty()) {
+                    uspecialization.setError("Specialization is required.");
+                    uspecialization.requestFocus();
+                    return;
+                }
+
+                if (reason.isEmpty()) {
+                    ureason.setError("Reason is required.");
+                    ureason.requestFocus();
+                    return;
+                }
+
+                if (admission.isEmpty()) {
+                    uadmission.setError("Admission date is required.");
+                    uadmission.requestFocus();
+                    return;
+                }
+
+                if (discharge.isEmpty()) {
+                    udischarge.setError("Discharge date is required.");
+                    udischarge.requestFocus();
+                    return;
+                }
+
+                if (occupation.isEmpty()) {
+                    uoccupation.setError("Occupation is required.");
+                    uoccupation.requestFocus();
+                    return;
+                }
+                if (contactNumber.isEmpty() || contactNumber.length() < 10) {
+                    uphone.setError("Please enter a valid contact number");
+                    return;
+                }  if (address.isEmpty()) {
+                    uaddress.setError("Please enter an address");
+                    return;
+                }
                 name=uname.getText().toString();
                addpatient();
 
@@ -131,9 +216,9 @@ name=uname.getText().toString();
                     @Override
                     public void onSuccess(Void aVoid) {
                         new SweetAlertDialog(AdminAddPatientActivity.this)
-                                .setTitleText("Patient Added")
+                                .setTitleText("Patient Added Successfully")
                                 .show();
-                        performauth();
+
 
                     }
                 })
@@ -141,83 +226,6 @@ name=uname.getText().toString();
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error writing user information to Firestore", e);
-                    }
-                });
-
-    }
-    private void performauth(){
-
-name=uname.getText().toString();
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-// Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("patients").child(spec).child(name);
-
-// Download the image file into a byte array
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                // Convert the byte array into a Bitmap object
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                // Set the Bitmap object in an ImageView
-
-                uimageView.setImageBitmap(bmp);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors that occur during the download
-                Toast.makeText(AdminAddPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
-            }
-        });
-        db.collection("patients").document(name)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-
-
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-
-                                String name = document.getString("name");
-                                String age = document.getString("age");
-                                String address = document.getString("address");
-                                String mail = document.getString("email");
-                                String pnumber=document.getString("pnumber");
-                                String ward=document.getString("ward");
-                                String admission=document.getString("admission");
-                                String discharge=document.getString("discharge");
-                                String gender=document.getString("gender");
-                                String occupation=document.getString("occupation");
-                                String contact=document.getString("contact");
-                                String reason=document.getString("reason");
-                                String special=document.getString("specialization");
-                                uname.setText(name);
-                                uage.setText(age);
-                                uemail.setText(mail);
-                                upnumber.setText(pnumber);
-                                uaddress.setText(address);
-                                uward.setText(ward);
-                                uadmission.setText(admission);
-                                ugender.setText(gender);
-                                uoccupation.setText(occupation);
-                                uphone.setText(contact);
-                                ureason.setText(reason);
-                                udischarge.setText(discharge);
-uspecialization.setText(special);
-
-                            } else {
-                                Log.d(TAG, "No such document");
-                            }
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
-                        }
                     }
                 });
 

@@ -79,15 +79,95 @@ name=uname.getText().toString();
         specialization = sharedPreferences2.getString("specialization", "").toString();
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
+                String namecheck=uname.getText().toString();
+                if (namecheck.equals("")){
+                    Toast.makeText(EditPatientActivity.this, "Please Enter Name before Uploading image", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
+                }
             }
         });
        addp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String nname = uname.getText().toString().trim();
+                String age = uage.getText().toString().trim();
+                String gender = ugender.getText().toString().trim();
+                String patientNo = upnumber.getText().toString().trim();
+                String ward = uward.getText().toString().trim();
+                String reason = ureason.getText().toString().trim();
+                String admission = uadmission.getText().toString().trim();
+                String discharge = udischarge.getText().toString().trim();
+                String occupation = uoccupation.getText().toString().trim();
+                String contactNumber = uphone.getText().toString().trim();
+                String address = uaddress.getText().toString().trim();
 
+
+
+
+                // Validate the user input
+                if (nname.isEmpty()) {
+                    uname.setError("Name is required.");
+                    uname.requestFocus();
+                    return;
+                }
+
+                if (age.isEmpty()) {
+                    uage.setError("Age is required.");
+                    uage.requestFocus();
+                    return;
+                }
+
+                if (gender.isEmpty()) {
+                    ugender.setError("Gender is required.");
+                    ugender.requestFocus();
+                    return;
+                }
+
+                if (patientNo.isEmpty()) {
+                    upnumber.setError("Patient number is required.");
+                    upnumber.requestFocus();
+                    return;
+                }
+
+                if (ward.isEmpty()) {
+                    uward.setError("Ward number is required.");
+                    uward.requestFocus();
+                    return;
+                }
+                if (reason.isEmpty()) {
+                    ureason.setError("Reason is required.");
+                    ureason.requestFocus();
+                    return;
+                }
+
+                if (admission.isEmpty()) {
+                    uadmission.setError("Admission date is required.");
+                    uadmission.requestFocus();
+                    return;
+                }
+
+                if (discharge.isEmpty()) {
+                    udischarge.setError("Discharge date is required.");
+                    udischarge.requestFocus();
+                    return;
+                }
+
+                if (occupation.isEmpty()) {
+                    uoccupation.setError("Occupation is required.");
+                    uoccupation.requestFocus();
+                    return;
+                }
+                if (contactNumber.isEmpty() || contactNumber.length() < 10) {
+                    uphone.setError("Please enter a valid contact number");
+                    return;
+                }  if (address.isEmpty()) {
+                    uaddress.setError("Please enter an address");
+                    return;
+                }
                addpatient();
 
             }
@@ -139,7 +219,7 @@ name=uname.getText().toString();
                     @Override
                     public void onSuccess(Void aVoid) {
                         new SweetAlertDialog(EditPatientActivity.this)
-                                .setTitleText("Patient Added")
+                                .setTitleText("Patient Details Updated Successfully")
                                 .show();
                         performauth();
 
