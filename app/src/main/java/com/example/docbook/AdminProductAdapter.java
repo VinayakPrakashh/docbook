@@ -39,7 +39,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapter.ProductViewHolder> {
     private Context context;
-    public String prod, name, price, quantity, uuser, addr, pin, prodname, uname;
+    public String prod, name, price, quantity, uuser, addr, pin, prodname, uname,pprice;
     private List<Product> productList;
 
     public AdminProductAdapter(Context context, List<Product> productList) {
@@ -60,14 +60,44 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
 
         Product product = productList.get(position);
         holder.textViewProductName.setText(product.getName());
-        holder.textViewProductPrice.setText(product.getPrice());
+        holder.textViewProductUser.setText(product.getUser());
+        holder.textViewProductPrice.setText(product.getAmount());
+        prod = product.getName();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        // Get a reference to the Firebase Storage instance
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+// Create a reference to the image file
+        String imagePath = "medicine/" + prod + "/image.jpg";
+        StorageReference imageRef = storage.getReference().child(imagePath);
+
+// Download the image into a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Convert the byte array into a bitmap
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Set the bitmap to the ImageView
+                holder.imageView.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Log.e(TAG, "Error downloading image", exception);
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                prod = product.getName();
-                uuser = product.getPrice();
+
+                uuser = product.getUser();
+
+pprice=product.getAmount();
 
                 showBottomDialog();
             }
@@ -80,32 +110,40 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewProductName, textViewProductPrice;
+        ImageView imageView;
+        TextView textViewProductName, textViewProductPrice,textViewProductUser;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textViewProductName = itemView.findViewById(R.id.product_name);
-            textViewProductPrice = itemView.findViewById(R.id.product_price);
+            textViewProductUser = itemView.findViewById(R.id.product_user);
+            textViewProductPrice =itemView.findViewById(R.id.product_price);
+            imageView=itemView.findViewById(R.id.product_image);
 
         }
     }
 
     public static class Product {
         private String name;
-        private String price;
+        private String user;
+         private String amount;
 
-        public Product(String name, String price) {
+        public Product(String name, String user,String amount) {
             this.name = name;
-            this.price = price;
+            this.user = user;
+            this.amount=amount;
         }
 
         public String getName() {
             return name;
         }
 
-        public String getPrice() {
-            return price;
+        public String getUser() {
+            return user;
+        }
+        public String getAmount(){
+            return amount;
         }
     }
 

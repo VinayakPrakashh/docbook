@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminMedicineActivity extends AppCompatActivity {
-    Button cartnav;
     private RecyclerView recyclerView;
     private AdminProductAdapter adminproductAdapter;
     private List<Product> productList;
@@ -31,7 +29,7 @@ public class AdminMedicineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_medicine);
 
-        cartnav = findViewById(R.id.cart);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,9 +54,10 @@ public class AdminMedicineActivity extends AppCompatActivity {
                 for (QueryDocumentSnapshot itemDetailsDoc : task.getResult()) {
 
                     String name = itemDetailsDoc.getString("name");
-                    String price = itemDetailsDoc.getString("user");
+                    String user = itemDetailsDoc.getString("user");
+                    String amount = itemDetailsDoc.getString("cost");
 
-                    AdminProductAdapter.Product product = new AdminProductAdapter.Product(name, price);
+                    AdminProductAdapter.Product product = new AdminProductAdapter.Product(name, user,amount);
                     productList.add(product);
                     dialog.dismiss();
                     adminproductAdapter.notifyDataSetChanged();
