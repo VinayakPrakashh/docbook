@@ -40,6 +40,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class EditProfileActivity extends AppCompatActivity {
 EditText uname,uage,uaddress,uphone,ucity,uemail;
 Button save;
+public String nname;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     private static final int REQUEST_CODE_IMAGE_PICKER = 1;
@@ -131,27 +132,7 @@ ImageView uimageView;
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = auth.getCurrentUser().getUid();
-// Create a reference to the image file you want to download
-        StorageReference imageRef = storage.getReference().child("users/" + uid + "/image");
 
-// Download the image file into a byte array
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                // Convert the byte array into a Bitmap object
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                // Set the Bitmap object in an ImageView
-
-                uimageView.setImageBitmap(bmp);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors that occur during the download
-                Toast.makeText(EditProfileActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
-            }
-        });
         db.collection("users")
                 .document(uid)
                 .get()
@@ -164,19 +145,39 @@ ImageView uimageView;
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
-                                String name = document.getString("username");
+                                nname = document.getString("username");
                                 String age = document.getString("age");
                                 String address = document.getString("address");
                                 String city=document.getString("city");
                                 String mail = document.getString("email");
                                 String phone=document.getString("contact");
-                                uname.setText(name);
+                                uname.setText(nname);
                                 uage.setText(age);
                                 uemail.setText(mail);
                                 ucity.setText(city);
                                 uphone.setText(phone);
                                 uaddress.setText(address);
+                                // Create a reference to the image file you want to download
+                                StorageReference imageRef = storage.getReference().child("users/" + nname + "/image");
 
+// Download the image file into a byte array
+                                imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                    @Override
+                                    public void onSuccess(byte[] bytes) {
+                                        // Convert the byte array into a Bitmap object
+                                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                                        // Set the Bitmap object in an ImageView
+
+                                        uimageView.setImageBitmap(bmp);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle any errors that occur during the download
+                                        Toast.makeText(EditProfileActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             } else {
                                 Log.d(TAG, "No such document");
                             }
@@ -186,15 +187,18 @@ ImageView uimageView;
                     }
                 });
 
+
+
+
     }
     private void uploadImageToFirebaseStorage(Uri imageUri) {
 
         // Get the user's UID
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = user.getUid();
+
 
         // Create a new StorageReference with the user's UID as the file name
-        StorageReference imageRef = storageRef.child("users/" + uid + "/image");
+        StorageReference imageRef = storageRef.child("users/" + nname + "/image");
 
         imageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -206,7 +210,7 @@ ImageView uimageView;
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         String uid = auth.getCurrentUser().getUid();
 // Create a reference to the image file you want to download
-                        StorageReference imageRef = storage.getReference().child("users/" + uid + "/image");
+                        StorageReference imageRef = storage.getReference().child("users/" + nname + "/image");
 
 // Download the image file into a byte array
                         Dialog dialog = new Dialog(EditProfileActivity.this);
@@ -236,6 +240,7 @@ ImageView uimageView;
 
                                 .setTitleText("Profile Picture Updated Successfully")
                                 .show();
+                        dialog.dismiss();
                         imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
@@ -244,6 +249,7 @@ ImageView uimageView;
                                 // Do something with the image URL, such as saving it to Firebase Realtime Database or Firestore
                             }
                         });
+                        dialog.dismiss();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -271,7 +277,7 @@ ImageView uimageView;
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             String uid = auth.getCurrentUser().getUid();
-            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + uid + "/image");
+            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + nname + "/image");
 
 // Download the contents of the file as a byte array
             imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

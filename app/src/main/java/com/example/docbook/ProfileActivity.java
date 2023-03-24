@@ -25,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 public class ProfileActivity extends AppCompatActivity {
 
 TextView uname,uage,uemail,uaddress,ucity,uphone;
+public String nname;
 ImageView uimageView;
 
     @Override
@@ -39,34 +40,10 @@ ImageView uimageView;
         uphone=findViewById(R.id.hospital);
         uimageView=findViewById(R.id.profile_photo);
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        String photo="Cardiologist.jpg";
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = auth.getCurrentUser().getUid();
-// Create a reference to the image file you want to download
-        // Get a reference to the Firebase Storage location where the image is stored
-        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + uid + "/image");
-
-// Download the contents of the file as a byte array
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-
-            @Override
-            public void onSuccess(byte[] bytes) {
-
-                // Create a bitmap image from the byte array
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                // Display the bitmap image in an ImageView
-
-                uimageView.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors that occur
-            }
-        });
-
         db.collection("users")
                 .document(uid)
                 .get()
@@ -79,19 +56,41 @@ ImageView uimageView;
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
-                                String name = document.getString("username");
+                              nname = document.getString("username");
                                 String age = document.getString("age");
                                 String address = document.getString("address");
                                 String city=document.getString("city");
                                 String mail = document.getString("email");
                                 String phone=document.getString("contact");
-                                uname.setText(name);
+                                uname.setText(nname);
                                 uage.setText("Age: "+age);
                                uemail.setText("Mail address: "+mail);
                                 ucity.setText("City: "+city);
                                uphone.setText("Contact No: "+phone);
                                 uaddress.setText("Address: "+address);
+// Create a reference to the image file you want to download
+                                // Get a reference to the Firebase Storage location where the image is stored
+                                StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + nname + "/image");
 
+// Download the contents of the file as a byte array
+                                imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
+                                    @Override
+                                    public void onSuccess(byte[] bytes) {
+
+                                        // Create a bitmap image from the byte array
+                                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                                        // Display the bitmap image in an ImageView
+
+                                        uimageView.setImageBitmap(bitmap);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle any errors that occur
+                                    }
+                                });
                             } else {
                                 Log.d(TAG, "No such document");
                             }
@@ -100,6 +99,9 @@ ImageView uimageView;
                         }
                     }
                 });
+
+
+
     }
 
 }

@@ -101,6 +101,7 @@
         android:layout_width="353dp"
         android:layout_height="50dp"
         android:layout_marginTop="48dp"
+
         android:background="@drawable/input_bg"
         android:ems="10"
         android:hint="Full name"

@@ -1,13 +1,21 @@
 package com.example.docbook;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -41,7 +49,27 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ProductVie
         holder.textViewname.setText(product.getName());
         holder.textViewtime.setText(product.getTime());
         holder.textViewdate.setText(product.getDate());
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + product.getName() + "/image");
 
+// Download the contents of the file as a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
+            @Override
+            public void onSuccess(byte[] bytes) {
+
+                // Create a bitmap image from the byte array
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Display the bitmap image in an ImageView
+
+                holder.imageView.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors that occur
+            }
+        });
 
 
     }
@@ -54,13 +82,14 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ProductVie
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView textViewname, textViewtime,textViewdate;
 
+        ImageView imageView;
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textViewname = itemView.findViewById(R.id.product_name);
             textViewtime = itemView.findViewById(R.id.product_price);
-            textViewdate = itemView.findViewById(R.id.product_quantity);
-
+            textViewdate = itemView.findViewById(R.id.product_user);
+imageView=itemView.findViewById(R.id.product_image);
         }
     }
 

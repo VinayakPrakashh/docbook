@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +25,6 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DoctorAppointmentActivity extends AppCompatActivity {
-    Button storenav;
     SweetAlertDialog sDialog;
     private RecyclerView recyclerView;
     private DoctorAdapter doctorAdapter;
@@ -37,7 +34,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_appointment);
         sDialog = new SweetAlertDialog(DoctorAppointmentActivity.this);
-        storenav=findViewById(R.id.store);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -53,6 +50,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("doctor",MODE_PRIVATE);
         String doctorName= sharedPreferences.getString("doctor","").toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Toast.makeText(this, doctorName, Toast.LENGTH_SHORT).show();
         db.collectionGroup("item")
                 .whereEqualTo("doctor",doctorName)
                 .orderBy("date", Query.Direction.ASCENDING)
@@ -67,7 +65,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
                             String name = documentSnapshot.getString("name");
                             String time = documentSnapshot.getString("time");
                             String date = documentSnapshot.getString("date");
-
+                            Toast.makeText(DoctorAppointmentActivity.this, "sdsa"+name+time+date, Toast.LENGTH_SHORT).show();
                             // display or process the appointment details
                             DoctorAdapter.Product product = new DoctorAdapter.Product(name,time,date);
                             productList.add(product);
@@ -87,12 +85,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
 
 
         dialog.dismiss();
-        storenav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(DoctorAppointmentActivity.this,MedicineActivity.class));
-            }
-        });
+
 
     }
     public void onBackPressed(){
