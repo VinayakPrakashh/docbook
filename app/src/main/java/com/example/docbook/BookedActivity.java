@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,7 +26,7 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class BookedActivity extends AppCompatActivity {
-    Button storenav;
+
     SweetAlertDialog sDialog;
     private RecyclerView recyclerView;
     private BookedAdapter bookedAdapter;
@@ -44,10 +43,6 @@ public class BookedActivity extends AppCompatActivity {
         productList = new ArrayList<>();
         bookedAdapter = new BookedAdapter(this, productList);
         recyclerView.setAdapter(bookedAdapter);
-
-
-
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String uid = auth.getCurrentUser().getUid();

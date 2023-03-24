@@ -51,7 +51,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
 
             textViewname = itemView.findViewById(R.id.product_name);
             textViewdate= itemView.findViewById(R.id.product_price);
-            textViewspec = itemView.findViewById(R.id.product_quantity);
+            textViewspec = itemView.findViewById(R.id.product_user);
 
         }
     }
