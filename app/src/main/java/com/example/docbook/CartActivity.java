@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +51,19 @@ storenav=findViewById(R.id.store);
         cartAdapter = new CartAdapter(this, productList);
         recyclerView.setAdapter(cartAdapter);
         recyclerView.addItemDecoration(new CartItemDecoration(16));
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                cartAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         Dialog dialog = new Dialog(CartActivity.this);
         dialog.setContentView(R.layout.loading_dialog);

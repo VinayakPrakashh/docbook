@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,16 +31,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHolder> {
     private Context context;
     public String prod,name,price,manufacturer,quantity,item,expiry,direction,number;
     private List<Product> productList;
-
+    private List<Product> productListFiltered;
     public CartAdapter(Context context, List<Product> productList) {
         this.context = context;
         this.productList = productList;
+        this.productListFiltered = productList;
     }
 
     @NonNull
@@ -52,14 +55,41 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = productList.get(position);
+       Product product = productListFiltered.get(position);
         holder.textViewProductName.setText(product.getName());
         holder.textViewProductPrice.setText("Rs:"+product.getPrice());
         holder.textViewProductQuantity.setText(" x "+product.getQuantity());
-holder.itemView.setOnClickListener(new View.OnClickListener() {
+        prod=product.getName();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        // Get a reference to the Firebase Storage instance
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+// Create a reference to the image file
+        String imagePath = "medicine/" + prod + "/image.jpg";
+        StorageReference imageRef = storage.getReference().child(imagePath);
+
+// Download the image into a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Convert the byte array into a bitmap
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Set the bitmap to the ImageView
+                holder.imageView.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+                Log.e(TAG, "Error downloading image", exception);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        prod=product.getName();
+
         showBottomDialog();
     }
 });
@@ -68,18 +98,20 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return productListFiltered.size();
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView textViewProductName, textViewProductPrice,textViewProductQuantity;
+        ImageView imageView;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
             textViewProductName = itemView.findViewById(R.id.product_name);
-            textViewProductPrice = itemView.findViewById(R.id.product_price);
-            textViewProductQuantity = itemView.findViewById(R.id.product_quantity);
+            textViewProductPrice = itemView.findViewById(R.id.product_user);
+            textViewProductQuantity = itemView.findViewById(R.id.product_price);
+            imageView=itemView.findViewById(R.id.product_image);
 
         }
     }
@@ -106,6 +138,39 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
             return quantity;
         }
     }
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String searchText = charSequence.toString().toLowerCase().trim();
+
+                if (searchText.isEmpty()) {
+                    productListFiltered = productList;
+                } else {
+                    List<Product> filteredList = new ArrayList<>();
+
+                    for (Product product : productList) {
+                        if (product.getName().toLowerCase().contains(searchText)) {
+                            filteredList.add(product);
+                        }
+                    }
+
+                    productListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = productListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                productListFiltered = (List<Product>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
     public void  showBottomDialog(){
 
         String[] quantityOptions = {"1", "2", "3","4","5"};
