@@ -52,7 +52,7 @@
             android:id="@+id/product_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="user"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="14sp" />
 

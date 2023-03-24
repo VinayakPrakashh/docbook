@@ -124,6 +124,7 @@ name=uname.getText().toString();
         user.put("admission", admission);
         user.put("ward", ward);
         user.put("pnumber", pnumber);
+        user.put("specialization",specialization);
 
         db.collection("patients").document(name)
                 .set(user)
@@ -328,11 +329,6 @@ dialog.dismiss();
             });
             dialog.dismiss();
         }
-    }
-    @Override
-    public void onBackPressed() {
-       startActivity(new Intent(AddPatientActivity.this,DoctorPatientsActivity.class));
-        super.onBackPressed();
     }
 
 }

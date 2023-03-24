@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class MedicineActivity extends AppCompatActivity {
     Button cartnav;
+    public String name;
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
     private List<ProductAdapter.Product> productList;
@@ -47,11 +49,25 @@ public class MedicineActivity extends AppCompatActivity {
         // Add the DividerItemDecoration
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this);
         recyclerView.addItemDecoration(dividerItemDecoration);
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                productAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         Dialog dialog = new Dialog(MedicineActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
         dialog.setCancelable(false);
         dialog.show();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("products")
                 .get()
@@ -60,7 +76,7 @@ public class MedicineActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String name = document.getString("name");
+                             name = document.getString("name");
                                 String price = document.getString("cost");
 
                                 ProductAdapter.Product product = new Product(name, price);
@@ -74,6 +90,7 @@ public class MedicineActivity extends AppCompatActivity {
                         }
                     }
                 });
+
         cartnav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
