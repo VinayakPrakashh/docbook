@@ -15,7 +15,15 @@ TextView t1,t2;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         t1=findViewById(R.id.tv);
+        t2=findViewById(R.id.contact);
         String url=t1.getText().toString();
+        t2.setOnClickListener(view -> {
+            String phoneNumber="7902963981";
+            Intent dialerIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+
+// start the dialer activity
+            startActivity(dialerIntent);
+        });
         t1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
