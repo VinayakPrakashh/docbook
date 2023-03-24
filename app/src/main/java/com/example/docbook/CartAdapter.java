@@ -89,7 +89,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-
+        prod=product.getName();
         showBottomDialog();
     }
 });

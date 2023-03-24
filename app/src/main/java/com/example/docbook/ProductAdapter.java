@@ -97,7 +97,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                prod=product.getName();
                 showBottomDialog();
             }
         });
@@ -139,7 +139,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             return price;
         }
     }
-    public Filter getFilter() {
+    public Filter getFilter2() {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {

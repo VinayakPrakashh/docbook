@@ -58,7 +58,7 @@ public class MedicineActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                productAdapter.getFilter().filter(newText);
+                productAdapter.getFilter2().filter(newText);
                 return false;
             }
         });
