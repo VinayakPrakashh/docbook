@@ -2,7 +2,6 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,10 +45,7 @@ b1=findViewById(R.id.button);
         // Add the DividerItemDecoration
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        Dialog dialog = new Dialog(AdminMedicineActivity.this);
-        dialog.setContentView(R.layout.loading_dialog);
-        dialog.setCancelable(false);
-        dialog.show();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -82,7 +78,7 @@ b1.setOnClickListener(new View.OnClickListener() {
 
                     AdminProductAdapter.Product product = new AdminProductAdapter.Product(name, user,amount);
                     productList.add(product);
-                    dialog.dismiss();
+
                     adminproductAdapter.notifyDataSetChanged();
                     // Add each 'product name' field to a list
                     // Do something with the product name here

@@ -14,6 +14,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -44,6 +46,7 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
     public String prod, name, price, quantity, uuser, addr, pin, prodname, uname, pprice;
     private List<Product> productList;
     private List<Product> productListFiltered;
+    int lastPosition=-1;
 
     public AdminProductAdapter(Context context, List<Product> productList) {
         this.context = context;
@@ -62,10 +65,18 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productListFiltered.get(position);
+        if(holder.getAdapterPosition()>lastPosition){
+            Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
+            ((ProductViewHolder)holder).itemView.startAnimation(animation);
+            holder.textViewProductName.setText(product.getName());
+            holder.textViewProductUser.setText("Ordered By "+product.getUser());
+            holder.textViewProductPrice.setText(product.getAmount());
+            lastPosition=holder.getAdapterPosition();
+        }
 
-        holder.textViewProductName.setText(product.getName());
-        holder.textViewProductUser.setText("Ordered By "+product.getUser());
-        holder.textViewProductPrice.setText(product.getAmount());
+
+
+
         prod = product.getName();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
