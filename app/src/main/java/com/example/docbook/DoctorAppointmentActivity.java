@@ -50,7 +50,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("doctor",MODE_PRIVATE);
         String doctorName= sharedPreferences.getString("doctor","").toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Toast.makeText(this, doctorName, Toast.LENGTH_SHORT).show();
+
         db.collectionGroup("item")
                 .whereEqualTo("doctor",doctorName)
                 .orderBy("date", Query.Direction.ASCENDING)
@@ -65,7 +65,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
                             String name = documentSnapshot.getString("name");
                             String time = documentSnapshot.getString("time");
                             String date = documentSnapshot.getString("date");
-                            Toast.makeText(DoctorAppointmentActivity.this, "sdsa"+name+time+date, Toast.LENGTH_SHORT).show();
+
                             // display or process the appointment details
                             DoctorAdapter.Product product = new DoctorAdapter.Product(name,time,date);
                             productList.add(product);

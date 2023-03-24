@@ -64,7 +64,7 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
         Product product = productListFiltered.get(position);
 
         holder.textViewProductName.setText(product.getName());
-        holder.textViewProductUser.setText(product.getUser());
+        holder.textViewProductUser.setText("Ordered By "+product.getUser());
         holder.textViewProductPrice.setText(product.getAmount());
         prod = product.getName();
 

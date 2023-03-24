@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     Button b1;
 
     public String email,password,specialization,login;
-    TextView t1,treg;
+    TextView treg;
 
     FirebaseAuth mauth;
     FirebaseUser mUser;
@@ -105,7 +105,6 @@ login=loginAsSpinner.getItemAtPosition(loginAsSpinner.getSelectedItemPosition())
                     return ;
                 }
 
-// Validate password
                 if (password.isEmpty()) {
                     pass.setError("Password is required");
                     pass.requestFocus();
@@ -115,10 +114,20 @@ login=loginAsSpinner.getItemAtPosition(loginAsSpinner.getSelectedItemPosition())
                     pass.requestFocus();
                     return;
                 }
+else if(Objects.equals(login, "Select")){
+
+                    Toast.makeText(LoginActivity.this, "Please Select Login Type!", Toast.LENGTH_SHORT).show();
+                return;
+}
 
                 if(Objects.equals(login, "Doctor")){
+                    specialization = specializationSpinner.getItemAtPosition(specializationSpinner.getSelectedItemPosition()).toString();
+if(specialization.equals("Select")){
+    Toast.makeText(LoginActivity.this, "Please Select Your Specialization!", Toast.LENGTH_SHORT).show();
+}else{
+    doctor();
+}
 
-                    doctor();
                 } else if (Objects.equals(login,"Admin")) {
 admin();
                 } else if (Objects.equals(login, "Patient")) {
@@ -238,7 +247,7 @@ if(Objects.equals(mail, email) && Objects.equals(pass, password) && Objects.equa
                 }
                 else {
                     dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to Login", Toast.LENGTH_SHORT).show();
                 }
             }
         });

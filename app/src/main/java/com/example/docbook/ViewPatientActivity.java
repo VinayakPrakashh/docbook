@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -78,7 +77,7 @@ name=uname.getText().toString();
 
 
     private void performauth(){
-        Toast.makeText(this, keyname+"   "+specialization, Toast.LENGTH_SHORT).show();
+
 
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -103,7 +102,7 @@ name=uname.getText().toString();
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors that occur during the download
-                Toast.makeText(ViewPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+
             }
         });
         db.collection("patients").document(keyname)

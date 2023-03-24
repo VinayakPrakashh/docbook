@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -61,7 +60,7 @@ SearchView searchView=findViewById(R.id.searchView);
         String specialization= sharedPreferences.getString("specialization","").toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        Toast.makeText(this, specialization, Toast.LENGTH_SHORT).show();
+
 
 
         db.collection("patients")
