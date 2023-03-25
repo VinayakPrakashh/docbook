@@ -17,6 +17,20 @@
         android:theme="@style/Theme.Docbook"
         tools:targetApi="31">
         <activity
+            android:name=".CheckoutActivity"
+            android:exported="false"
+            android:label="@string/title_activity_checkout"
+            android:theme="@style/Theme.Docbook" />
+
+        <!-- This element is required to enable Google Pay in your app. -->
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".BottomNavigation"
             android:exported="false" />
         <activity
@@ -53,9 +67,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminPatientsActivity"
-            android:windowSoftInputMode="adjustPan"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".DoctorProfileActivity"
             android:exported="false"
@@ -63,12 +77,11 @@
         <activity
             android:name=".DoctorHomeActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".EditProfileActivity"
             android:exported="false"
@@ -88,16 +101,12 @@
         <activity
             android:name=".DoctorPatientsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ProfileActivity"
             android:exported="false"
-            android:screenOrientation="portrait" /> <!-- This element is required to enable Google Pay in your app. -->
-        <meta-data
-            android:name="com.google.android.gms.wallet.api.enabled"
-            android:value="true" />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ImageSliderActvity"
             android:exported="false"
