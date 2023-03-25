@@ -133,7 +133,7 @@
                 android:id="@+id/details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Directions for Use"
+                android:text="Directions for Use:"
                 android:textSize="18sp"
                 android:textStyle="bold"
 

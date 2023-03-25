@@ -2,6 +2,7 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -23,12 +24,15 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -37,6 +41,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,9 +206,29 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         EditText address=dialog.findViewById(R.id.addr);
 
 
+
+
         place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(qselects.getText().toString().equals("Select")) {
+                    // Display error message
+                    Toast.makeText(context, "Please select quantity", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(pincode.getText().toString().isEmpty()) {
+                    // Display error message
+                    pincode.setError("Pincode is required");
+                    return;
+                }
+
+                if(address.getText().toString().isEmpty()) {
+                    // Display error message
+                    address.setError("Address is required");
+                    return;
+                }
+
                 String pin=pincode.getText().toString();
                 String addresses=address.getText().toString();
                 String numberofitems=qselects.getText().toString();
@@ -211,64 +236,88 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 int cost=Integer.parseInt(price);
                 int famount=amount*cost;
                 String finalamount=String.valueOf(famount);
-                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Confirm Purchase?")
-                        .setContentText("Total Amount: "+finalamount)
-                        .setConfirmText("Confirm")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                String uname = sharedPreferences.getString("name", "").toString();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                // Check if user has already placed an order with a matching prod value
+                db.collection("bookings").document(uname).collection("itemdetails").document(prod)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-                                String uname = sharedPreferences.getString("name", "").toString();
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                Map<String, Object> data = new HashMap<>();
-                                data.put("cost", finalamount);
-                                data.put("direction", direction);
-                                data.put("expiry", expiry);
-                                data.put("item", item);
-                                data.put("quantity", quantity);
-                                data.put("name", name);
-                                data.put("manufacturer", manufacturer);
-                                data.put("pincode", pin);
-                                data.put("address", addresses);
-                                data.put("user", uname);
-                                data.put("numberofitems",numberofitems);
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        // User has already placed an order with a matching prod value, show an error message
+                                        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                                                .setTitleText("Order Already Placed.")
+                                                .setContentText("You have already placed an order for this product. Please wait for your previous order to be delivered or cancel it to place a new order.")
+                                                .show();
+                                    } else {
+                                        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                                                .setTitleText("Confirm Purchase?")
+                                                .setContentText("Total Amount: "+finalamount)
+                                                .setConfirmText("Confirm")
+                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                    @Override
+                                                    public void onClick(SweetAlertDialog sDialog) {
+                                                        SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                                                        String uname = sharedPreferences.getString("name", "").toString();
+                                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                                        Map<String, Object> data = new HashMap<>();
+                                                        data.put("cost", finalamount);
+                                                        data.put("direction", direction);
+                                                        data.put("expiry", expiry);
+                                                        data.put("item", item);
+                                                        data.put("quantity", quantity);
+                                                        data.put("name", name);
+                                                        data.put("manufacturer", manufacturer);
+                                                        data.put("pincode", pin);
+                                                        data.put("address", addresses);
+                                                        data.put("user", uname);
+                                                        data.put("numberofitems",numberofitems);
 
-                                db.collection("bookings").document(uname).collection("itemdetails").document(prod)
-                                        .set(data)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                new SweetAlertDialog(context)
-                                                        .setTitleText("Order Placed.")
-                                                        .show();
+                                                        db.collection("bookings").document(uname).collection("itemdetails").document(prod)
+                                                                .set(data)
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+                                                                        new SweetAlertDialog(context)
+                                                                                .setTitleText("Order Placed.")
+                                                                                .show();
 
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                // Handle any errors here
-                                            }
-                                        });
+                                                                    }
+                                                                })
+                                                                .addOnFailureListener(new OnFailureListener() {
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+                                                                        // Handle any errors here
+                                                                    }
+                                                                });
 
-                                // perform action on confirm button click
-                                sDialog.dismissWithAnimation();
+                                                        // perform action on confirm button click
+                                                        sDialog.dismissWithAnimation();
+                                                    }
+                                                })
+                                                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                                                    @Override
+                                                    public void onClick(SweetAlertDialog sDialog) {
+                                                        // perform action on cancel button click
+                                                        sDialog.dismissWithAnimation();
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                } else {
+                                    // Handle any errors here
+                                }
                             }
-                        })
-                        .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                // perform action on cancel button click
-                                sDialog.dismissWithAnimation();
-                            }
-                        })
-                        .show();
-
-
+                        });
             }
         });
-       qselects.setOnClickListener(new View.OnClickListener() {
+
+        qselects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -346,5 +395,64 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+    public void gpay(){
+        // Create a PaymentDataRequest object
+        PaymentDataRequest request = PaymentDataRequest.newBuilder()
+                .setTransactionInfo(
+                        TransactionInfo.newBuilder()
+                                .setTotalPriceStatus(WalletConstants.TOTAL_PRICE_STATUS_FINAL)
+                                .setTotalPrice("400")
+                                .setCurrencyCode("INR")
+                                .build())
+                .setMerchantInfo(
+                        MerchantInfo.newBuilder()
+                                .setMerchantName("Your Merchant Name")
+                                .build())
+                .setAllowedPaymentMethods(Arrays.asList(
+                        WalletConstants.PAYMENT_METHOD_CARD,
+                        WalletConstants.PAYMENT_METHOD_TOKENIZED_CARD,
+                        WalletConstants.PAYMENT_METHOD_PAYPAL))
+                .setPhoneNumberRequired(true)
+                .setEmailRequired(true)
+                .setShippingAddressRequired(true)
+                .setShippingAddressRequirements(
+                        ShippingAddressRequirements.newBuilder()
+                                .addAllowedCountryCodes(Arrays.asList("US", "CA"))
+                                .build())
+                .build();
+
+// Initialize the PaymentsClient
+        PaymentsClient paymentsClient = PaymentsUtil.createPaymentsClient(this);
+        final int LOAD_PAYMENT_DATA_REQUEST_CODE = 42;
+
+// Launch the Google Pay payment sheet
+        AutoResolveHelper.resolveTask(
+                paymentsClient.loadPaymentData(request),
+                this,
+                LOAD_PAYMENT_DATA_REQUEST_CODE);
+
+// Handle the payment result
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            switch (requestCode) {
+                case LOAD_PAYMENT_DATA_REQUEST_CODE:
+                    switch (resultCode) {
+                        case Activity.RESULT_OK:
+                            PaymentData paymentData = PaymentData.getFromIntent(data);
+                            // Handle the successful payment
+                            break;
+                        case Activity.RESULT_CANCELED:
+                            // Handle the cancelled payment
+                            break;
+                        case AutoResolveHelper.RESULT_ERROR:
+                            Status status = AutoResolveHelper.getStatusFromIntent(data);
+                            // Handle the payment error
+                            break;
+                    }
+                    break;
+            }
+        }
+
     }
 }
