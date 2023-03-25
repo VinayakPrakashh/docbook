@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
     private Context context;
     private List<Product> productList;
 
+    int lastPosition=-1;
     public BookedAdapter(Context context, List<Product> productList) {
         this.context = context;
         this.productList = productList;
@@ -39,9 +42,15 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.textViewname.setText(product.getName());
-        holder.textViewdate.setText(product.getDate());
-        holder.textViewspec.setText(product.getSpecialization());
+        if(holder.getAdapterPosition()>lastPosition){
+            Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
+            ((BookedAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
+            holder.textViewname.setText(product.getName());
+            holder.textViewdate.setText(product.getDate());
+            holder.textViewspec.setText(product.getSpecialization());
+            lastPosition=holder.getAdapterPosition();
+        }
+
         StorageReference imageRef = FirebaseStorage.getInstance().getReference().child(product.getSpecialization()+".jpg");
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
 

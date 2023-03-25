@@ -15,6 +15,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,6 +41,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
     public String prod,name,price,manufacturer,quantity,item,expiry,direction,number;
     private List<Product> productList;
     private List<Product> productListFiltered;
+    int lastPosition=-1;
     public CartAdapter(Context context, List<Product> productList) {
         this.context = context;
         this.productList = productList;
@@ -56,9 +59,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
        Product product = productListFiltered.get(position);
-        holder.textViewProductName.setText(product.getName());
-        holder.textViewProductPrice.setText("Rs:"+product.getPrice());
-        holder.textViewProductQuantity.setText(" x "+product.getQuantity());
+        if(holder.getAdapterPosition()>lastPosition){
+            Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
+            ((CartAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
+            holder.textViewProductName.setText(product.getName());
+            holder.textViewProductPrice.setText("Rs:"+product.getPrice());
+            holder.textViewProductQuantity.setText(" x "+product.getQuantity());
+            lastPosition=holder.getAdapterPosition();
+        }
+
         prod=product.getName();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Get a reference to the Firebase Storage instance

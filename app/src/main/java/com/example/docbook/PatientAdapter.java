@@ -14,6 +14,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,6 +41,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductV
 public  String value,specialization;
     private List<Product> productList;
     private List<Product> productListFiltered;
+    int lastPosition=-1;
 
     public PatientAdapter(Context context, List<Product> productList) {
 
@@ -63,9 +66,15 @@ public  String value,specialization;
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productListFiltered.get(position);
-        holder.textViewname.setText(product.getName());
-        holder.textViewNumber.setText("No: "+ product.getNumber());
-        holder.textViewward.setText("Ward No: "+product.getWard());
+        if(holder.getAdapterPosition()>lastPosition){
+            Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
+            ((PatientAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
+            holder.textViewname.setText(product.getName());
+            holder.textViewNumber.setText("No: "+ product.getNumber());
+            holder.textViewward.setText("Ward No: "+product.getWard());
+            lastPosition=holder.getAdapterPosition();
+        }
+
         specialization=product.getSpecialization();
         value=product.getName();
 

@@ -16,6 +16,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
@@ -46,6 +48,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public String prod,name,price,manufacturer,quantity,item,expiry,direction;
     private List<Product> productList;
     private List<Product> productListFiltered;
+    int lastPosition=-1;
 
     public ProductAdapter(Context context, List<Product> productList) {
         this.context = context;
@@ -65,8 +68,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
 
         Product product = productListFiltered.get(position);
-        holder.textViewProductName.setText(product.getName());
-        holder.textViewProductPrice.setText( "Rs: "+product.getPrice());
+        if(holder.getAdapterPosition()>lastPosition){
+            Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
+            ((ProductAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
+            holder.textViewProductName.setText(product.getName());
+            holder.textViewProductPrice.setText( "Rs: "+product.getPrice());
+            lastPosition=holder.getAdapterPosition();
+        }
+
         prod=product.getName();
 
 
