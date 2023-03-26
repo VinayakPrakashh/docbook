@@ -6,9 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,49 +24,19 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-        send = (Button) findViewById(R.id.send);
-        amount = (EditText)findViewById(R.id.amount_et);
-        note = (EditText)findViewById(R.id.note);
-        name = (EditText) findViewById(R.id.name);
-        upivirtualid =(EditText) findViewById(R.id.upi_id);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Getting the values from the EditTexts
-                if (TextUtils.isEmpty(name.getText().toString().trim())){
-                    Toast.makeText(PaymentActivity.this," Name is invalid", Toast.LENGTH_SHORT).show();
 
-                }else if (TextUtils.isEmpty(upivirtualid.getText().toString().trim())){
-                    Toast.makeText(PaymentActivity.this," UPI ID is invalid", Toast.LENGTH_SHORT).show();
-
-                }else if (TextUtils.isEmpty(note.getText().toString().trim())){
-                    Toast.makeText(PaymentActivity.this," Note is invalid", Toast.LENGTH_SHORT).show();
-
-                }else if (TextUtils.isEmpty(amount.getText().toString().trim())){
-                    Toast.makeText(PaymentActivity.this," Amount is invalid", Toast.LENGTH_SHORT).show();
-                }else{
-
-                    payUsingUpi(name.getText().toString(), upivirtualid.getText().toString(),
-                            note.getText().toString(), amount.getText().toString());
-
-                }
-
-
-            }
-        });
     }
-    void payUsingUpi(  String name,String upiId, String note, String amount) {
-      String val="5";
-        Log.e("main ", "name "+name +"--up--"+upiId+"--"+ note+"--"+amount);
+   public void payUsingUpi( String amount) {
+
         // main: name pavan n--up--pavan.n.sap@okaxis--Test UPI Payment--5.00
         Uri uri = Uri.parse("upi://pay").buildUpon()
                 .appendQueryParameter("pa", "shibitk1976-1@oksbi")
-                .appendQueryParameter("pn", name)
+                .appendQueryParameter("pn", "Vinayak Prakash")
                 .appendQueryParameter("mc", "")
                 //.appendQueryParameter("tid", "02125412")
                 .appendQueryParameter("tr", "25564594")
-                .appendQueryParameter("tn", note)
-                .appendQueryParameter("am", "5")
+                .appendQueryParameter("tn", "")
+                .appendQueryParameter("am", amount)
                 .appendQueryParameter("cu", "INR")
                 //.appendQueryParameter("refUrl", "blueapp")
                 .build();
@@ -152,6 +120,7 @@ public class PaymentActivity extends AppCompatActivity {
             if (status.equals("success")) {
                 //Code to handle successful transaction here.
                 Toast.makeText(PaymentActivity.this, "Transaction successful.", Toast.LENGTH_SHORT).show();
+
                 Log.e("UPI", "payment successfull: "+approvalRefNo);
             }
             else if("Payment cancelled by user.".equals(paymentCancel)) {

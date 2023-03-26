@@ -2,15 +2,18 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -47,6 +50,8 @@ import java.util.Map;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+
+   public static final int UPI_PAYMENT = 0;
     private Context context;
     public String prod,name,price,manufacturer,quantity,item,expiry,direction;
     private List<Product> productList;
@@ -57,6 +62,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.context = context;
         this.productList = productList;
         this.productListFiltered = productList;
+
     }
 
     @NonNull
@@ -262,15 +268,47 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
                                                     @Override
                                                     public void onClick(SweetAlertDialog sDialog) {
+                                                        Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
                                                         final Dialog dialog2=new Dialog(context);
                                                         dialog2.setContentView(R.layout.bottomsheet_payment);
-                                                        dialog2.show();
+
                                                         ImageView gpay=dialog2.findViewById(R.id.googlepay);
                                                         ImageView cod=dialog2.findViewById(R.id.cashondelivery);
+                                                        dialog2.show();
+                                                        dialog2.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                                                        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                                        dialog2.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
+                                                        dialog2.getWindow().setGravity(Gravity.BOTTOM);
                                                         gpay.setOnClickListener(new View.OnClickListener() {
                                                             @Override
                                                             public void onClick(View view) {
-                                                                Toast.makeText(context, "gpay", Toast.LENGTH_SHORT).show();
+                                                                Uri uri = Uri.parse("upi://pay").buildUpon()
+                                                                        .appendQueryParameter("pa", "shibitk1976-1@oksbi")
+                                                                        .appendQueryParameter("pn", "Vinayak Prakash")
+                                                                        .appendQueryParameter("mc", "")
+                                                                        //.appendQueryParameter("tid", "02125412")
+                                                                        .appendQueryParameter("tr", "25564594")
+                                                                        .appendQueryParameter("tn", "")
+                                                                        .appendQueryParameter("am", finalamount)
+                                                                        .appendQueryParameter("cu", "INR")
+                                                                        //.appendQueryParameter("refUrl", "blueapp")
+                                                                        .build();
+
+
+                                                                Intent upiPayIntent = new Intent(Intent.ACTION_VIEW);
+                                                                upiPayIntent.setData(uri);
+
+                                                                // will always show a dialog to user to choose an app
+                                                                Intent chooser = Intent.createChooser(upiPayIntent, "Pay with");
+
+                                                                // check if intent resolves
+                                                                if(null != chooser.resolveActivity(context.getPackageManager())) {
+                                                                    ((Activity) context).startActivityForResult(chooser, UPI_PAYMENT);
+                                                                } else {
+                                                                    Toast.makeText(context,"No UPI app found, please install one to continue",Toast.LENGTH_SHORT).show();
+                                                                }
+
+
                                                             }
                                                         });
                                                         cod.setOnClickListener(new View.OnClickListener() {
@@ -301,13 +339,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                                                                                 new SweetAlertDialog(context)
                                                                                         .setTitleText("Order Placed.")
                                                                                         .show();
-
+                                                                                dialog2.dismiss();
                                                                             }
                                                                         })
                                                                         .addOnFailureListener(new OnFailureListener() {
                                                                             @Override
                                                                             public void onFailure(@NonNull Exception e) {
                                                                                 // Handle any errors here
+                                                                                dialog2.dismiss();
                                                                             }
                                                                         });
                                                             }
@@ -331,7 +370,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                                     // Handle any errors here
                                 }
                             }
+
                         });
+
             }
         });
 
@@ -414,5 +455,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+
 
 }

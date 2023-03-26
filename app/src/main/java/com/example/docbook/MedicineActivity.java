@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -102,6 +104,18 @@ startActivity(new Intent(MedicineActivity.this,CartActivity.class));
 
     public void onBackPressed(){
         startActivity(new Intent(MedicineActivity.this,HomeActivity.class));
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ProductAdapter.UPI_PAYMENT && resultCode == RESULT_OK) {
+            String status = data.getStringExtra("Status");
+            if(status.equals("SUCCESS")) {
+                Toast.makeText(this, "Payment successful", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 }
