@@ -130,7 +130,7 @@ startActivity(new Intent(HomeActivity.this,AboutActivity.class));
         abouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, PaymentActivity.class));
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             }
         });
         article.setOnClickListener(new View.OnClickListener() {

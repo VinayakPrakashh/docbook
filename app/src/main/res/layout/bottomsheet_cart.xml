@@ -158,7 +158,18 @@
                 android:padding="16dp"
                 android:textColor="@color/black"/>
 
-
+            <Button
+                android:id="@+id/cancelorder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel Order"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#FB0000"
+                android:textColor="#FDFBFB"
+                android:textSize="18sp"
+                android:padding="16dp"
+                android:layout_gravity="bottom"
+                />
 
         </LinearLayout>
     </ScrollView>

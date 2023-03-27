@@ -21,6 +21,8 @@ public class ImageSliderActvity extends AppCompatActivity {
                 mData.add(R.drawable.health1);
                 mData.add(R.drawable.health2);
                 mData.add(R.drawable.health3);
+        mData.add(R.drawable.spring);
+
         mData.add(R.drawable.health4);
 
                 mAdapter = new ViewPagerAdapter(mData, mViewPager2);
