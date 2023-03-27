@@ -268,7 +268,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
                                                     @Override
                                                     public void onClick(SweetAlertDialog sDialog) {
-                                                        Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show();
+
                                                         final Dialog dialog2=new Dialog(context);
                                                         dialog2.setContentView(R.layout.bottomsheet_payment);
 

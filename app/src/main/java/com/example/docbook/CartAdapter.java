@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,24 +18,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHolder> {
     private Context context;
@@ -194,6 +203,116 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         TextView pquantity=dialog.findViewById(R.id.stripTextView);
         TextView pdirection=dialog.findViewById(R.id.discription);
         TextView Qnumber=dialog.findViewById(R.id.numofitems);
+        Button cancel=dialog.findViewById(R.id.cancelorder);
+
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Are You Sure?")
+                        .setContentText("Money will not be returned if already made Payment")
+                        .setConfirmText("Confirm")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                Dialog dialog2 = new Dialog(context);
+                                dialog2.setContentView(R.layout.loading_dialog);
+                                dialog2.setCancelable(false);
+                                dialog2.show();
+                                SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                                String mail = sharedPreferences.getString("mail", "").toString();
+                                String password = sharedPreferences.getString("password", "").toString();
+                                // Inside your authentication method (e.g. email/password authentication)
+                                FirebaseAuth.getInstance().signInWithEmailAndPassword(mail, password)
+                                        .addOnCompleteListener(task2 -> {
+                                            if (task2.isSuccessful()) {
+                                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                String uid = user.getUid();
+                                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                                DocumentReference docRef = db.collection("users").document(uid);
+                                                docRef.get().addOnSuccessListener(documentSnapshot -> {
+                                                    if (documentSnapshot.exists()) {
+                                                        String username2 = documentSnapshot.getString("username");
+
+                                                    }
+                                                });
+                                                Query itemDetailsRef =db.collectionGroup("itemdetails");
+
+                                                itemDetailsRef.get().addOnCompleteListener(task -> {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot itemDetailsDoc : task.getResult()) {
+
+                                                            String name2 = itemDetailsDoc.getString("name");
+                                                            String user2 = itemDetailsDoc.getString("user");
+
+
+
+
+                                                            if(user2.trim().equals("vinayak prakash") && name2.trim().equals(name)){
+
+                                                              itemDetailsDoc.getReference().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                            @Override
+                                                                            public void onSuccess(Void aVoid) {
+                                                                                dialog2.dismiss();
+                                                                                new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                                                                                        .setTitleText("Order has been Cancelled Successfully")
+                                                                                        .setConfirmText("OK")
+                                                                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                                                            @Override
+                                                                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                                                                // Start the new activity
+                                                                                    dialog2.dismiss();
+                                                                                                Intent intent = new Intent(context, CartActivity.class);
+                                                                                                context.startActivity(intent);
+                                                                                                // Dismiss the dialog
+                                                                                                sweetAlertDialog.dismiss();
+                                                                                            }
+                                                                                        })
+                                                                                        .show();
+
+                                                                            }
+                                                                        })
+                                                                        .addOnFailureListener(new OnFailureListener() {
+                                                                            @Override
+                                                                            public void onFailure(@NonNull Exception e) {
+                                                                                dialog.dismiss();
+                                                                                Toast.makeText(context, "Error Please Try again", Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        });
+
+                                                            }
+                                                            else {
+
+                                                            }
+
+                                                                                               }
+                                                    } else {
+                                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                                    }
+                                                });
+
+
+                                            } else {
+                                                // Handle authentication error
+                                            }
+                                        });
+                                // perform action on confirm button click
+                                sDialog.dismissWithAnimation();
+                            }
+                        })
+                        .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                // perform action on cancel button click
+                                sDialog.dismissWithAnimation();
+                            }
+                        })
+                        .show();
+                dialog.dismiss();
+            }
+        });
         TextView pmanufacturer=dialog.findViewById(R.id.manufacturerTextView);
         SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String uname = sharedPreferences.getString("name", "").toString();
