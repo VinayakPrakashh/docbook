@@ -47,6 +47,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHolder> {
     private Context context;
+    public  Product product;
     public String prod,name,price,manufacturer,quantity,item,expiry,direction,number;
     private List<Product> productList;
     private List<Product> productListFiltered;
@@ -67,16 +68,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-       Product product = productListFiltered.get(position);
+
         if(holder.getAdapterPosition()>lastPosition){
             Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
             ((CartAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
+            product = productListFiltered.get(position);
             holder.textViewProductName.setText(product.getName());
             holder.textViewProductPrice.setText("Rs:"+product.getPrice());
             holder.textViewProductQuantity.setText(" x "+product.getQuantity());
             lastPosition=holder.getAdapterPosition();
         }
-
+     product = productListFiltered.get(position);
+        holder.textViewProductName.setText(product.getName());
+        holder.textViewProductPrice.setText("Rs:"+product.getPrice());
+        holder.textViewProductQuantity.setText(" x "+product.getQuantity());
         prod=product.getName();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Get a reference to the Firebase Storage instance

@@ -23,6 +23,7 @@ import java.util.List;
 
 public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductViewHolder> {
     private Context context;
+    public Product product;
     private List<Product> productList;
 
     int lastPosition=-1;
@@ -41,16 +42,20 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = productList.get(position);
+
         if(holder.getAdapterPosition()>lastPosition){
             Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
             ((BookedAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
+            product = productList.get(position);
             holder.textViewname.setText(product.getName());
             holder.textViewdate.setText(product.getDate());
             holder.textViewspec.setText(product.getSpecialization());
             lastPosition=holder.getAdapterPosition();
         }
-
+        product = productList.get(position);
+        holder.textViewname.setText(product.getName());
+        holder.textViewdate.setText(product.getDate());
+        holder.textViewspec.setText(product.getSpecialization());
         StorageReference imageRef = FirebaseStorage.getInstance().getReference().child(product.getSpecialization()+".jpg");
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
 

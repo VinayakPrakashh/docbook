@@ -45,6 +45,7 @@ public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapte
     private Context context;
     private AdminPatientsActivity activity;
     public String value, special;
+    public Product product;
     private List<Product> productList;
     private List<Product> productListFiltered;
     int lastPosition=-1;
@@ -67,16 +68,20 @@ public String specialization;
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = productListFiltered.get(position);
+
         if(holder.getAdapterPosition()>lastPosition){
             Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
             ((AdminPatientAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
+            product = productListFiltered.get(position);
             holder.textViewname.setText(product.getName());
             holder.textViewNumber.setText("No: "+ product.getNumber());
             holder.textViewward.setText("Ward No: "+product.getWard());
             lastPosition=holder.getAdapterPosition();
         }
-
+        product = productListFiltered.get(position);
+        holder.textViewname.setText(product.getName());
+        holder.textViewNumber.setText("No: "+ product.getNumber());
+        holder.textViewward.setText("Ward No: "+product.getWard());
         specialization=product.getSpecialization();
         value=product.getName();
 

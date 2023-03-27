@@ -43,6 +43,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapter.ProductViewHolder> {
     private Context context;
+    public  Product product;
     public String prod, name, price, quantity, uuser, addr, pin, prodname, uname, pprice;
     private List<Product> productList;
     private List<Product> productListFiltered;
@@ -64,17 +65,20 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Product product = productListFiltered.get(position);
+
         if(holder.getAdapterPosition()>lastPosition){
             Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
-            ((ProductViewHolder)holder).itemView.startAnimation(animation);
+            ((ProductViewHolder)holder).itemView.startAnimation(animation);product = productListFiltered.get(position);
             holder.textViewProductName.setText(product.getName());
             holder.textViewProductUser.setText("Ordered By "+product.getUser());
             holder.textViewProductPrice.setText(product.getAmount());
             lastPosition=holder.getAdapterPosition();
         }
+        product = productListFiltered.get(position);
 
-
+        holder.textViewProductName.setText(product.getName());
+        holder.textViewProductUser.setText("Ordered By "+product.getUser());
+        holder.textViewProductPrice.setText(product.getAmount());
 
 
         prod = product.getName();
