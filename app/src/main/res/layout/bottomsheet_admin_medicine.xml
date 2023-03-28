@@ -102,6 +102,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#CCCCCC" />
+            <TextView
+                android:id="@+id/product_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delivery Date"
+                android:textSize="18sp"
+
+                android:padding="16dp"
+                android:textColor="@color/black"/>
             <!-- Second LinearLayout -->
             <LinearLayout
                 android:layout_width="match_parent"

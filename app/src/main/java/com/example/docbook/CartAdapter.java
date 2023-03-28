@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.SimpleDateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -49,7 +51,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHolder> {
     private Context context;
 
-    public String prod,name,price,manufacturer,quantity,item,expiry,direction,number;
+    public String prod,name,price,manufacturer,quantity,item,expiry,direction,number,datedelivery;
     private List<Product> productList;
     private List<Product> productListFiltered;
     int lastPosition=-1;
@@ -198,7 +200,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
 
     public void  showBottomDialog(){
 
-        String[] quantityOptions = {"1", "2", "3","4","5"};
+
+
+// ...
+
+
 
         final Dialog dialog=new Dialog(context);
         dialog.setContentView(R.layout.bottomsheet_cart);
@@ -211,7 +217,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         TextView pdirection=dialog.findViewById(R.id.discription);
         TextView Qnumber=dialog.findViewById(R.id.numofitems);
         Button cancel=dialog.findViewById(R.id.cancelorder);
-
+TextView deliverydate=dialog.findViewById(R.id.product_date);
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,45 +268,52 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
 
                                                             String name2 = itemDetailsDoc.getString("name");
                                                             String user2 = itemDetailsDoc.getString("user");
-
+String delverydate=itemDetailsDoc.getString("delivery");
                                                             SharedPreferences sharedPreferences3 = context.getSharedPreferences("username", MODE_PRIVATE);
                                                             String username2 = sharedPreferences3.getString("user", "").toString();
 
                                                             SharedPreferences.Editor editor = sharedPreferences3.edit();
                                                             editor.clear();
                                                             editor.apply();
-                                                            if(user2.trim().equals(username2) && name2.trim().equals(name)){
+                                                            if(user2.trim().equals(username2) && name2.trim().equals(name)) {
+                                                                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                                                                String date = formatter.format(new Date());
 
-                                                              itemDetailsDoc.getReference().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                            @Override
-                                                                            public void onSuccess(Void aVoid) {
-                                                                                dialog2.dismiss();
-                                                                                new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
-                                                                                        .setTitleText("Order has been Cancelled Successfully")
-                                                                                        .setConfirmText("OK")
-                                                                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                                                            @Override
-                                                                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                                                                // Start the new activity
-                                                                                    dialog2.dismiss();
-                                                                                                Intent intent = new Intent(context, CartActivity.class);
-                                                                                                context.startActivity(intent);
-                                                                                                // Dismiss the dialog
-                                                                                                sweetAlertDialog.dismiss();
-                                                                                            }
-                                                                                        })
-                                                                                        .show();
+                                                              if(delverydate.equals(date.trim()))  {
+                                                                  Toast.makeText(context, "Sorry you cannot cancel order right now", Toast.LENGTH_SHORT).show();
+                                                                  dialog2.dismiss();
+                                                            }
+                                                              else{
+                                                                  itemDetailsDoc.getReference().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                              @Override
+                                                                              public void onSuccess(Void aVoid) {
+                                                                                  dialog2.dismiss();
+                                                                                  new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                                                                                          .setTitleText("Order has been Cancelled Successfully")
+                                                                                          .setConfirmText("OK")
+                                                                                          .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                                                              @Override
+                                                                                              public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                                                                  // Start the new activity
+                                                                                                  dialog2.dismiss();
+                                                                                                  Intent intent = new Intent(context, CartActivity.class);
+                                                                                                  context.startActivity(intent);
+                                                                                                  // Dismiss the dialog
+                                                                                                  sweetAlertDialog.dismiss();
+                                                                                              }
+                                                                                          })
+                                                                                          .show();
 
-                                                                            }
-                                                                        })
-                                                                        .addOnFailureListener(new OnFailureListener() {
-                                                                            @Override
-                                                                            public void onFailure(@NonNull Exception e) {
-                                                                                dialog.dismiss();
-                                                                                Toast.makeText(context, "Error Please Try again", Toast.LENGTH_SHORT).show();
-                                                                            }
-                                                                        });
-
+                                                                              }
+                                                                          })
+                                                                          .addOnFailureListener(new OnFailureListener() {
+                                                                              @Override
+                                                                              public void onFailure(@NonNull Exception e) {
+                                                                                  dialog.dismiss();
+                                                                                  Toast.makeText(context, "Error Please Try again", Toast.LENGTH_SHORT).show();
+                                                                              }
+                                                                          });
+                                                              }
                                                             }
                                                             else {
 
@@ -376,6 +389,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
                     direction = documentSnapshot.getString("direction");
                     quantity = documentSnapshot.getString("quantity");
 number=documentSnapshot.getString("numberofitems");
+datedelivery=documentSnapshot.getString("delivery");
                     // Do something with the data, e.g. update UI
                     pname.setText(name);
                     pprice.setText("Rs: "+price);
@@ -384,6 +398,7 @@ number=documentSnapshot.getString("numberofitems");
                     pmanufacturer.setText("Manufacturer: "+manufacturer);
 Qnumber.setText("Quantity: "+number);
                     pdirection.setText(direction);
+                    deliverydate.setText("Delivery Date: "+datedelivery);
 
                 }
             }

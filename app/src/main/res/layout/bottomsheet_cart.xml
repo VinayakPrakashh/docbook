@@ -101,6 +101,15 @@
 
             </LinearLayout>
             <TextView
+                android:id="@+id/product_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delivery Date"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:textColor="@color/black"/>
+            <TextView
                 android:id="@+id/numofitems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

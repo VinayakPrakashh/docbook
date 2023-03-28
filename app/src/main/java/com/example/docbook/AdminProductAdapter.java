@@ -44,7 +44,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapter.ProductViewHolder> {
     private Context context;
 
-    public String prod, name, price, quantity, uuser, addr, pin, prodname, uname, pprice;
+    public String prod, name, price, quantity, uuser, addr, pin, prodname, uname, pprice,datedelivery;
     private List<Product> productList;
     private List<Product> productListFiltered;
     int lastPosition=-1;
@@ -221,7 +221,7 @@ public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapte
         Button status = dialog.findViewById(R.id.status);
         TextView pincode = dialog.findViewById(R.id.pin);
         TextView address = dialog.findViewById(R.id.addr);
-
+        TextView deliverydate = dialog.findViewById(R.id.product_date);
 
         status.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,6 +268,7 @@ delete();
                     quantity = documentSnapshot.getString("numberofitems");
                     pin = documentSnapshot.getString("pincode");
                     addr = documentSnapshot.getString("address");
+                    datedelivery=documentSnapshot.getString("delivery");
                     // Do something with the data, e.g. update UI
                     pname.setText(prodname);
                     pprice.setText(price);
@@ -275,6 +276,7 @@ delete();
                     pincode.setText(pin);
                     address.setText(addr);
                     pquantity.setText(quantity);
+                    deliverydate.setText("Delivery Deadline: "+datedelivery);
                 }
             }
         });

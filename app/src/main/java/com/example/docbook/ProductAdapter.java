@@ -53,7 +53,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
    public static final int UPI_PAYMENT = 0;
     private Context context;
-    public String prod,name,price,manufacturer,quantity,item,expiry,direction;
+    public String prod,name,price,manufacturer,quantity,item,expiry,direction,date;
     private List<Product> productList;
     private List<Product> productListFiltered;
     int lastPosition=-1;
@@ -212,7 +212,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Button place=dialog.findViewById(R.id.placeorder);
         EditText pincode=dialog.findViewById(R.id.pin);
         EditText address=dialog.findViewById(R.id.addr);
-
+TextView datedelivery=dialog.findViewById(R.id.product_date);
 
 
 
@@ -333,6 +333,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                                                                 data.put("address", addresses);
                                                                 data.put("user", uname);
                                                                 data.put("numberofitems",numberofitems);
+                                                                data.put("delivery",date.trim());
 
                                                                 db.collection("bookings").document(uname).collection("itemdetails").document(prod)
                                                                         .set(data)
@@ -436,7 +437,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                      manufacturer = documentSnapshot.getString("manufacturer");
                      direction = documentSnapshot.getString("direction");
                      quantity = documentSnapshot.getString("quantity");
-
+date=documentSnapshot.getString("delivery");
                     // Do something with the data, e.g. update UI
                     pname.setText(name);
                     pprice.setText("Rs: "+price);
@@ -445,6 +446,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     pmanufacturer.setText("Manufacturer: "+manufacturer);
                     pquantity.setText(quantity);
                     pdirection.setText(direction);
+                    datedelivery.setText("Expected Delivery Date: "+date);
 
                 }
             }
