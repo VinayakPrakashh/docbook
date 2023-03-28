@@ -43,7 +43,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapter.ProductViewHolder> implements Filterable {
     private Context context;
-    private AdminPatientsActivity activity;
+
     public String value, special;
     public Product product;
     private List<Product> productList;

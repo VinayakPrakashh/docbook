@@ -50,7 +50,7 @@ import java.util.Map;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
-public Product product;
+
    public static final int UPI_PAYMENT = 0;
     private Context context;
     public String prod,name,price,manufacturer,quantity,item,expiry,direction;
@@ -81,12 +81,12 @@ public Product product;
 
             Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
             ((ProductAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
-            product = productListFiltered.get(position);
+            Product product = productListFiltered.get(position);
             holder.textViewProductName.setText(product.getName());
             holder.textViewProductPrice.setText( "Rs: "+product.getPrice());
             lastPosition=holder.getAdapterPosition();
         }
-        product = productListFiltered.get(position);
+        Product product = productListFiltered.get(position);
         holder.textViewProductName.setText(product.getName());
         holder.textViewProductPrice.setText( "Rs: "+product.getPrice());
         prod=product.getName();

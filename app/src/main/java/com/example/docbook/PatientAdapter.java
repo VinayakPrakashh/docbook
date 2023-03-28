@@ -38,7 +38,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ProductViewHolder> {
     private Context context;
-    public Product product;
+
 public  String value,specialization;
     private List<Product> productList;
     private List<Product> productListFiltered;
@@ -70,13 +70,13 @@ public  String value,specialization;
         if(holder.getAdapterPosition()>lastPosition){
             Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
             ((PatientAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
-            product = productListFiltered.get(position);
+            Product product = productListFiltered.get(position);
             holder.textViewname.setText(product.getName());
             holder.textViewNumber.setText("No: "+ product.getNumber());
             holder.textViewward.setText("Ward No: "+product.getWard());
             lastPosition=holder.getAdapterPosition();
         }
-        product = productListFiltered.get(position);
+        Product product = productListFiltered.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewNumber.setText("No: "+ product.getNumber());
         holder.textViewward.setText("Ward No: "+product.getWard());

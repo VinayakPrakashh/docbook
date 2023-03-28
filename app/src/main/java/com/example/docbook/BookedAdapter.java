@@ -22,8 +22,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductViewHolder> {
-    private Context context;
-    public Product product;
+
+ public Context context;
     private List<Product> productList;
 
     int lastPosition=-1;
@@ -46,13 +46,13 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
         if(holder.getAdapterPosition()>lastPosition){
             Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
             ((BookedAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
-            product = productList.get(position);
+           Product product = productList.get(position);
             holder.textViewname.setText(product.getName());
             holder.textViewdate.setText(product.getDate());
             holder.textViewspec.setText(product.getSpecialization());
             lastPosition=holder.getAdapterPosition();
         }
-        product = productList.get(position);
+       Product product = productList.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewdate.setText(product.getDate());
         holder.textViewspec.setText(product.getSpecialization());
