@@ -1,6 +1,7 @@
 package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -144,6 +145,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         private String price;
         private String quantity;
 
+
         public Product(String name, String price,String quantity) {
             this.name = name;
             this.price = price;
@@ -214,11 +216,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Are You Sure?")
                         .setContentText("Money will not be returned if already made Payment")
                         .setConfirmText("Confirm")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
 
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
@@ -227,7 +231,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
                                 dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                 dialog2.setCancelable(false);
                                 dialog2.show();
-                                SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+                                SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", MODE_PRIVATE);
                                 String mail = sharedPreferences.getString("mail", "").toString();
                                 String password = sharedPreferences.getString("password", "").toString();
                                 // Inside your authentication method (e.g. email/password authentication)
@@ -238,10 +243,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
                                                 String uid = user.getUid();
                                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                                 DocumentReference docRef = db.collection("users").document(uid);
+
                                                 docRef.get().addOnSuccessListener(documentSnapshot -> {
                                                     if (documentSnapshot.exists()) {
-                                                        String username2 = documentSnapshot.getString("username");
+                                                      String username2 = documentSnapshot.getString("username");
+                                                        SharedPreferences sharedPreferences2 = context.getSharedPreferences("username",MODE_PRIVATE);
+                                                        SharedPreferences.Editor myEdit = sharedPreferences2.edit();
+                                                        myEdit.putString("user", username2);
 
+                                                        myEdit.commit();
                                                     }
                                                 });
                                                 Query itemDetailsRef =db.collectionGroup("itemdetails");
@@ -253,10 +263,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
                                                             String name2 = itemDetailsDoc.getString("name");
                                                             String user2 = itemDetailsDoc.getString("user");
 
+                                                            SharedPreferences sharedPreferences3 = context.getSharedPreferences("username", MODE_PRIVATE);
+                                                            String username2 = sharedPreferences3.getString("user", "").toString();
 
-
-
-                                                            if(user2.trim().equals("vinayak prakash") && name2.trim().equals(name)){
+                                                            SharedPreferences.Editor editor = sharedPreferences3.edit();
+                                                            editor.clear();
+                                                            editor.apply();
+                                                            if(user2.trim().equals(username2) && name2.trim().equals(name)){
 
                                                               itemDetailsDoc.getReference().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                             @Override
@@ -320,7 +333,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
             }
         });
         TextView pmanufacturer=dialog.findViewById(R.id.manufacturerTextView);
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", MODE_PRIVATE);
         String uname = sharedPreferences.getString("name", "").toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Get a reference to the Firebase Storage instance
