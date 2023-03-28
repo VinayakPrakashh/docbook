@@ -4,6 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -67,6 +69,7 @@ public class MedicineActivity extends AppCompatActivity {
 
         Dialog dialog = new Dialog(MedicineActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
         dialog.show();
 

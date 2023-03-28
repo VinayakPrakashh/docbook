@@ -224,6 +224,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
                             public void onClick(SweetAlertDialog sDialog) {
                                 Dialog dialog2 = new Dialog(context);
                                 dialog2.setContentView(R.layout.loading_dialog);
+                                dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                 dialog2.setCancelable(false);
                                 dialog2.show();
                                 SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);

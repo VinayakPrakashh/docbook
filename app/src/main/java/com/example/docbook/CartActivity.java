@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -50,7 +52,7 @@ storenav=findViewById(R.id.store);
         productList = new ArrayList<>();
         cartAdapter = new CartAdapter(this, productList);
         recyclerView.setAdapter(cartAdapter);
-        recyclerView.addItemDecoration(new CartItemDecoration(16));
+
         SearchView searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -67,6 +69,8 @@ storenav=findViewById(R.id.store);
 
         Dialog dialog = new Dialog(CartActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         dialog.setCancelable(false);
         dialog.show();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
