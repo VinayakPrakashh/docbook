@@ -55,7 +55,7 @@ dallpatients=findViewById(R.id.allpatients);
         orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AdminHomeActivity.this,AdminMedicineActivity.class));
+                startActivity(new Intent(AdminHomeActivity.this,AdminProductViewActivity.class));
             }
         });
         dallpatients.setOnClickListener(new View.OnClickListener() {

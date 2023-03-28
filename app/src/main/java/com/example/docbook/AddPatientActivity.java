@@ -42,7 +42,7 @@ EditText uname,uage,ugender,upnumber,uward,ureason,uadmission,udischarge,uoccupa
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
-    private static final int REQUEST_CODE_IMAGE_PICKER = 1;
+    static final int REQUEST_CODE_IMAGE_PICKER = 1;
 ImageView uimageView;
     Button upload,addp;
 

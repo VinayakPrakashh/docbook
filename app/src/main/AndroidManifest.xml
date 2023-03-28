@@ -16,11 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Docbook"
         tools:targetApi="31">
-        <activity
-            android:name=".CheckoutActivity"
-            android:exported="false"
-            android:label="@string/title_activity_checkout"
-            android:theme="@style/Theme.Docbook" />
+
 
         <!-- This element is required to enable Google Pay in your app. -->
         <meta-data
@@ -47,6 +43,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminDoctorDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminProductViewActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
