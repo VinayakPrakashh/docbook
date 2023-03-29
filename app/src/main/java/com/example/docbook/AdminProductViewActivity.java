@@ -149,7 +149,7 @@ showBottomDialog();
         TextView addimage=dialog.findViewById(R.id.addimage);
         Button add=dialog.findViewById(R.id.addmedicine);
         TextView datedelivery=dialog.findViewById(R.id.delivery);
-
+        imageView.setImageResource(R.drawable.baseline_image_24);
 
 addimage.setOnClickListener(new View.OnClickListener() {
     @Override

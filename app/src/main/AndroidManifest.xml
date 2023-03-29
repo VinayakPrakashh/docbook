@@ -16,8 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Docbook"
         tools:targetApi="31">
-
-
+        <activity
+            android:name=".AdminEditMedicine"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <!-- This element is required to enable Google Pay in your app. -->
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
@@ -33,6 +36,7 @@
             android:name=".DoctorAppointmentActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".AdminHomeActivity"
             android:exported="false"
@@ -43,6 +47,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminDoctorDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdminSettingsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

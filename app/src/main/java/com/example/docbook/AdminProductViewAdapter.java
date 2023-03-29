@@ -2,6 +2,8 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import static com.example.docbook.AddPatientActivity.REQUEST_CODE_IMAGE_PICKER;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,12 +24,15 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,7 +41,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -43,6 +52,8 @@ public class AdminProductViewAdapter extends RecyclerView.Adapter<AdminProductVi
    public static final int UPI_PAYMENT = 0;
    public  String product_name;
     private Context context;
+    public String product_price,product_expiry,product_quantity,product_packing,product_manufacturer,product_direction,product_delivery;
+
     public String prod,name,price,manufacturer,quantity,item,expiry,direction,date;
     private List<Product> productList;
     private List<Product> productListFiltered;
@@ -210,6 +221,10 @@ TextView datedelivery=dialog.findViewById(R.id.product_date);
             @Override
             public void onClick(View view) {
 
+                // replace with the actual medicine ID
+                Intent intent = new Intent(context, AdminEditMedicine.class);
+                intent.putExtra("product_name", prod);
+                context.startActivity(intent);
 
 
             }
@@ -334,6 +349,7 @@ date=documentSnapshot.getString("delivery");
         dialog.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+
 
 
 }

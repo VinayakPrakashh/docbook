@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/titlehome">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/about"
+            android:id="@+id/products"
             android:layout_width="132dp"
             android:layout_height="wrap_content"
 
@@ -64,12 +64,12 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/baseline_info_24" />
+                    android:src="@drawable/baseline_production_quantity_limits_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ABOUT"
+                    android:text="ALL PRODUCTS"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -136,9 +136,9 @@
                 android:textAlignment="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/chat" />
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/baseline_account_circle_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -175,7 +175,7 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/baseline_account_circle_24" />
+                    android:src="@drawable/baseline_production_quantity_limits_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -225,7 +225,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/logout"
+            android:id="@+id/settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="2"
@@ -249,12 +249,12 @@
                 <ImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:src="@drawable/baseline_logout_24" />
+                    android:src="@drawable/baseline_settings_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LOGOUT"
+                    android:text="SETTINGS"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
