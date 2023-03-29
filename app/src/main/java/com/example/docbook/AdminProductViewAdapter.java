@@ -2,18 +2,13 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,19 +17,15 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -43,15 +34,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminProductViewAdapter extends RecyclerView.Adapter<AdminProductViewAdapter.ProductViewHolder> {
 
    public static final int UPI_PAYMENT = 0;
+   public  String product_name;
     private Context context;
     public String prod,name,price,manufacturer,quantity,item,expiry,direction,date;
     private List<Product> productList;
@@ -196,208 +186,91 @@ public class AdminProductViewAdapter extends RecyclerView.Adapter<AdminProductVi
 
     public void  showBottomDialog(){
 
-      String[] quantityOptions = {"1", "2", "3","4","5"};
+
 
         final Dialog dialog=new Dialog(context);
-        dialog.setContentView(R.layout.bottomsheet_medicine);
+        dialog.setContentView(R.layout.bottomsheet_admin_product);
        TextView pname=dialog.findViewById(R.id.product_name);
         ImageView imageView=dialog.findViewById(R.id.product_image);
        TextView  pprice=dialog.findViewById(R.id.priceTextView);
         TextView pexpiry=dialog.findViewById(R.id.exp);
         TextView pitem=dialog.findViewById(R.id.item);
-        TextView pquantity=dialog.findViewById(R.id.stripTextView);
+        TextView pquantity=dialog.findViewById(R.id.quantity);
         TextView pdirection=dialog.findViewById(R.id.discription);
         TextView pmanufacturer=dialog.findViewById(R.id.manufacturerTextView);
-        TextView qselects=dialog.findViewById(R.id.qselect);
-        Button place=dialog.findViewById(R.id.placeorder);
-        EditText pincode=dialog.findViewById(R.id.pin);
-        EditText address=dialog.findViewById(R.id.addr);
+
+        Button edits=dialog.findViewById(R.id.edit);
+      Button del=dialog.findViewById(R.id.delete);
 TextView datedelivery=dialog.findViewById(R.id.product_date);
 
 
 
-        place.setOnClickListener(new View.OnClickListener() {
+
+        edits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(qselects.getText().toString().equals("Select")) {
-                    // Display error message
-                    Toast.makeText(context, "Please select quantity", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if(pincode.getText().toString().isEmpty()) {
-                    // Display error message
-                    pincode.setError("Pincode is required");
-                    return;
-                }
-
-                if(address.getText().toString().isEmpty()) {
-                    // Display error message
-                    address.setError("Address is required");
-                    return;
-                }
-
-                String pin=pincode.getText().toString();
-                String addresses=address.getText().toString();
-                String numberofitems=qselects.getText().toString();
-                int amount=Integer.parseInt((qselects.getText().toString()));
-                int cost=Integer.parseInt(price);
-                int famount=amount*cost;
-                String finalamount=String.valueOf(famount);
-                SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-                String uname = sharedPreferences.getString("name", "").toString();
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                // Check if user has already placed an order with a matching prod value
-                db.collection("bookings").document(uname).collection("itemdetails").document(prod)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot document = task.getResult();
-                                    if (document.exists()) {
-                                        // User has already placed an order with a matching prod value, show an error message
-                                        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
-                                                .setTitleText("Order Already Placed.")
-                                                .setContentText("You have already placed an order for this product. Please wait for your previous order to be delivered or cancel it to place a new order.")
-                                                .show();
-                                    } else {
-                                        dialog.dismiss();
-                                        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                                                .setTitleText("Confirm Purchase?")
-                                                .setContentText("Total Amount: "+finalamount)
-                                                .setConfirmText("Confirm")
-                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-
-                                                    @Override
-                                                    public void onClick(SweetAlertDialog sDialog) {
-
-                                                        final Dialog dialog2=new Dialog(context);
-                                                        dialog2.setContentView(R.layout.bottomsheet_payment);
-
-                                                        ImageView gpay=dialog2.findViewById(R.id.googlepay);
-                                                        ImageView cod=dialog2.findViewById(R.id.cashondelivery);
-                                                        dialog2.show();
-                                                        dialog2.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-                                                        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                                        dialog2.getWindow().getAttributes().windowAnimations=R.style.DialogAnimation;
-                                                        dialog2.getWindow().setGravity(Gravity.BOTTOM);
-                                                        gpay.setOnClickListener(new View.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(View view) {
-                                                                Uri uri = Uri.parse("upi://pay").buildUpon()
-                                                                        .appendQueryParameter("pa", "shibitk1976-1@oksbi")
-                                                                        .appendQueryParameter("pn", "Vinayak Prakash")
-                                                                        .appendQueryParameter("mc", "")
-                                                                        //.appendQueryParameter("tid", "02125412")
-                                                                        .appendQueryParameter("tr", "25564594")
-                                                                        .appendQueryParameter("tn", "")
-                                                                        .appendQueryParameter("am", finalamount)
-                                                                        .appendQueryParameter("cu", "INR")
-                                                                        //.appendQueryParameter("refUrl", "blueapp")
-                                                                        .build();
 
 
-                                                                Intent upiPayIntent = new Intent(Intent.ACTION_VIEW);
-                                                                upiPayIntent.setData(uri);
-
-                                                                // will always show a dialog to user to choose an app
-                                                                Intent chooser = Intent.createChooser(upiPayIntent, "Pay with");
-
-                                                                // check if intent resolves
-                                                                if(null != chooser.resolveActivity(context.getPackageManager())) {
-                                                                    ((Activity) context).startActivityForResult(chooser, UPI_PAYMENT);
-                                                                } else {
-                                                                    Toast.makeText(context,"No UPI app found, please install one to continue",Toast.LENGTH_SHORT).show();
-                                                                }
-
-
-                                                            }
-                                                        });
-                                                        cod.setOnClickListener(new View.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(View view) {
-                                                                SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-                                                                String uname = sharedPreferences.getString("name", "").toString();
-                                                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                                                Map<String, Object> data = new HashMap<>();
-                                                                data.put("cost", finalamount);
-                                                                data.put("direction", direction);
-                                                                data.put("expiry", expiry);
-                                                                data.put("item", item);
-                                                                data.put("quantity", quantity);
-                                                                data.put("name", name);
-                                                                data.put("manufacturer", manufacturer);
-                                                                data.put("pincode", pin);
-                                                                data.put("address", addresses);
-                                                                data.put("user", uname);
-                                                                data.put("numberofitems",numberofitems);
-                                                                data.put("delivery",date.trim());
-
-                                                                db.collection("bookings").document(uname).collection("itemdetails").document(prod)
-                                                                        .set(data)
-                                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                            @Override
-                                                                            public void onSuccess(Void aVoid) {
-
-                                                                                new SweetAlertDialog(context)
-                                                                                        .setTitleText("Order Placed.")
-                                                                                        .show();
-                                                                                dialog2.dismiss();
-                                                                            }
-                                                                        })
-                                                                        .addOnFailureListener(new OnFailureListener() {
-                                                                            @Override
-                                                                            public void onFailure(@NonNull Exception e) {
-                                                                                // Handle any errors here
-                                                                                dialog2.dismiss();
-                                                                            }
-                                                                        });
-                                                            }
-                                                        });
-
-
-                                                        // perform action on confirm button click
-                                                        sDialog.dismissWithAnimation();
-                                                    }
-                                                })
-                                                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
-                                                    @Override
-                                                    public void onClick(SweetAlertDialog sDialog) {
-                                                        // perform action on cancel button click
-                                                        sDialog.dismissWithAnimation();
-                                                    }
-                                                })
-                                                .show();
-                                    }
-                                } else {
-                                    // Handle any errors here
-                                }
-                            }
-
-                        });
 
             }
         });
 
-        qselects.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Select");
-                builder.setSingleChoiceItems(quantityOptions, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle gender selection here
-                        String selectedquantity = quantityOptions[which];
-                        qselects.setText(selectedquantity);
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
-            }
-        });
+       del.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                       .setTitleText("Confirm?")
+                       .setContentText("Are you Sure You want to delete product?")
+                       .setConfirmText("Confirm")
+                       .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                           @Override
+                           public void onClick(SweetAlertDialog sDialog) {
+
+                               FirebaseFirestore db = FirebaseFirestore.getInstance();
+                               CollectionReference productsCollectionRef = db.collection("products");
+                               DocumentReference itemDocRef = productsCollectionRef.document(prod);
+
+                               itemDocRef.delete()
+                                       .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                           @Override
+                                           public void onSuccess(Void aVoid) {
+
+                                               new SweetAlertDialog(context)
+                                                       .setTitleText("Medicine Removed")
+                                                       .setConfirmButton("OK", sDialog1 -> {
+                                                           sDialog1.dismissWithAnimation();
+                                                           context.startActivity(new Intent(context, AdminProductViewActivity.class));
+                                                       })
+                                                       .show();
+
+
+                                           }
+                                       })
+                                       .addOnFailureListener(new OnFailureListener() {
+                                           @Override
+                                           public void onFailure(@NonNull Exception e) {
+                                               Log.w(TAG, "Error deleting document", e);
+                                           }
+                                       });
+
+
+                               // perform action on confirm button click
+                               sDialog.dismissWithAnimation();
+                           }
+                       })
+                       .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
+                           @Override
+                           public void onClick(SweetAlertDialog sDialog) {
+                               // perform action on cancel button click
+                               sDialog.dismissWithAnimation();
+                           }
+                       })
+                       .show();
+
+
+
+           }
+       });
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         // Get a reference to the Firebase Storage instance
         FirebaseStorage storage = FirebaseStorage.getInstance();

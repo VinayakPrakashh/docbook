@@ -118,6 +118,15 @@
 
                 android:padding="16dp"
                 android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="quantity"
+                android:textSize="18sp"
+
+                android:padding="16dp"
+                android:textColor="@color/black"/>
             <!-- First LinearLayout -->
 
             <TextView
@@ -165,10 +174,10 @@
 
 
             <Button
-                android:id="@+id/placeorder"
+                android:id="@+id/edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Edit or delete"
+                android:text="Edit Product"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/green"
                 android:textColor="#000000"
@@ -176,7 +185,18 @@
                 android:padding="16dp"
                 android:layout_gravity="bottom"
                 />
-
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Product"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#FF0000"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:layout_gravity="bottom"
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
