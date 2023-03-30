@@ -199,13 +199,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
     }
 
     public void  showBottomDialog(){
-
-
-
-// ...
-
-
-
         final Dialog dialog=new Dialog(context);
         dialog.setContentView(R.layout.bottomsheet_cart);
         TextView pname=dialog.findViewById(R.id.product_name);
