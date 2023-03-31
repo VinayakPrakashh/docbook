@@ -304,6 +304,6 @@ dialog.dismiss();
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(EditProfileActivity.this,MainActivity.class));
+        startActivity(new Intent(EditProfileActivity.this,HomeActivity.class));
     }
 }

@@ -61,8 +61,9 @@
 
                         <ImageView
                             android:id="@+id/imagepic"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:layout_gravity="center"
                             android:src="@drawable/icon"
                             tools:layout_editor_absoluteX="99dp"
                             tools:layout_editor_absoluteY="214dp" />
