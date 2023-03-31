@@ -82,7 +82,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -110,6 +110,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
                     <LinearLayout
+                        android:id="@+id/bstore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -118,7 +119,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/bstore"
+
                             android:layout_width="wrap_content"
                             android:layout_height="75dp"
                             android:layout_margin="10dp"
@@ -136,6 +137,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/bcart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -144,7 +146,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/bcart"
+
                             android:layout_width="match_parent"
                             android:layout_height="75dp"
                             android:layout_margin="10dp"
@@ -162,6 +164,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/bappointment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -170,7 +173,7 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/bappointment"
+
                             android:layout_width="match_parent"
                             android:layout_height="75dp"
                             android:layout_margin="10dp"
@@ -273,6 +276,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/sstore"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
@@ -285,7 +289,7 @@
                             android:background="@drawable/white_top_buttons">
 
                             <ImageView
-                                android:id="@+id/imageViewgfh6"
+
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginStart="16dp"
@@ -312,6 +316,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/scart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -324,7 +329,7 @@
                             android:background="@drawable/white_top_buttons">
 
                             <ImageView
-                                android:id="@+id/imageViewghfgh6"
+
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginStart="16dp"
@@ -351,6 +356,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/sappointment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -363,7 +369,7 @@
                             android:background="@drawable/white_top_buttons">
 
                             <ImageView
-                                android:id="@+id/imageViewghfg6"
+
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginStart="16dp"
@@ -390,6 +396,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/barticle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -402,7 +409,7 @@
                             android:background="@drawable/white_top_buttons">
 
                             <ImageView
-                                android:id="@+id/imageViewghg6"
+
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginStart="16dp"
@@ -435,6 +442,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/bprofile"
                         android:layout_width="70dp"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
@@ -447,7 +455,7 @@
                             android:background="@drawable/white_top_buttons">
 
                             <ImageView
-                                android:id="@+id/imageVfgiew6"
+
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginStart="16dp"
@@ -474,6 +482,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/babout"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -513,6 +522,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/bsettings"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -525,7 +535,7 @@
                             android:background="@drawable/white_top_buttons">
 
                             <ImageView
-                                android:id="@+id/imageViggew6"
+
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginStart="16dp"
@@ -552,6 +562,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/blogout"
                         android:layout_width="70dp"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
@@ -564,7 +575,7 @@
                             android:background="@drawable/white_top_buttons">
 
                             <ImageView
-                                android:id="@+id/imageVoijiew6"
+
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginStart="16dp"

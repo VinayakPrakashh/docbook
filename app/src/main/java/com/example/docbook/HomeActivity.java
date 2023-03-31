@@ -10,11 +10,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,20 +29,27 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class HomeActivity extends AppCompatActivity {
 
+LinearLayout store,cart,appointment;
+TextView user;
 
-
-    CardView lgout, appointment, store, cart, abouts, article;
+    LinearLayout lgout, abouts, article,profile,s_cart,s_appointment,s_store,settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        lgout = findViewById(R.id.bookings);
-        appointment = findViewById(R.id.pediatrician);
-        store = findViewById(R.id.orthologist);
-        cart = findViewById(R.id.cardiologist);
-        abouts = findViewById(R.id.neurologist);
-        article = findViewById(R.id.radiologist);
+        setContentView(R.layout.activity_new_home);
+        lgout = findViewById(R.id.blogout);
+        appointment = findViewById(R.id.bappointment);
+        store = findViewById(R.id.bstore);
+        cart = findViewById(R.id.bcart);
+        abouts = findViewById(R.id.babout);
+        article = findViewById(R.id.barticle);
+profile=findViewById(R.id.bprofile);
+s_cart=findViewById(R.id.scart);
+s_appointment=findViewById(R.id.sappointment);
+s_store=findViewById(R.id.sstore);
+settings=findViewById(R.id.bsettings);
+user=findViewById(R.id.username);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -69,9 +77,10 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d(TAG, "Error getting document: " + e);
             }
         });
-
-
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        String uname = sharedPreferences.getString("name", "").toString();
+user.setText(uname);
+
         String mail = sharedPreferences.getString("mail", "").toString();
         String password = sharedPreferences.getString("password", "").toString();
         // Inside your authentication method (e.g. email/password authentication)
@@ -101,15 +110,38 @@ public class HomeActivity extends AppCompatActivity {
                         // Handle authentication error
                     }
                 });
-
+profile.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(HomeActivity.this,ProfileActivity.class));
+    }
+});
         lgout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-startActivity(new Intent(HomeActivity.this,AboutActivity.class));
+                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                // When the user clicks the logout button
+                FirebaseAuth.getInstance().signOut();
+                Context context = view.getContext();
+// Reset the value of toast_displayed to false
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editors = prefs.edit();
+                editors.putBoolean("toast_displayed", false);
+                editors.apply();
+                startActivity(new Intent(HomeActivity.this, MainActivity.class));
 
             }
         });
         appointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, AppointmentActivity.class));
+            }
+        });
+        s_appointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, AppointmentActivity.class));
@@ -121,7 +153,19 @@ startActivity(new Intent(HomeActivity.this,AboutActivity.class));
                 startActivity(new Intent(HomeActivity.this, MedicineActivity.class));
             }
         });
+        s_store.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, MedicineActivity.class));
+            }
+        });
         cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, CartActivity.class));
+            }
+        });
+        s_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, CartActivity.class));
@@ -130,13 +174,19 @@ startActivity(new Intent(HomeActivity.this,AboutActivity.class));
         abouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                startActivity(new Intent(HomeActivity.this, AboutActivity.class));
             }
         });
         article.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, ImageSliderActvity.class));
+            }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             }
         });
     }
