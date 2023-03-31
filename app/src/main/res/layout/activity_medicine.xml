@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#04CA25">
+    android:background="#5e3bee"
+    >
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
@@ -35,12 +36,12 @@
         android:layout_width="388dp"
         android:layout_height="48dp"
         android:layout_marginTop="12dp"
-        android:backgroundTint="@color/teal_200"
+        android:backgroundTint="@color/white"
 android:textAlignment="center"
         android:gravity="center_horizontal"
         android:text="View Cart"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        android:textColor="#5e3bee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
