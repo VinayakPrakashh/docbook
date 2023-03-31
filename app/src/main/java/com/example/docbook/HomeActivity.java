@@ -75,6 +75,7 @@ user=findViewById(R.id.username);
                     String username = documentSnapshot.getString("username");
                     SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                    user.setText(username);
                     myEdit.putString("name", username);
                     myEdit.commit();
                 } else {
@@ -233,6 +234,7 @@ profile.setOnClickListener(new View.OnClickListener() {
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             }
         });
+        user.setText(uname);
     }
 
     @Override

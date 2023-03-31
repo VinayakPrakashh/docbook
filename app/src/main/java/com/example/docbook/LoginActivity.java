@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,17 +35,17 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     EditText mail,pass;
-    Button b1;
 
+AppCompatButton b1,treg;
     public String email,password,specialization,login;
-    TextView treg;
+
 
     FirebaseAuth mauth;
     FirebaseUser mUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_test);
         mail=findViewById(R.id.username);
         pass=findViewById(R.id.password);
         b1=findViewById(R.id.b1);
@@ -58,6 +59,15 @@ public class LoginActivity extends AppCompatActivity {
         Spinner loginAsSpinner = findViewById(R.id.loginas);
         TextView specializationTextView = findViewById(R.id.textView);
         Spinner specializationSpinner = findViewById(R.id.specialization);
+        Spinner spinner = findViewById(R.id.specialization);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spec_types, R.layout.spinner_item_layout);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.user_types, R.layout.spinner_item_layout);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        loginAsSpinner.setAdapter(adapter2);
+
 
 // Step 2: Set an OnItemSelectedListener on the loginas spinner
 

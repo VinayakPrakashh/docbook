@@ -159,18 +159,20 @@
         android:layout_width="64dp"
         android:layout_height="53dp"
         android:layout_marginStart="36dp"
+        android:background="@color/float_transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:srcCompat="@drawable/calendar" />
+        app:srcCompat="@drawable/baseline_date_range_24" />
 
     <ImageButton
         android:id="@+id/time"
         android:layout_width="64dp"
         android:layout_height="53dp"
         android:layout_marginStart="36dp"
+        android:background="@color/float_transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10"
-        app:srcCompat="@drawable/calendar" />
+        app:srcCompat="@drawable/time" />
 
     <TextView
         android:id="@+id/datetex"
