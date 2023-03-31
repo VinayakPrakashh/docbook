@@ -6,16 +6,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -31,6 +37,8 @@ public class HomeActivity extends AppCompatActivity {
 
 LinearLayout store,cart,appointment;
 TextView user;
+ConstraintLayout finddoctor;
+ImageView img;
 
     LinearLayout lgout, abouts, article,profile,s_cart,s_appointment,s_store,settings;
 
@@ -44,6 +52,8 @@ TextView user;
         cart = findViewById(R.id.bcart);
         abouts = findViewById(R.id.babout);
         article = findViewById(R.id.barticle);
+        img=findViewById(R.id.imagepic);
+        finddoctor=findViewById(R.id.finddoc);
 profile=findViewById(R.id.bprofile);
 s_cart=findViewById(R.id.scart);
 s_appointment=findViewById(R.id.sappointment);
@@ -79,8 +89,36 @@ user=findViewById(R.id.username);
         });
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
         String uname = sharedPreferences.getString("name", "").toString();
-user.setText(uname);
+user.setText(uname.trim());
+        String suname=uname.trim();
 
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + suname + "/image");
+
+// Download the contents of the file as a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
+            @Override
+            public void onSuccess(byte[] bytes) {
+
+                // Create a bitmap image from the byte array
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Display the bitmap image in an ImageView
+
+                img.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@androidx.annotation.NonNull Exception exception) {
+                // Handle any errors that occur
+            }
+        });
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
+            }
+        });
         String mail = sharedPreferences.getString("mail", "").toString();
         String password = sharedPreferences.getString("password", "").toString();
         // Inside your authentication method (e.g. email/password authentication)
@@ -110,6 +148,12 @@ user.setText(uname);
                         // Handle authentication error
                     }
                 });
+        finddoctor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,AppointmentActivity.class));
+            }
+        });
 profile.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
@@ -144,7 +188,7 @@ profile.setOnClickListener(new View.OnClickListener() {
         s_appointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, AppointmentActivity.class));
+                startActivity(new Intent(HomeActivity.this, BookedActivity.class));
             }
         });
         store.setOnClickListener(new View.OnClickListener() {

@@ -42,27 +42,30 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    app:cardCornerRadius="100dp"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginEnd="24dp"
                     app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="100dp"
                     app:cardElevation="4dp"
+
                     app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        app:cardCornerRadius="100dp"
-                        android:layout_gravity="center">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/icon"
-                        tools:layout_editor_absoluteX="99dp"
-                        tools:layout_editor_absoluteY="214dp" />
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        app:cardCornerRadius="100dp">
+
+                        <ImageView
+                            android:id="@+id/imagepic"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/icon"
+                            tools:layout_editor_absoluteX="99dp"
+                            tools:layout_editor_absoluteY="214dp" />
                     </androidx.cardview.widget.CardView>
                 </androidx.cardview.widget.CardView>
 
@@ -193,25 +196,8 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <EditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="4dp"
-                android:textSize="16sp"
-                android:textColor="#8D8D8D"
-                android:textStyle="bold|italic"
-                android:background="@drawable/background_edittext_search"
-                android:ems="10"
-                android:inputType="textPersonName"
-               android:hint="Search for..."
-                android:drawableEnd="@drawable/search_icon"/>
-
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/finddoc"
                 android:layout_width="match_parent"
                 android:layout_height="130sp"
                 android:layout_marginEnd="40dp"
@@ -286,6 +272,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            app:cardElevation="8dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardPreventCornerOverlap="false"
                             android:background="@drawable/white_top_buttons">
 
                             <ImageView
