@@ -2,10 +2,13 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,12 +29,13 @@ public class ProfileActivity extends AppCompatActivity {
 
 TextView uname,uage,uemail,uaddress,ucity,uphone;
 public String nname;
+Button b1;
 ImageView uimageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_test);
         uname=findViewById(R.id.name);
         uage=findViewById(R.id.spec);
         uemail=findViewById(R.id.feeses);
@@ -39,6 +43,7 @@ ImageView uimageView;
         ucity=findViewById(R.id.exp);
         uphone=findViewById(R.id.hospital);
         uimageView=findViewById(R.id.profile_photo);
+        b1=findViewById(R.id.button);
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -63,11 +68,17 @@ ImageView uimageView;
                                 String mail = document.getString("email");
                                 String phone=document.getString("contact");
                                 uname.setText(nname);
-                                uage.setText("Age: "+age);
-                               uemail.setText("Mail address: "+mail);
-                                ucity.setText("City: "+city);
-                               uphone.setText("Contact No: "+phone);
-                                uaddress.setText("Address: "+address);
+                                uage.setText(age);
+                               uemail.setText(mail);
+                                ucity.setText(city);
+                               uphone.setText(phone);
+                                uaddress.setText(address);
+                                b1.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        startActivity(new Intent(ProfileActivity.this,EditProfileActivity.class));
+                                    }
+                                });
 // Create a reference to the image file you want to download
                                 // Get a reference to the Firebase Storage location where the image is stored
                                 StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + nname + "/image");
