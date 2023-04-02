@@ -206,7 +206,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ProductViewHol
         TextView  pprice=dialog.findViewById(R.id.priceTextView);
         TextView pexpiry=dialog.findViewById(R.id.exp);
         TextView pitem=dialog.findViewById(R.id.item);
-        TextView pquantity=dialog.findViewById(R.id.stripTextView);
+        
         TextView pdirection=dialog.findViewById(R.id.discription);
         TextView Qnumber=dialog.findViewById(R.id.numofitems);
         Button cancel=dialog.findViewById(R.id.cancelorder);
@@ -245,7 +245,9 @@ TextView deliverydate=dialog.findViewById(R.id.product_date);
 
                                                 docRef.get().addOnSuccessListener(documentSnapshot -> {
                                                     if (documentSnapshot.exists()) {
-                                                      String username2 = documentSnapshot.getString("username");
+
+
+                                                        String username2 = documentSnapshot.getString("username");
                                                         SharedPreferences sharedPreferences2 = context.getSharedPreferences("username",MODE_PRIVATE);
                                                         SharedPreferences.Editor myEdit = sharedPreferences2.edit();
                                                         myEdit.putString("user", username2);

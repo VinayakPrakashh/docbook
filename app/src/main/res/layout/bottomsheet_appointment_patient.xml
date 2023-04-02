@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bkg">
+
+            <Button
+                android:id="@+id/cancelorder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel Appointment"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#F30000"
+                android:textColor="#DFD8D8"
+                android:textSize="18sp"
+                android:padding="16dp"
+                android:layout_gravity="bottom"
+                />
+
+
+</LinearLayout>
