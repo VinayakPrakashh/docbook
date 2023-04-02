@@ -410,7 +410,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/edit_profile_new" />
+                                app:srcCompat="@drawable/baseline_article_24" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
