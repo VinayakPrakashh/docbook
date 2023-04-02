@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.text.SimpleDateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,7 +34,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Date;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -183,13 +181,11 @@ imageView=itemView.findViewById(R.id.product_image);
                                         for (QueryDocumentSnapshot itemDetailsDoc : task.getResult()) {
 
                                             String user = itemDetailsDoc.getString("name");
-                                            String time = itemDetailsDoc.getString("date");
+
                                             String specialization=itemDetailsDoc.getString("specialization");
 
                                             if(user.trim().equals(username) && specialization.trim().equals(specs)) {
 
-                                                SimpleDateFormat formatter = new SimpleDateFormat("d-M-yyyy");
-                                                String date = formatter.format(new Date());
                                                     itemDetailsDoc.getReference().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
