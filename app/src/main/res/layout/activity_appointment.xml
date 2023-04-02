@@ -8,7 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg4"
+    android:background="#5e3bee"
     tools:context=".HomeActivity">
 
     <TextView
@@ -196,16 +196,16 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardiologist"
-            android:layout_width="149dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
             android:layout_row="0"
             android:layout_rowWeight="1"
             android:layout_column="0"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
-            android:backgroundTint="@color/white"
-
             android:background="@drawable/bg4"
+
+            android:backgroundTint="@color/white"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             app:cardUseCompatPadding="true">

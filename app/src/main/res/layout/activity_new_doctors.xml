@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e8e8f9"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="@+id/imageView"
+                    app:srcCompat="@drawable/top_background_gradient" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/top_background" />
+
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="84dp"
+                    android:text="Vinayak Prakash"
+                    android:textColor="#ffffff"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/white_top_buttons"
+                    android:elevation="4dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/username">
+
+                    <LinearLayout
+                        android:id="@+id/rr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/bstore"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/purple_top_buttons"
+                            android:orientation="vertical">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="75dp"
+                                android:layout_marginTop="20dp"
+                                app:srcCompat="@drawable/store" />
+
+                            <TextView
+                                android:id="@+id/Car"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:text="Cardiologoist"
+                                android:textAlignment="center"
+                                android:textColor="#7182ef"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/bcart"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/purple_top_buttons"
+                            android:orientation="vertical">
+
+                            <ImageView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                android:layout_margin="10dp"
+                                app:srcCompat="@drawable/cart" />
+
+                            <TextView
+                                android:id="@+id/textView3gh"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:text="Orthologist"
+                                android:textAlignment="center"
+                                android:textColor="#7182ef"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/bstore"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/purple_top_buttons"
+                            android:orientation="vertical">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="75dp"
+                                android:layout_margin="10dp"
+                                app:srcCompat="@drawable/store" />
+
+                            <TextView
+                                android:id="@+id/textViewghg"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:text="Pediatrician"
+                                android:textAlignment="center"
+                                android:textColor="#7182ef"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/bcart"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/purple_top_buttons"
+                            android:orientation="vertical">
+
+                            <ImageView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                android:layout_margin="10dp"
+                                app:srcCompat="@drawable/cart" />
+
+                            <TextView
+                                android:id="@+id/textView3gh"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:text="Radiologist"
+                                android:textAlignment="center"
+                                android:textColor="#7182ef"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/bstore"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/purple_top_buttons"
+                            android:orientation="vertical">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="75dp"
+                                android:layout_margin="10dp"
+                                app:srcCompat="@drawable/store" />
+
+                            <TextView
+                                android:id="@+id/textViewghg"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:text="Neurologist"
+                                android:textAlignment="center"
+                                android:textColor="#7182ef"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/bcart"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/purple_top_buttons"
+                            android:orientation="vertical">
+
+                            <ImageView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                android:layout_margin="10dp"
+                                app:srcCompat="@drawable/cart" />
+
+                            <TextView
+                                android:id="@+id/textView3gh"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:text="Booked Apoointments"
+                                android:textAlignment="center"
+                                android:textColor="#7182ef"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
