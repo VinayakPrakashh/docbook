@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,23 +45,24 @@ public String nname;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     private static final int REQUEST_CODE_IMAGE_PICKER = 1;
-ImageView uimageView;
+CardView uimageView;
     Button upload;
+    ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_edit_profile_test);
         uname=findViewById(R.id.name);
         uage=findViewById(R.id.spec);
         uemail=findViewById(R.id.feeses);
         uaddress=findViewById(R.id.quali);
         ucity=findViewById(R.id.exp);
         uphone=findViewById(R.id.phone);
-        uimageView=findViewById(R.id.photo);
+        uimageView=findViewById(R.id.profile_photo2);
         save=findViewById(R.id.save);
-        upload=findViewById(R.id.uploadb);
-        upload.setOnClickListener(new View.OnClickListener() {
+      img=findViewById(R.id.profile_photo);
+        img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -169,7 +171,7 @@ ImageView uimageView;
 
                                         // Set the Bitmap object in an ImageView
 
-                                        uimageView.setImageBitmap(bmp);
+                                        img.setImageBitmap(bmp);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -225,7 +227,7 @@ ImageView uimageView;
 
                                 // Set the Bitmap object in an ImageView
                                 dialog.dismiss();
-                                uimageView.setImageBitmap(bmp);
+                                img.setImageBitmap(bmp);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -290,7 +292,7 @@ ImageView uimageView;
 
                     // Display the bitmap image in an ImageView
 dialog.dismiss();
-                    uimageView.setImageBitmap(bitmap);
+                    img.setImageBitmap(bitmap);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
