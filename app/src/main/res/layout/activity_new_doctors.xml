@@ -47,9 +47,9 @@
                     android:layout_height="wrap_content"
 
                     android:layout_marginTop="84dp"
-                    android:text="Vinayak Prakash"
+                    android:text="Find Doctor"
                     android:textColor="#ffffff"
-                    android:textSize="25sp"
+                    android:textSize="40sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -57,10 +57,10 @@
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
-                    android:layout_width="380dp"
+                    android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginTop="70dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/white_top_buttons"
                     android:elevation="4dp"
@@ -71,12 +71,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/username">
 
                     <LinearLayout
-                        android:id="@+id/rr"
+                        android:id="@+id/sdfdf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <LinearLayout
-                            android:id="@+id/bstore"
+                            android:id="@+id/cardiologist"
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:layout_margin="10dp"
@@ -89,7 +89,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="75dp"
                                 android:layout_marginTop="20dp"
-                                app:srcCompat="@drawable/store" />
+                                app:srcCompat="@drawable/cardiology" />
 
                             <TextView
                                 android:id="@+id/Car"
@@ -103,7 +103,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/bcart"
+                            android:id="@+id/orthologist"
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:layout_margin="10dp"
@@ -115,11 +115,11 @@
 
                                 android:layout_width="match_parent"
                                 android:layout_height="75dp"
-                                android:layout_margin="10dp"
-                                app:srcCompat="@drawable/cart" />
+                                android:layout_marginTop="20dp"
+                                app:srcCompat="@drawable/orthopedist" />
 
                             <TextView
-                                android:id="@+id/textView3gh"
+                                android:id="@+id/fgsdfgdfg"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"
@@ -133,12 +133,12 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/rr"
+                        android:id="@+id/rfgdfgsfr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <LinearLayout
-                            android:id="@+id/bstore"
+                            android:id="@+id/pediatrician"
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:layout_margin="10dp"
@@ -147,14 +147,13 @@
                             android:orientation="vertical">
 
                             <ImageView
-
                                 android:layout_width="wrap_content"
                                 android:layout_height="75dp"
-                                android:layout_margin="10dp"
-                                app:srcCompat="@drawable/store" />
+                                android:layout_marginTop="20dp"
+                                app:srcCompat="@drawable/pediatrician" />
 
                             <TextView
-                                android:id="@+id/textViewghg"
+                                android:id="@+id/sdgbbfg"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"
@@ -165,7 +164,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/bcart"
+                            android:id="@+id/radiologist"
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:layout_margin="10dp"
@@ -174,14 +173,14 @@
                             android:orientation="vertical">
 
                             <ImageView
-
                                 android:layout_width="match_parent"
                                 android:layout_height="75dp"
-                                android:layout_margin="10dp"
-                                app:srcCompat="@drawable/cart" />
+                                android:layout_marginTop="20dp"
+
+                                app:srcCompat="@drawable/radiologist" />
 
                             <TextView
-                                android:id="@+id/textView3gh"
+                                android:id="@+id/dfsgf"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"
@@ -195,12 +194,12 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/rr"
+                        android:id="@+id/rgdr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <LinearLayout
-                            android:id="@+id/bstore"
+                            android:id="@+id/neurologist"
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:layout_margin="10dp"
@@ -209,13 +208,14 @@
                             android:orientation="vertical">
 
                             <ImageView
-
                                 android:layout_width="wrap_content"
                                 android:layout_height="75dp"
-                                android:layout_margin="10dp"
-                                app:srcCompat="@drawable/store" />
+                                android:layout_marginTop="20dp"
+
+                                app:srcCompat="@drawable/neurology" />
 
                             <TextView
+
                                 android:id="@+id/textViewghg"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -227,7 +227,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/bcart"
+                            android:id="@+id/bookings"
                             android:layout_width="match_parent"
                             android:layout_height="140dp"
                             android:layout_margin="10dp"
@@ -239,11 +239,11 @@
 
                                 android:layout_width="match_parent"
                                 android:layout_height="75dp"
-                                android:layout_margin="10dp"
-                                app:srcCompat="@drawable/cart" />
+                                android:layout_marginTop="20dp"
+                                app:srcCompat="@drawable/appointment" />
 
                             <TextView
-                                android:id="@+id/textView3gh"
+                                android:id="@+id/gfgfds"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"
