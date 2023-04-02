@@ -58,7 +58,7 @@ allproducts=findViewById(R.id.products);
         ddoctors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AdminHomeActivity.this,PaymentActivity.class));
+                startActivity(new Intent(AdminHomeActivity.this,AdminAppointmentActivity.class));
             }
         });
         daddpatient.setOnClickListener(new View.OnClickListener() {

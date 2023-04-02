@@ -32,10 +32,8 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctor_details);
+        setContentView(R.layout.activity_profile_doctor);
 
-
-        setContentView(R.layout.activity_doctor_details);
         docname2 = findViewById(R.id.dname);
         docspec2 = findViewById(R.id.dspec);
         dochospital2 = findViewById(R.id.dhospital);
@@ -44,7 +42,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         dquali = findViewById(R.id.dqualification);
         fees2 = findViewById(R.id.contact);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        b1 = findViewById(R.id.book_appointment_button);
+        b1 = findViewById(R.id.book);
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
         String spec = sharedPreferences.getString("specialization", "").toString();
 
@@ -101,13 +99,13 @@ public class DoctorDetailsActivity extends AppCompatActivity {
 
 
 
-                                docname2.setText("Name: " + name);
-                                docspec2.setText("Specialization: " + specialization);
-                                dochospital2.setText("Hospital: " + hospital);
-                                dexp2.setText("Experience: " + exp + " Years");
-                                doccontact2.setText("Contact No: " + dcon);
-                                dquali.setText("Qualification: " + qualification);
-                                fees2.setText("Appointment Fees: " + fees);
+                                docname2.setText(name);
+                                docspec2.setText(specialization);
+                                dochospital2.setText(hospital);
+                                dexp2.setText(exp + " Years");
+                                doccontact2.setText(dcon);
+                                dquali.setText(qualification);
+                                fees2.setText(fees);
 
 
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();

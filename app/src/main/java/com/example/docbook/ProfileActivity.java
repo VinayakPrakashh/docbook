@@ -30,6 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
 TextView uname,uage,uemail,uaddress,ucity,uphone;
 public String nname;
 Button b1;
+TextView name_t;
 ImageView uimageView;
 
     @Override
@@ -44,6 +45,7 @@ ImageView uimageView;
         uphone=findViewById(R.id.hospital);
         uimageView=findViewById(R.id.profile_photo);
         b1=findViewById(R.id.button);
+        name_t=findViewById(R.id.name_top);
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -68,6 +70,7 @@ ImageView uimageView;
                                 String mail = document.getString("email");
                                 String phone=document.getString("contact");
                                 uname.setText(nname);
+                                name_t.setText(nname);
                                 uage.setText(age);
                                uemail.setText(mail);
                                 ucity.setText(city);

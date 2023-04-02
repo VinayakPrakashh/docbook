@@ -116,13 +116,13 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
 
 
 
-                                docname2.setText("Name: " + name);
-                                docspec2.setText("Specialization: " + specialization);
-                                dochospital2.setText("Hospital: " + hospital);
-                                dexp2.setText("Experience: " + exp + " Years");
-                                doccontact2.setText("Contact No: " + dcon);
-                                dquali.setText("Qualification: " + qualification);
-                                fees2.setText("Appointment Fees: " + fees);
+                                docname2.setText(name);
+                                docspec2.setText(specialization);
+                                dochospital2.setText(hospital);
+                                dexp2.setText(exp + " Years");
+                                doccontact2.setText(dcon);
+                                dquali.setText(qualification);
+                                fees2.setText(fees);
 
 
                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
