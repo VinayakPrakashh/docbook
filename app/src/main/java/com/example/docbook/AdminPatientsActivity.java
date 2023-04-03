@@ -44,7 +44,7 @@ public class AdminPatientsActivity extends AppCompatActivity {
         productList = new ArrayList<>();
         adminpatientadapter = new AdminPatientAdapter(this, productList);
         recyclerView.setAdapter(adminpatientadapter);
-        recyclerView.addItemDecoration(new CartItemDecoration(16));
+
 
         SearchView searchView = findViewById(R.id.searchView);
 

@@ -48,9 +48,9 @@ ImageView uimageView;
         uaddress=scrollView.findViewById(R.id.address);
         uward=scrollView.findViewById(R.id.ward);
         uphone=scrollView.findViewById(R.id.contact);
-        uimageView=findViewById(R.id.photo);
+        uimageView=scrollView.findViewById(R.id.photo);
         addp=scrollView.findViewById(R.id.add);
-uspecialization=findViewById(R.id.specialization);
+uspecialization=scrollView.findViewById(R.id.specialization);
 upnumber=scrollView.findViewById(R.id.pnumber);
         ureason=scrollView.findViewById(R.id.reason);
         uadmission=scrollView.findViewById(R.id.admission);
@@ -128,16 +128,25 @@ uspecialization.setText(special);
         StorageReference storageRef = storage.getReference();
         String imageName = keyname; // replace with your image name
 
-        storageRef.child("patients/"+special+"/" + imageName).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(special).child(imageName);
+
+// Download the contents of the file as a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
             @Override
             public void onSuccess(byte[] bytes) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                uimageView.setImageBitmap(bmp);
+
+                // Create a bitmap image from the byte array
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Display the bitmap image in an ImageView
+
+                uimageView.setImageBitmap(bitmap);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "Error getting image from Firebase Storage", e);
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors that occur
             }
         });
 

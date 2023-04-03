@@ -41,7 +41,7 @@ public class DoctorAppointmentActivity extends AppCompatActivity {
         productList = new ArrayList<>();
         doctorAdapter = new DoctorAdapter(this, productList);
         recyclerView.setAdapter(doctorAdapter);
-        recyclerView.addItemDecoration(new CartItemDecoration(16));
+
 
         Dialog dialog = new Dialog(DoctorAppointmentActivity.this);
         dialog.setContentView(R.layout.loading_dialog);

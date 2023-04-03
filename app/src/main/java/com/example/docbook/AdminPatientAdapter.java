@@ -44,8 +44,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class AdminPatientAdapter extends RecyclerView.Adapter<AdminPatientAdapter.ProductViewHolder> implements Filterable {
     private Context context;
 
-    public String value, special;
-    public Product product;
+    public String value, special,value2;
+
     private List<Product> productList;
     private List<Product> productListFiltered;
     int lastPosition=-1;
@@ -72,13 +72,13 @@ public String specialization;
         if(holder.getAdapterPosition()>lastPosition){
             Animation animation= AnimationUtils.loadAnimation(context,R.anim.slide_in);
             ((AdminPatientAdapter.ProductViewHolder)holder).itemView.startAnimation(animation);
-            product = productListFiltered.get(position);
+           Product product = productListFiltered.get(position);
             holder.textViewname.setText(product.getName());
             holder.textViewNumber.setText("No: "+ product.getNumber());
             holder.textViewward.setText("Ward No: "+product.getWard());
             lastPosition=holder.getAdapterPosition();
         }
-        product = productListFiltered.get(position);
+       Product product = productListFiltered.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewNumber.setText("No: "+ product.getNumber());
         holder.textViewward.setText("Ward No: "+product.getWard());
@@ -110,7 +110,8 @@ public String specialization;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                value = product.getName();
+                value2 = product.getName();
+
               showBottomDialog();
 
             }
@@ -217,9 +218,9 @@ ImageView imageView;
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
+
                 Intent intent=new Intent(context,AdminEditPatientActivity.class);
-                intent.putExtra("key", value);
+                intent.putExtra("key", value2);
                 context.startActivity(intent);
 
             }
@@ -240,7 +241,7 @@ ImageView imageView;
 
 
                 Intent intent=new Intent(context,AdminViewPatientActivity.class);
-                intent.putExtra("key", value);
+                intent.putExtra("key", value2);
                 context.startActivity(intent);
 
             }
@@ -254,7 +255,7 @@ ImageView imageView;
     public void delete(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("patients").document(value)
+        db.collection("patients").document(value2)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -266,7 +267,7 @@ ImageView imageView;
                             if (document.exists()) {
 
                                 special=document.getString("specialization");
-                                DocumentReference parentDocRef = db.collection("patients").document(value);
+                                DocumentReference parentDocRef = db.collection("patients").document(value2);
 
 
 // Delete the document
@@ -317,9 +318,9 @@ ImageView imageView;
     }
 
     public void deleteimage(){
-        Toast.makeText(context, special+" "+value, Toast.LENGTH_SHORT).show();
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("patients/"+special+"/"+value);
+        StorageReference storageRef = storage.getReference().child("patients/"+special+"/"+value2);
 
         storageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

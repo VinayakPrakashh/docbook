@@ -38,7 +38,7 @@ public class DoctorPatientsActivity extends AppCompatActivity {
         productList = new ArrayList<>();
         patientadapter = new PatientAdapter(this, productList);
         recyclerView.setAdapter(patientadapter);
-        recyclerView.addItemDecoration(new CartItemDecoration(16));
+
 SearchView searchView=findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
