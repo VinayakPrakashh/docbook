@@ -182,8 +182,8 @@
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/animationView"
-                    android:layout_width="164dp"
-                    android:layout_height="142dp"
+                    android:layout_width="124dp"
+                    android:layout_height="111dp"
 
                     android:background="#00000000"
                     android:backgroundTint="@color/black"
@@ -312,7 +312,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Add Patient"
+                            android:text="Add New"
                             android:textAlignment="center"
                             android:textColor="#2e3d6d"
                             android:textSize="12sp"
