@@ -39,7 +39,7 @@ ImageView uimageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_view_patient);
+        setContentView(R.layout.activity_patient_profile_test);
         scrollView=findViewById(R.id.scroll);
         uname=scrollView.findViewById(R.id.name);
         uage=scrollView.findViewById(R.id.age);
@@ -99,20 +99,19 @@ name=uname.getText().toString();
                                 String contact=document.getString("contact");
                                 String reason=document.getString("reason");
                                  special=document.getString("specialization");
-
-                                uname.setText("Name: " +name);
-                                uage.setText("Age: "+age);
-                                uemail.setText("Email id"+mail);
-                                upnumber.setText("Patient Number: "+pnumber);
-                                uaddress.setText("Address: "+address);
-                                uward.setText("Ward No: "+ward);
-                                uadmission.setText("Admission Date: "+admission);
-                                ugender.setText("Gender: "+gender);
-                                uoccupation.setText("Occupation: "+occupation);
-                                uphone.setText("Phone No: "+contact);
-                                ureason.setText("Reason For Admitting: "+reason);
-                                udischarge.setText("Discharge Date: "+discharge);
-uspecialization.setText("Specialization of Doctor: "+special);
+                                uoccupation.setText(occupation);
+                                ugender.setText(gender);
+                                uadmission.setText(admission);
+                                uname.setText(name);
+                                uage.setText(age);
+                                uemail.setText(mail);
+                                upnumber.setText(pnumber);
+                                uaddress.setText(address);
+                                uward.setText(ward);
+                                uphone.setText(contact);
+                                ureason.setText(reason);
+                                udischarge.setText(discharge);
+uspecialization.setText(special);
                                 searchForImage();
                             } else {
                                 Log.d(TAG, "No such document");

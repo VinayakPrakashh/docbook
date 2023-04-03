@@ -101,6 +101,12 @@ allproducts=findViewById(R.id.products);
                 startActivity(new Intent(AdminHomeActivity.this,AdminMedicineActivity.class));
             }
         });
+        mid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AdminHomeActivity.this,AdminMedicineActivity.class));
+            }
+        });
         dallpatients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
