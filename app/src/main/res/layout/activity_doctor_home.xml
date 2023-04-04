@@ -75,7 +75,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/orthologist"
+            android:id="@+id/mypatients"
             android:layout_width="133dp"
             android:layout_height="wrap_content"
             android:layout_row="0"
@@ -149,7 +149,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/radiologist"
+            android:id="@+id/prof"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="1"
@@ -223,7 +223,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/bookings"
+            android:id="@+id/lgout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="2"

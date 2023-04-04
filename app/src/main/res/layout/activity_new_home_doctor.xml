@@ -40,6 +40,34 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/top_background" />
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginEnd="24dp"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="100dp"
+                    app:cardElevation="4dp"
+
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        app:cardCornerRadius="100dp">
+
+                        <ImageView
+                            android:id="@+id/photo"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/icon"
+                            tools:layout_editor_absoluteX="99dp"
+                            tools:layout_editor_absoluteY="214dp" />
+                    </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
 
 
@@ -51,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="56dp"
-                    android:text="Welcome Admin,"
+                    android:text="Welcome Doctor,"
                     android:textColor="#ffffff"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -68,7 +96,7 @@
                     android:textColor="#ffffff"
                     android:textSize="25sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+
                     app:layout_constraintStart_toStartOf="@+id/textView"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -87,7 +115,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
                     <LinearLayout
-                        android:id="@+id/products_top"
+                        android:id="@+id/appointment_top"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -115,7 +143,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/allpatients_top"
+                        android:id="@+id/patients_top"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -143,7 +171,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/doctors_top"
+                        android:id="@+id/prof"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -217,7 +245,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="32dp"
-                    android:text="See Orders Now."
+                    android:text="Check Now."
                     android:textColor="#ffffff"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -229,6 +257,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:orientation="vertical">
@@ -239,7 +268,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/allpatients"
+                        android:id="@+id/mypatients"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
@@ -346,7 +375,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/dctr" />
+                                app:srcCompat="@drawable/appointment_new" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
@@ -354,15 +383,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Doctors"
+                            android:text="Appointments"
                             android:textAlignment="center"
                             android:textColor="#2e3d6d"
-                            android:textSize="12sp"
+                            android:textSize="10sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/allorders"
+                        android:id="@+id/lgout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -386,177 +415,11 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/baseline_shopping_cart_24" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <TextView
-                            android:id="@+id/textVighgfhew6"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Orders"
-                            android:textAlignment="center"
-                            android:textColor="#2e3d6d"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/products"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:orientation="vertical">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/white_top_buttons">
-
-                            <ImageView
-
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginBottom="16dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/addproduct" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Products"
-                            android:textAlignment="center"
-                            android:textColor="#2e3d6d"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/about"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/white_top_buttons">
-
-                            <ImageView
-                                android:id="@+id/imageViewgggg6"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginBottom="16dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/about_new" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <TextView
-                            android:id="@+id/textViefgggw6"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="About"
-                            android:textAlignment="center"
-                            android:textColor="#2e3d6d"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/settings"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/white_top_buttons">
-
-                            <ImageView
-
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginBottom="16dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:srcCompat="@drawable/settings_new" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <TextView
-                            android:id="@+id/textViewff6"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Settings"
-                            android:textAlignment="center"
-                            android:textColor="#2e3d6d"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/logout"
-                        android:layout_width="70dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:orientation="vertical">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/white_top_buttons">
-
-                            <ImageView
-
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginBottom="16dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
                                 app:srcCompat="@drawable/logout_new" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
-                            android:id="@+id/textVivvew6"
+                            android:id="@+id/textVighgfhew6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -567,6 +430,8 @@
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
+
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
