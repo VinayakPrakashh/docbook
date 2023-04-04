@@ -1,133 +1,351 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#000000">
+    android:background="#F5F5F5"
+    tools:context=".MainActivity">
 
-    <!-- Doctor Details Heading -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Doctor Details"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="match_parent">
 
-    <!-- Doctor Photo, Name, and Specialization -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <!-- Doctor Photo -->
-        <ImageView
-            android:id="@+id/dphoto"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-
-            android:contentDescription="Doctor Photo"/>
-
-        <!-- Doctor Name and Specialization -->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <!-- Doctor Name -->
-            <TextView
-                android:id="@+id/dname"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content">
 
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Doctor Specialization -->
-            <TextView
-                android:id="@+id/dspec"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="360dp"
+                        android:background="@drawable/top_background_gradient_doctor"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/profile_photo2"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_marginTop="32dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="100dp"
+                        app:cardElevation="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        >
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            app:cardCornerRadius="100dp">
+
+                            <ImageView
+                                android:id="@+id/dphoto"
+                                android:layout_width="140dp"
+                                android:layout_height="140dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/icon"
+                                tools:layout_editor_absoluteX="99dp"
+                                tools:layout_editor_absoluteY="214dp" />
+                        </androidx.cardview.widget.CardView>
+                    </androidx.cardview.widget.CardView>
+
+
+
+                    <TextView
+                        android:id="@+id/dname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+
+                        android:textColor="#ffffff"
+                        android:textSize="20sp"
+                        android:shadowColor="#000000"
+                        android:shadowDx="5"
+                        android:shadowDy="5"
+                        android:shadowRadius="7"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_photo2"
+                        app:layout_constraintStart_toStartOf="@+id/profile_photo2"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_photo2" />
+
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/circles" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="90dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:background="@drawable/white_background"
+                        android:elevation="3dp"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/dname"
+                        app:layout_constraintVertical_bias="1.0">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/dsa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Specialization:"
+                                android:textColor="#182693"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/dspec"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="specialization"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#5B5B5B"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="6dp"
+                            android:background="#D9D9D9" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/fasdf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Qualification:"
+                                android:textColor="#182693"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/dqualification"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="qualification"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#5B5B5B"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view2"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="6dp"
+                            android:background="#D9D9D9" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Experience:"
+                                android:textColor="#182693"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/dexp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="experience"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#5B5B5B"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view3"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="6dp"
+                            android:background="#D9D9D9" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/sfgdfg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Hospital:"
+                                android:textColor="#182693"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/dhospital"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Hospital Name"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#5B5B5B"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view4"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="6dp"
+                            android:background="#D9D9D9" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/guyhjguj"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Contact No:"
+                                android:textColor="#182693"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/dcontact"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="contact no"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#5B5B5B"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/view8"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="6dp"
+                            android:background="#D9D9D9" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/dds"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Appointment Fees:"
+                                android:textColor="#182693"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/contact"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="fees"
+                                android:textAlignment="viewEnd"
+                                android:textColor="#5B5B5B"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/savebutton"
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
+                android:layout_height="50dp"
+                android:layout_margin="24dp"
+                android:backgroundTint="#EE5F00"
+                android:background="@drawable/background_button"
+                android:text="Edit Profile"
                 android:textColor="#ffffff"
-                android:textSize="16sp"/>
-            <TextView
-                android:id="@+id/dqualification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:textColor="#ffffff"
-                android:textSize="16sp"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- Doctor Details -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginTop="16dp"
-        android:background="#333333">
-
-        <!-- Hospital Name -->
-        <TextView
-            android:id="@+id/dhospital"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:textColor="#ffffff"
-            android:textSize="16sp"/>
-
-        <!-- Experience -->
-        <TextView
-            android:id="@+id/dexp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:textColor="#ffffff"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
-
-        <!-- Contact Number -->
-        <TextView
-            android:id="@+id/dcontact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:textColor="#ffffff"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
-        <TextView
-            android:id="@+id/contact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:textColor="#ffffff"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp"/>
-
-    </LinearLayout>
-
-    <!-- Book Appointment Button -->
-
-
-    <Button
-        android:id="@+id/book_appointment_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/green"
-
-        android:text="Book Appointmentqqq"
-
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-</LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

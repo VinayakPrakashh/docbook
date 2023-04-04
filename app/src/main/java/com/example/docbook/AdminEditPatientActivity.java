@@ -402,7 +402,7 @@ dialog.dismiss();
 
 private void image(){
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    Toast.makeText(this, special+" "+keyname, Toast.LENGTH_SHORT).show();
+
 
 // Create a reference to the image file you want to download
     StorageReference imageRef = storage.getReference().child("patients").child(special).child(keyname);

@@ -34,15 +34,15 @@ ImageView uimageView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
-        uname=findViewById(R.id.name);
-        uspec=findViewById(R.id.spec);
-        ufees=findViewById(R.id.feeses);
-        uqualification=findViewById(R.id.quali);
-        uexp=findViewById(R.id.exp);
-        uhospital=findViewById(R.id.hospital);
-        ucontact=findViewById(R.id.contact);
-        mail=findViewById(R.id.emails);
-        uimageView=findViewById(R.id.profile_photo);
+        uname=findViewById(R.id.dname);
+        uspec=findViewById(R.id.dspec);
+        ufees=findViewById(R.id.contact);
+        uqualification=findViewById(R.id.dqualification);
+        uexp=findViewById(R.id.dexp);
+        uhospital=findViewById(R.id.dhospital);
+        ucontact=findViewById(R.id.dcontact);
+
+        uimageView=findViewById(R.id.dphoto);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
@@ -95,13 +95,13 @@ String experience=document.getString("experience");
                                 String fees=document.getString("fees");
                                 String email=document.getString("email");
                                 uname.setText(name);
-                                uspec.setText("Specialization: "+specialization);
-                               uqualification.setText("Qualification: "+qualification);
-uexp.setText("Experience: "+experience);
-                               uhospital.setText("Hospital: "+hospital);
-                                ucontact.setText("Phone: "+phone);
-                                ufees.setText("Appointment Fees: "+fees);
-                                mail.setText("Mail id: "+email);
+                                uspec.setText(specialization);
+                               uqualification.setText(qualification);
+uexp.setText(experience);
+                               uhospital.setText(hospital);
+                                ucontact.setText(phone);
+                                ufees.setText(fees);
+
                             } else {
                                 Log.d(TAG, "No such document");
                             }

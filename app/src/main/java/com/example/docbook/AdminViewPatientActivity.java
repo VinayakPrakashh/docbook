@@ -8,10 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class AdminViewPatientActivity extends AppCompatActivity {
     ScrollView scrollView;
+    public String newname;
     public String name,specialization,keyname,special;
 TextView uname,uage,ugender,upnumber,uward,ureason,uadmission,uspecialization,udischarge,uoccupation,uaddress,uphone,uemail;
 
@@ -59,7 +62,16 @@ uoccupation=scrollView.findViewById(R.id.occupation);
 name=uname.getText().toString();
         Intent intent = getIntent();
     keyname = intent.getStringExtra("key");
+addp.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
 
+        Intent intent = new Intent(AdminViewPatientActivity.this, AdminEditPatientActivity.class);
+        intent.putExtra("key", newname);
+        startActivity(intent);
+
+    }
+});
 
         Dialog dialog = new Dialog(AdminViewPatientActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
@@ -86,7 +98,7 @@ name=uname.getText().toString();
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
-                                String name = document.getString("name");
+                                newname = document.getString("name");
                                 String age = document.getString("age");
                                 String address = document.getString("address");
                                 String mail = document.getString("email");
@@ -100,6 +112,7 @@ name=uname.getText().toString();
                                 String reason=document.getString("reason");
                                  special=document.getString("specialization");
                                 uoccupation.setText(occupation);
+
                                 ugender.setText(gender);
                                 uadmission.setText(admission);
                                 uname.setText(name);

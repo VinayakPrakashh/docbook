@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -31,12 +32,12 @@ public class ViewPatientActivity extends AppCompatActivity {
     ScrollView scrollView;
     public String name,specialization,keyname;
 TextView uname,uage,ugender,upnumber,uward,ureason,uadmission,udischarge,uoccupation,uaddress,uphone,uemail;
-
+    Button addp;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     private static final int REQUEST_CODE_IMAGE_PICKER = 1;
 ImageView uimageView;
-    Button addp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,16 @@ uoccupation=scrollView.findViewById(R.id.occupation);
 name=uname.getText().toString();
         Intent intent = getIntent();
     keyname = intent.getStringExtra("key");
+        addp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent intent = new Intent(ViewPatientActivity.this, EditPatientActivity.class);
+                intent.putExtra("key", keyname);
+                startActivity(intent);
+
+            }
+        });
         SharedPreferences sharedPreferences2 = getSharedPreferences("MySharedPref",MODE_PRIVATE);
         specialization = sharedPreferences2.getString("specialization", "").toString();
 
@@ -129,18 +139,18 @@ name=uname.getText().toString();
                                 String contact=document.getString("contact");
                                 String reason=document.getString("reason");
 
-                                uname.setText("Name: " +name);
-                                uage.setText("Age: "+age);
-                                uemail.setText("Email id"+mail);
-                                upnumber.setText("Patient Number: "+pnumber);
-                                uaddress.setText("Address: "+address);
-                                uward.setText("Ward No: "+ward);
-                                uadmission.setText("Admission Date: "+admission);
-                                ugender.setText("Gender: "+gender);
-                                uoccupation.setText("Occupation: "+occupation);
-                                uphone.setText("Phone No: "+contact);
-                                ureason.setText("Reason For Admitting: "+reason);
-                                udischarge.setText("Discharge Date: "+discharge);
+                                uname.setText(name);
+                                uage.setText(age);
+                                uemail.setText(mail);
+                                upnumber.setText(pnumber);
+                                uaddress.setText(address);
+                                uward.setText(ward);
+                                uadmission.setText(admission);
+                                ugender.setText(gender);
+                                uoccupation.setText(occupation);
+                                uphone.setText(contact);
+                                ureason.setText(reason);
+                                udischarge.setText(discharge);
 
 
                             } else {

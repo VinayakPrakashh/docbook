@@ -145,6 +145,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:hint="Your Name"
+                                android:textColorHint="#5B5B5B"
                                 android:textAlignment="viewEnd"
 
                                 android:textColor="#5B5B5B"
@@ -177,6 +178,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/age"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -213,6 +215,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/gender"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -249,6 +252,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/pnumber"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -285,6 +289,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/ward"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -320,6 +325,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/specialization"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -355,6 +361,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/reason"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -390,6 +397,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/admission"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -425,6 +433,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/discharge"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -460,6 +469,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/occupation"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -495,6 +505,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/mail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -529,6 +540,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/contact"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -563,6 +575,7 @@
                                 android:textSize="18sp" />
 
                             <EditText
+                                android:textColorHint="#5B5B5B"
                                 android:id="@+id/address"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
