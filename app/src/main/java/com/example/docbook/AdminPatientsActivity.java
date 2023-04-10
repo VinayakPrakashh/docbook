@@ -73,10 +73,11 @@ public class AdminPatientsActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // Retrieve patient name and phone number
-                                String patientName = document.getId();
+                                String patientName = document.getString("name");
                                 String special=document.getString("specialization");
                                 String ward=document.getString("ward");
                                 String pnumber = document.getString("pnumber");

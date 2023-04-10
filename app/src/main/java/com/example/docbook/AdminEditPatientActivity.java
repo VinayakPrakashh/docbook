@@ -184,8 +184,14 @@ if (specialization.isEmpty()){
     }
 
     private void addpatient() {
-
-
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("patients").document(keyname)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(AdminEditPatientActivity.this, "sdsdffd", Toast.LENGTH_SHORT).show();
+                    }});
         String name=uname.getText().toString();
         String age=uage.getText().toString();
         String email=uemail.getText().toString();
@@ -199,7 +205,7 @@ if (specialization.isEmpty()){
         String contact=uphone.getText().toString();
         String reason=ureason.getText().toString();
         String special=uspecialization.getText().toString();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
 
         Map<String, Object> user = new HashMap<>();
@@ -217,8 +223,8 @@ if (specialization.isEmpty()){
         user.put("pnumber", pnumber);
         user.put("specialization",special);
 
-        db.collection("patients").document(keyname)
-                .update(user)
+        db.collection("patients").document(name)
+                .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -295,9 +301,9 @@ image();
     private void uploadImageToFirebaseStorage(Uri imageUri) {
 
 
-
+        name=uname.getText().toString();
         // Create a new StorageReference with the user's UID as the file name
-        StorageReference imageRef = storageRef.child("patients").child(special).child(keyname);
+        StorageReference imageRef = storageRef.child("patients").child(special).child(name);
 
         imageRef.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -309,7 +315,7 @@ image();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 // Create a reference to the image file you want to download
-                        StorageReference imageRef = storage.getReference().child("patients").child(special).child(keyname);
+                        StorageReference imageRef = storage.getReference().child("patients").child(special).child(name);
 
 // Download the image file into a byte array
                         Dialog dialog = new Dialog(AdminEditPatientActivity.this);
@@ -375,7 +381,7 @@ image();
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(special).child(keyname);
+            StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("patients").child(special).child(name);
 
 // Download the contents of the file as a byte array
             imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -403,7 +409,7 @@ dialog.dismiss();
 private void image(){
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
-
+    Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
 // Create a reference to the image file you want to download
     StorageReference imageRef = storage.getReference().child("patients").child(special).child(keyname);
 
