@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -72,7 +73,29 @@
                     </androidx.cardview.widget.CardView>
 
 
+                    <TextView
+                        android:id="@+id/name_top"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Nick Edward"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_photo2"
+                        app:layout_constraintStart_toStartOf="@+id/profile_photo2"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_photo2" />
 
+                    <TextView
+                        android:id="@+id/special_top"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="nickedward@gmail.com"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="@+id/name_top"
+                        app:layout_constraintStart_toStartOf="@+id/name_top"
+                        app:layout_constraintTop_toBottomOf="@+id/name_top" />
 
                     <ImageView
                         android:id="@+id/imageView2"
@@ -87,22 +110,20 @@
                         app:srcCompat="@drawable/circles" />
 
                     <LinearLayout
+                        android:id="@+id/ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="90dp"
                         android:layout_marginEnd="24dp"
-                        android:layout_marginBottom="24dp"
                         android:background="@drawable/white_background"
                         android:elevation="3dp"
                         android:orientation="vertical"
                         android:paddingBottom="10dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/profile_photo2"
-                        app:layout_constraintVertical_bias="1.0">
+                        app:layout_constraintTop_toBottomOf="@+id/special_top">
 
 
                         <LinearLayout
@@ -122,19 +143,17 @@
                                 android:text="Name:"
                                 android:textColor="#182693"
                                 android:textSize="18sp" />
+
                             <EditText
-                                android:id="@+id/name"
-                                android:layout_width="260dp"
+                                android:id="@+id/fname"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
-                                android:hint="Enter name"
                                 android:layout_weight="1"
-                                android:textColor="#5B5B5B"
-
-
-                                android:textColorHint="#aaaaaa"
+                                android:hint="Your Name"
+                                android:textAlignment="viewEnd"
+                                android:textColor="@color/black"
+                                android:textColorHint="#5B5B5B"
                                 android:textSize="16sp" />
-
                         </LinearLayout>
 
                         <View
@@ -163,16 +182,14 @@
                                 android:textSize="18sp" />
 
                             <EditText
-
                                 android:id="@+id/spec"
-                                android:layout_width="260dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:hint="Enter age"
                                 android:layout_weight="1"
-                                android:textColor="#5B5B5B"
-
-
-                                android:textColorHint="#aaaaaa"
+                                android:hint="eg:20"
+                                android:textAlignment="viewEnd"
+                                android:textColor="@color/black"
+                                android:textColorHint="#5B5B5B"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -197,21 +214,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Contact:"
+                                android:text="Gender:"
                                 android:textColor="#182693"
                                 android:textSize="18sp" />
 
                             <EditText
-                                android:id="@+id/phone"
-                                android:layout_width="250dp"
+                                android:id="@+id/gender"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:hint="Enter Phone No"
-                                android:textColorHint="#aaaaaa"
                                 android:layout_weight="1"
-                                android:textColor="#5B5B5B"
-
-
-                                android:textSize="16sp"/>
+                                android:hint="Choose gender"
+                                android:textAlignment="viewEnd"
+                                android:textColor="@color/black"
+                                android:textColorHint="#5B5B5B"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <View
@@ -235,21 +251,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Address:"
+                                android:text="Reason:"
                                 android:textColor="#182693"
                                 android:textSize="18sp" />
 
                             <EditText
-                                android:id="@+id/quali"
-                                android:layout_width="250dp"
+                                android:id="@+id/reason"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:hint="Enter address"
-                                android:textColorHint="#aaaaaa"
                                 android:layout_weight="1"
-                                android:textColor="#5B5B5B"
-
-
-                                android:textSize="16sp"/>
+                                android:hint="Provide Your Reason"
+                                android:textAlignment="viewEnd"
+                                android:textColor="@color/black"
+                                android:textColorHint="#5B5B5B"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <View
@@ -273,24 +288,26 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="City:"
+                                android:text="Contact No:"
                                 android:textColor="#182693"
                                 android:textSize="18sp" />
 
                             <EditText
-                                android:id="@+id/exp"
-                                android:layout_width="260dp"
+                                android:id="@+id/contactnumber"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:hint="Enter city"
-                                android:textColorHint="#aaaaaa"
                                 android:layout_weight="1"
-                                android:textColor="#5B5B5B"
+                                android:hint="Number"
 
+                                android:textAlignment="viewEnd"
+                                android:textColor="@color/black"
+                                android:textColorHint="#5B5B5B"
+                                android:textSize="16sp" />
 
-                                android:textSize="16sp"/>
                         </LinearLayout>
+
                         <View
-                            android:id="@+id/fhgfd"
+
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginStart="10dp"
@@ -306,44 +323,122 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/fgdfg"
+                                android:id="@+id/fghf"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Mail Address:"
+                                android:text="Select Date"
                                 android:textColor="#182693"
                                 android:textSize="18sp" />
 
-                            <EditText
-                                android:id="@+id/special_top"
-                                android:layout_width="220dp"
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/date"
+                                android:layout_width="64dp"
+                                android:layout_height="53dp"
+
+                                android:background="@color/float_transparent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                                app:srcCompat="@drawable/app_cal" />
+
+                            <TextView
+                                android:id="@+id/datetex"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+
+                                android:textColor="@color/black"
+                                android:textSize="24dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                        </LinearLayout>
+
+                        <View
+
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="6dp"
+                            android:background="#D9D9D9" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/sdfg"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:hint="Enter Email address"
-                                android:textColorHint="#aaaaaa"
                                 android:layout_weight="1"
-                                android:textColor="#5B5B5B"
-
-
-                                android:textSize="16sp"/>
+                                android:text="Select Time"
+                                android:textColor="#182693"
+                                android:textSize="18sp" />
 
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/time"
+                                android:layout_width="64dp"
+                                android:layout_height="53dp"
+
+                                android:background="@color/float_transparent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                                app:srcCompat="@drawable/baseline_access_time_filled_24" />
+
+
+                            <TextView
+                                android:id="@+id/timetex"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="24dp" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
+
+                    <Button
+                        android:id="@+id/book"
+                        style="@android:style/Widget.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+android:layout_marginTop="13dp"
+                        android:background="@drawable/background_button"
+                        android:backgroundTint="@color/purple_500"
+                        android:text="Book Appointment"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ll"
+                        tools:layout_editor_absoluteX="24dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/save"
-                style="@android:style/Widget.Button"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="24dp"
-                android:backgroundTint="@color/purple_500"
-                android:background="@drawable/background_button"
-                android:text="Save Changes"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+
         </LinearLayout>
     </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

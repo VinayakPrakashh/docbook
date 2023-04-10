@@ -37,7 +37,7 @@ EditText uname,pass,mail,cpass;
         pass=findViewById(R.id.password);
         cpass=findViewById(R.id.cpassword);
 
-        mail=findViewById(R.id.feeses);
+        mail=findViewById(R.id.special_top);
         b1=findViewById(R.id.b1);
         login=findViewById(R.id.tregister);
        mauth=FirebaseAuth.getInstance();

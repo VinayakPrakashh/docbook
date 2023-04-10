@@ -39,7 +39,7 @@ ImageView uimageView;
         setContentView(R.layout.activity_profile_test);
         uname=findViewById(R.id.name);
         uage=findViewById(R.id.spec);
-        uemail=findViewById(R.id.feeses);
+        uemail=findViewById(R.id.special_top);
         uaddress=findViewById(R.id.quali);
         ucity=findViewById(R.id.exp);
         uphone=findViewById(R.id.hospital);

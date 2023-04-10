@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -55,7 +57,7 @@ CardView uimageView;
         setContentView(R.layout.activity_edit_profile_test);
         uname=findViewById(R.id.name);
         uage=findViewById(R.id.spec);
-        uemail=findViewById(R.id.feeses);
+        uemail=findViewById(R.id.special_top);
         uaddress=findViewById(R.id.quali);
         ucity=findViewById(R.id.exp);
         uphone=findViewById(R.id.phone);
@@ -65,20 +67,31 @@ CardView uimageView;
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Dialog dialog = new Dialog(EditProfileActivity.this);
+                dialog.setContentView(R.layout.loading_dialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCancelable(false);
+                dialog.show();
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
+                dialog.dismiss();
             }
         });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Dialog dialog = new Dialog(EditProfileActivity.this);
+                dialog.setContentView(R.layout.loading_dialog);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCancelable(false);
+                dialog.show();
                 bookit();
-
+dialog.dismiss();
             }
         });
         Dialog dialog = new Dialog(EditProfileActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
         dialog.show();
       performauth();
@@ -209,14 +222,14 @@ CardView uimageView;
                         FirebaseStorage storage = FirebaseStorage.getInstance();
 
                         FirebaseAuth auth = FirebaseAuth.getInstance();
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        String uid = auth.getCurrentUser().getUid();
+
 // Create a reference to the image file you want to download
                         StorageReference imageRef = storage.getReference().child("users/" + nname + "/image");
 
 // Download the image file into a byte array
                         Dialog dialog = new Dialog(EditProfileActivity.this);
                         dialog.setContentView(R.layout.loading_dialog);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         dialog.setCancelable(false);
                         dialog.show();
                         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -272,13 +285,13 @@ CardView uimageView;
         if (requestCode == REQUEST_CODE_IMAGE_PICKER && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Dialog dialog = new Dialog(EditProfileActivity.this);
             dialog.setContentView(R.layout.loading_dialog);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.setCancelable(false);
             dialog.show();
             Uri imageUri = data.getData();
             uploadImageToFirebaseStorage(imageUri);
             FirebaseAuth auth = FirebaseAuth.getInstance();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            String uid = auth.getCurrentUser().getUid();
+
             StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + nname + "/image");
 
 // Download the contents of the file as a byte array
