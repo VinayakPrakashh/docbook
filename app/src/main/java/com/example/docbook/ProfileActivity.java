@@ -2,9 +2,12 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,7 +50,11 @@ ImageView uimageView;
         b1=findViewById(R.id.button);
         name_t=findViewById(R.id.name_top);
         FirebaseStorage storage = FirebaseStorage.getInstance();
-
+        Dialog dialog = new Dialog(ProfileActivity.this);
+        dialog.setContentView(R.layout.loading_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(false);
+        dialog.show();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String uid = auth.getCurrentUser().getUid();
@@ -115,7 +122,7 @@ ImageView uimageView;
                 });
 
 
-
+dialog.dismiss();
     }
 
 }
