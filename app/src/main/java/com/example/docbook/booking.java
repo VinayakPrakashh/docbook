@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,6 +44,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class booking extends AppCompatActivity {
 EditText name,reasons,contact,ages;
+TextView docname2,docspec2;
 public String val;
     private String[] genderOptions = {"Male", "Female", "Other"};
     private String[] timeslots=
@@ -73,10 +79,68 @@ timetext=findViewById(R.id.timetex);
         day = cal.get(Calendar.DAY_OF_MONTH);
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        docname2 = findViewById(R.id.name_top);
+        docspec2 = findViewById(R.id.special_top);
+        ImageView imageView = findViewById(R.id.profile_photo);
+
+        b1 = findViewById(R.id.book);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
+        String spec = sharedPreferences.getString("specialization", "").toString();
+        db.collection("doctor")
+                .document(spec)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                // Extract doctor details here
+                                String name = document.getString("name");
+                                String specialization = document.getString("specialization");
+                                docname2.setText(name);
+                                docspec2.setText(specialization);
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+        // Get a reference to the Firebase Storage instance
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        String photo = spec + ".jpg";
+// Create a reference to the image file you want to download
+        StorageReference imageRef = storage.getReference().child(photo);
+
+// Download the image file into a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Convert the byte array into a Bitmap object
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Set the Bitmap object in an ImageView
+
+                imageView.setImageBitmap(bmp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors that occur during the download
+                Log.e("TAG", "Failed to download image", exception);
+            }
+        });
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseFirestore db2 = FirebaseFirestore.getInstance();
         String uid = auth.getCurrentUser().getUid();
-        db.collection("users")
+        db2.collection("users")
                 .document(uid)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
