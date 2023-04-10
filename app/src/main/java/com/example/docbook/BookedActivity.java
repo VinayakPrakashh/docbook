@@ -58,7 +58,9 @@ public class BookedActivity extends AppCompatActivity {
                         String date = document.getString("date");
                         String name= document.getString("doctor");
                         String specialization=document.getString("specialization");
-                        BookedAdapter.Product product = new BookedAdapter.Product(name,specialization,date);
+                        String time=document.getString("time");
+
+                        BookedAdapter.Product product = new BookedAdapter.Product(name,specialization,date,time);
                         productList.add(product);
                         bookedAdapter.notifyDataSetChanged();
 

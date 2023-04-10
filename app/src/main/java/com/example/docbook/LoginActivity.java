@@ -238,8 +238,6 @@ if(Objects.equals(mail, email) && Objects.equals(pass, password) && Objects.equa
         dialog.setContentView(R.layout.loading_dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
-
-// When the user clicks the login button
         dialog.show();
         String email = mail.getText().toString();
         String password = pass.getText().toString();

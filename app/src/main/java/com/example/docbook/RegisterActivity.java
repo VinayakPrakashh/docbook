@@ -3,6 +3,8 @@ package com.example.docbook;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -110,6 +112,7 @@ EditText uname,pass,mail,cpass;
 
         Dialog dialog = new Dialog(RegisterActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(false);
         dialog.show();
         String username=uname.getText().toString();
@@ -138,8 +141,9 @@ EditText uname,pass,mail,cpass;
                 }
                 else {
                     dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Mail Id Already Exists!", Toast.LENGTH_SHORT).show();
                 }
+                dialog.dismiss();
             }
         });
     }

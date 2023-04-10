@@ -59,7 +59,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.layout_product, parent, false);
+        View view = inflater.inflate(R.layout.layout_appointment, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -73,12 +73,14 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ProductVie
             holder.textViewname.setText(product.getName());
             holder.textViewdate.setText(product.getDate());
             holder.textViewspec.setText(product.getSpecialization());
+            holder.textViewtime.setText(product.getTime());
             lastPosition=holder.getAdapterPosition();
         }
        Product product = productList.get(position);
         holder.textViewname.setText(product.getName());
         holder.textViewdate.setText(product.getDate());
         holder.textViewspec.setText(product.getSpecialization());
+        holder.textViewtime.setText(product.getTime());
         StorageReference imageRef = FirebaseStorage.getInstance().getReference().child(product.getSpecialization()+".jpg");
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
 
@@ -114,7 +116,7 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewname, textViewdate,textViewspec;
+        TextView textViewname, textViewdate,textViewspec,textViewtime;
         ImageView imageView;
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -123,6 +125,8 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
             textViewdate= itemView.findViewById(R.id.product_price);
             textViewspec = itemView.findViewById(R.id.product_user);
 imageView=itemView.findViewById(R.id.product_image);
+textViewtime=itemView.findViewById(R.id.time);
+
         }
     }
 
@@ -130,11 +134,12 @@ imageView=itemView.findViewById(R.id.product_image);
         private String name;
         private String date;
         private String specialization;
-
-        public Product(String name,String specialization, String date) {
+        private String time;
+        public Product(String name,String specialization, String date,String time) {
             this.name = name;
             this.date =date;
             this.specialization=specialization;
+            this.time=time;
 
         }
 
@@ -147,6 +152,9 @@ imageView=itemView.findViewById(R.id.product_image);
         }
         public String getSpecialization() {
             return specialization;
+        }
+        public String getTime() {
+            return time;
         }
     }
     public void  showBottomDialog(){
