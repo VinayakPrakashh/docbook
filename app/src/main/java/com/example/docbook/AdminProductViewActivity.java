@@ -195,7 +195,7 @@ addimage.setOnClickListener(new View.OnClickListener() {
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "DocumentSnapshot added with ID: " + name);
                                 // Show a success message to the user
-                                Toast.makeText(AdminProductViewActivity.this, "Order placed successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AdminProductViewActivity.this, "Product Added successfully", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         })
@@ -204,7 +204,7 @@ addimage.setOnClickListener(new View.OnClickListener() {
                             public void onFailure(@NonNull Exception e) {
                                 Log.w(TAG, "Error adding document", e);
                                 // Show an error message to the user
-                                Toast.makeText(AdminProductViewActivity.this, "Error placing order", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AdminProductViewActivity.this, "Error Adding Product", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         });

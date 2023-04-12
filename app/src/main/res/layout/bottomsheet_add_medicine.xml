@@ -241,7 +241,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:hint="Enter Direction for Use"
                     android:backgroundTint="#000000"
                     android:textColor="@color/black"/>
@@ -266,7 +266,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:hint="dd-mm-yyyy"
                     android:backgroundTint="#000000"
                     android:textColor="@color/black"/>

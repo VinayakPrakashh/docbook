@@ -137,7 +137,7 @@ EditText uname,pass,mail,cpass;
                     usersRef.document(uid).set(user);
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Sucess", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this,MainActivity.class));
+                    startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
                 }
                 else {
                     dialog.dismiss();

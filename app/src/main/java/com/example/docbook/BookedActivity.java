@@ -2,6 +2,7 @@ package com.example.docbook;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -71,6 +72,11 @@ public class BookedActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+    @Override
+    public void onBackPressed() {
+startActivity(new Intent(BookedActivity.this,AppointmentActivity.class));
     }
 
 }

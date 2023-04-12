@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +42,7 @@ import java.util.Map;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AdminDoctorDetailsActivity extends AppCompatActivity {
+    ImageView imageView;
     TextView docname2, docspec2, dochospital2, dexp2, doccontact2, dquali, fees2;
     Button b1;
     private static final int REQUEST_CODE_IMAGE_PICKER = 1;
@@ -151,7 +151,7 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
         final Dialog dialog=new Dialog(AdminDoctorDetailsActivity.this);
         dialog.setContentView(R.layout.bottomsheet_doctor);
         EditText pname=dialog.findViewById(R.id.name);
-        ImageView imageView=dialog.findViewById(R.id.product_image);
+        imageView=dialog.findViewById(R.id.product_image);
         EditText pspec=dialog.findViewById(R.id.specialization);
         EditText pexp=dialog.findViewById(R.id.experience);
         EditText pqualification=dialog.findViewById(R.id.qualification);
@@ -292,6 +292,13 @@ upload.setOnClickListener(new View.OnClickListener() {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
     private void uploadImageToFirebaseStorage(Uri imageUri) {
+        Dialog dialog2 = new Dialog(AdminDoctorDetailsActivity.this);
+        dialog2.setContentView(R.layout.loading_dialog);
+
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dialog2.setCancelable(false);
+        dialog2.show();
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
         String spec = sharedPreferences.getString("specialization", "").toString();
 
@@ -306,8 +313,7 @@ upload.setOnClickListener(new View.OnClickListener() {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         FirebaseStorage storage = FirebaseStorage.getInstance();
 
-                        FirebaseAuth auth = FirebaseAuth.getInstance();
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
 // Create a reference to the image file you want to download
                         StorageReference imageRef = storage.getReference().child(spec+".jpg");
@@ -332,10 +338,32 @@ upload.setOnClickListener(new View.OnClickListener() {
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(AdminDoctorDetailsActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                         dialog.dismiss();
+                        String photo = spec + ".jpg";
+// Create a reference to the image file you want to download
+
+
+// Download the image file into a byte array
+                        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                // Convert the byte array into a Bitmap object
+                                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+
+                                imageView.setImageBitmap(bmp);
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors that occur during the download
+                                Log.e("TAG", "Failed to download image", exception);
+                            }
+                        });
                         new SweetAlertDialog(AdminDoctorDetailsActivity.this)
 
                                 .setTitleText("Profile Picture Updated Successfully!")
@@ -360,7 +388,7 @@ upload.setOnClickListener(new View.OnClickListener() {
                                 .show();
                     }
                 });
-
+dialog2.dismiss();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -371,6 +399,9 @@ upload.setOnClickListener(new View.OnClickListener() {
         if (requestCode == REQUEST_CODE_IMAGE_PICKER && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Dialog dialog = new Dialog(AdminDoctorDetailsActivity.this);
             dialog.setContentView(R.layout.loading_dialog);
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
             dialog.setCancelable(false);
             dialog.show();
             Uri imageUri = data.getData();
@@ -428,7 +459,7 @@ upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors that occur during the download
-                Toast.makeText(AdminDoctorDetailsActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+
             }
         });
         db.collection("doctor").document(spec)
@@ -452,15 +483,15 @@ upload.setOnClickListener(new View.OnClickListener() {
                                 String qualification = document.getString("qualification");
 
                                 String fees = document.getString("fees");
-                                docname2.setText("Name: " + name);
-                                docspec2.setText("Specialization: " + specialization);
-                                dochospital2.setText("Hospital: " + hospital);
-                                dexp2.setText("Experience: " + exp + " Years");
-                                doccontact2.setText("Contact No: " + dcon);
-                                dquali.setText("Qualification: " + qualification);
-                                fees2.setText("Appointment Fees: " + fees);
+                                docname2.setText(name);
+                                docspec2.setText(specialization);
+                                dochospital2.setText(hospital);
+                                dexp2.setText(exp + " Years");
+                                doccontact2.setText( dcon);
+                                dquali.setText(qualification);
+                                fees2.setText(fees);
 
-                                Toast.makeText(AdminDoctorDetailsActivity.this, "Profile Updated", Toast.LENGTH_SHORT).show();
+
 
                             } else {
                                 Log.d(TAG, "No such document");

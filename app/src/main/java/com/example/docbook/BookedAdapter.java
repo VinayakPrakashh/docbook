@@ -203,7 +203,7 @@ textViewtime=itemView.findViewById(R.id.time);
                                             String user = itemDetailsDoc.getString("name");
                                             String time = itemDetailsDoc.getString("date");
                                             String specialization=itemDetailsDoc.getString("specialization");
-                                            Toast.makeText(context, user+specialization, Toast.LENGTH_SHORT).show();
+
                                             if(user.trim().equals(uu) && specialization.trim().equals(spec)) {
 
                                                 SimpleDateFormat formatter = new SimpleDateFormat("d-M-yyyy");
