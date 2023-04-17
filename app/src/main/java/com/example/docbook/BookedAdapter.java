@@ -186,7 +186,7 @@ textViewtime=itemView.findViewById(R.id.time);
                 new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Are you Sure?")
                         .setContentText("Cancellation will fail if your appointment is Today")
-                        .setConfirmText("Confirm")
+                        .setConfirmText("Ok")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
 
 

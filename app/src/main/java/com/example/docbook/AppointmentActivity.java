@@ -85,5 +85,11 @@ booking.setOnClickListener(new View.OnClickListener() {
     }
 });
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish(); // optional, depending on your use case
+    }
 
 }

@@ -197,6 +197,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:hint="eg:20"
+                                android:inputType="number"
                                 android:textAlignment="viewEnd"
                                 android:textColor="@color/black"
                                 android:textColorHint="#5B5B5B"
@@ -228,7 +229,7 @@
                                 android:textColor="#182693"
                                 android:textSize="18sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/gender"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -307,6 +308,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:inputType="number"
                                 android:hint="Number"
 
                                 android:textAlignment="viewEnd"

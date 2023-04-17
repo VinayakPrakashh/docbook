@@ -44,6 +44,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class AdminDoctorDetailsActivity extends AppCompatActivity {
     ImageView imageView;
     TextView docname2, docspec2, dochospital2, dexp2, doccontact2, dquali, fees2;
+    EditText pname,pspec,pexp,pfees,pqualification,phospital,pcontact,email,password;
     Button b1;
     private static final int REQUEST_CODE_IMAGE_PICKER = 1;
 
@@ -150,17 +151,18 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
 
         final Dialog dialog=new Dialog(AdminDoctorDetailsActivity.this);
         dialog.setContentView(R.layout.bottomsheet_doctor);
-        EditText pname=dialog.findViewById(R.id.name);
+        pname=dialog.findViewById(R.id.name);
         imageView=dialog.findViewById(R.id.product_image);
-        EditText pspec=dialog.findViewById(R.id.specialization);
-        EditText pexp=dialog.findViewById(R.id.experience);
-        EditText pqualification=dialog.findViewById(R.id.qualification);
-        EditText phospital=dialog.findViewById(R.id.hospital);
-        EditText pfees=dialog.findViewById(R.id.fees);
-        EditText pcontact=dialog.findViewById(R.id.contact);
+      pspec=dialog.findViewById(R.id.specialization);
+         pexp=dialog.findViewById(R.id.experience);
+         pqualification=dialog.findViewById(R.id.qualification);
+         phospital=dialog.findViewById(R.id.hospital);
+         pfees=dialog.findViewById(R.id.fees);
+         pcontact=dialog.findViewById(R.id.contact);
         Button upload=dialog.findViewById(R.id.edit_photo_button);
         Button save=dialog.findViewById(R.id.update);
-
+ email=dialog.findViewById(R.id.mail);
+         password=dialog.findViewById(R.id.pass);
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
         String spec = sharedPreferences.getString("specialization", "").toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -210,12 +212,15 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
                                 String hospital = document.getString("hospital");
                                 String dcon = document.getString("contact");
                                 String qualification = document.getString("qualification");
-
+                                String dmail = document.getString("email");
                                 String fees = document.getString("fees");
+                                String dpass = document.getString("password");
                                 // Update UI with doctor details
 
 
 
+                                email.setText(dmail);
+                                password.setText(dpass);
 
                                 pname.setText(name);
                                 pspec.setText(specialization);
@@ -235,46 +240,53 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+if(validateInput()){
 
-                String name=pname.getText().toString();
-                String specialization=pspec.getText().toString();
-                String contact=pcontact.getText().toString();
-                String hospital=phospital.getText().toString();
-                String experience=pexp.getText().toString();
-                String qualification=pqualification.getText().toString();
-                String fees=pfees.getText().toString();
+    String name=pname.getText().toString();
+    String specialization=pspec.getText().toString();
+    String contact=pcontact.getText().toString();
+    String hospital=phospital.getText().toString();
+    String experience=pexp.getText().toString();
+    String qualification=pqualification.getText().toString();
+    String fees=pfees.getText().toString();
+    String mailid=email.getText().toString();
+    String passw=password.getText().toString();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    Map<String, Object> user = new HashMap<>();
+    user.put("name", name);
+    user.put("specialization", specialization);
+    user.put("hospital", hospital);
+    user.put("experience", experience);
+    user.put("contact", contact);
+    user.put("qualification",qualification);
+    user.put("fees",fees);
+    user.put("email",mailid);
+    user.put("password",passw);
 
-                Map<String, Object> user = new HashMap<>();
-                user.put("name", name);
-                user.put("specialization", specialization);
-                user.put("hospital", hospital);
-                user.put("experience", experience);
-                user.put("contact", contact);
-                user.put("qualification",qualification);
-                user.put("fees",fees);
+    db.collection("doctor").document(specialization)
+            .update(user)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    new SweetAlertDialog(AdminDoctorDetailsActivity.this)
+                            .setTitleText("Doctor Profile Updated")
+                            .show();
 
-                db.collection("doctor").document(specialization)
-                        .update(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                new SweetAlertDialog(AdminDoctorDetailsActivity.this)
-                                        .setTitleText("Doctor Profile Updated")
-                                        .show();
+                    dialog.dismiss();
+                    performauth();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error writing user information to Firestore", e);
+                }
+            });
+}else {
 
-                                dialog.dismiss();
-                                performauth();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error writing user information to Firestore", e);
-                            }
-                        });
+}
 
             }
         });
@@ -503,4 +515,84 @@ dialog2.dismiss();
                 });
 
     }
+    private boolean validateInput() {
+        String name = pname.getText().toString();
+        String specialization = pspec.getText().toString();
+        String contact = pcontact.getText().toString();
+        String hospital = phospital.getText().toString();
+        String experience = pexp.getText().toString();
+        String qualification = pqualification.getText().toString();
+        String fees = pfees.getText().toString();
+        String mailid = email.getText().toString();
+        String passw = password.getText().toString();
+
+        if (name.isEmpty()) {
+            pname.setError("Please enter your name");
+            return false;
+        } else if (!name.matches("[a-zA-Z ]+")) {
+            pname.setError("Name should contain only letters");
+            return false;
+        } else if (name.length() < 3) {
+            pname.setError("Name should be at least 3 characters long");
+            return false;
+        }
+
+        if (specialization.isEmpty()) {
+            pspec.setError("Please enter your specialization");
+            return false;
+        }
+
+        if (contact.isEmpty()) {
+            pcontact.setError("Please enter your contact number");
+            return false;
+        } else if (!contact.matches("\\d{10}")) {
+            pcontact.setError("Contact number should be 10 digits long");
+            return false;
+        }
+
+        if (hospital.isEmpty()) {
+            phospital.setError("Please enter the hospital name");
+            return false;
+        }
+
+        if (experience.isEmpty()) {
+            pexp.setError("Please enter your experience");
+            return false;
+        } else if (!experience.matches("\\d+")) {
+            pexp.setError("Experience should be a number");
+            return false;
+        }
+
+        if (qualification.isEmpty()) {
+            pqualification.setError("Please enter your qualification");
+            return false;
+        }
+
+        if (fees.isEmpty()) {
+            pfees.setError("Please enter your fees");
+            return false;
+        } else if (!fees.matches("\\d+")) {
+            pfees.setError("Fees should be a number");
+            return false;
+        }
+
+        if (mailid.isEmpty()) {
+            email.setError("Please enter your email ID");
+            return false;
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mailid).matches()) {
+            email.setError("Please enter a valid email ID");
+            return false;
+        }
+
+        if (passw.isEmpty()) {
+            password.setError("Please enter your password");
+            return false;
+        } else if (passw.length() < 8) {
+            password.setError("Password should be at least 8 characters long");
+            return false;
+        }
+
+        return true;
+    }
+
 }
