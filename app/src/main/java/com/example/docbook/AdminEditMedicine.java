@@ -104,7 +104,7 @@ public Context context=AdminEditMedicine.this;
                                 Log.d(TAG, "DocumentSnapshot added with ID: " + name);
                                 // Show a success message to the user
                                 Toast.makeText(context, "Changes Saved successfully", Toast.LENGTH_SHORT).show();
-
+startActivity(new Intent(AdminEditMedicine.this,AdminProductViewActivity.class));
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

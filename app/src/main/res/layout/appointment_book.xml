@@ -78,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Nick Edward"
+
                         android:textColor="#ffffff"
                         android:textSize="20sp"
                         android:elevation="8dp"
@@ -100,7 +100,7 @@
                         android:shadowDy="5"
                         android:shadowRadius="7"
                         android:layout_height="wrap_content"
-                        android:text="nickedward@gmail.com"
+
                         android:textColor="#ffffff"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="@+id/name_top"

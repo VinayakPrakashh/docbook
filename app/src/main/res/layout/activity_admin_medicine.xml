@@ -33,12 +33,13 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:text="Return"
-        android:textColor="@color/black"
-        android:backgroundTint="#FFFB00"
+
+        android:textColor="#5E3BED"
+        android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

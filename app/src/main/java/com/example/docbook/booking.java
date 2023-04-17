@@ -103,7 +103,7 @@ timetext=findViewById(R.id.timetex);
                                 // Extract doctor details here
                                 String name = document.getString("name");
                                 String specialization = document.getString("specialization");
-                                docname2.setText(name);
+                                docname2.setText("Dr. "+name);
                                 docspec2.setText(specialization);
                             } else {
                                 Log.d(TAG, "No such document");

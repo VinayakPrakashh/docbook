@@ -163,6 +163,7 @@ public class AdminDoctorDetailsActivity extends AppCompatActivity {
         Button save=dialog.findViewById(R.id.update);
  email=dialog.findViewById(R.id.mail);
          password=dialog.findViewById(R.id.pass);
+         pspec.setEnabled(false);
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
         String spec = sharedPreferences.getString("specialization", "").toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();

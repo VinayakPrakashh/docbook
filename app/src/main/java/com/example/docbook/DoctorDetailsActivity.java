@@ -99,7 +99,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
 
 
 
-                                docname2.setText(name);
+                                docname2.setText("Dr. "+name);
                                 docspec2.setText(specialization);
                                 dochospital2.setText(hospital);
                                 dexp2.setText(exp + " Years");
