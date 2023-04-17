@@ -55,7 +55,7 @@ public class AdminProductViewActivity extends AppCompatActivity {
     public String name;
     public ImageView imageView;
     private RecyclerView recyclerView;
-    public  TextView pname;
+    public  TextView pname,pprice,pexpiry,ppacking,pquantity,pdirection,pmanufacturer,addimage,datedelivery;
     private AdminProductViewAdapter adminProductViewAdapter;
     public String product_name,product_price,product_expiry,product_quantity,product_packing,product_manufacturer,product_direction,product_delivery;
     private List<Product> productList;
@@ -140,77 +140,89 @@ showBottomDialog();
         dialog.setContentView(R.layout.bottomsheet_add_medicine);
          pname=dialog.findViewById(R.id.name);
          imageView=dialog.findViewById(R.id.product_image);
-        TextView  pprice=dialog.findViewById(R.id.price);
-        TextView pexpiry=dialog.findViewById(R.id.expiry);
-        TextView ppacking=dialog.findViewById(R.id.pack);
-        TextView pquantity=dialog.findViewById(R.id.quantity);
-        TextView pdirection=dialog.findViewById(R.id.direction);
-        TextView pmanufacturer=dialog.findViewById(R.id.manufacturer);
-        TextView addimage=dialog.findViewById(R.id.addimage);
+          pprice=dialog.findViewById(R.id.price);
+         pexpiry=dialog.findViewById(R.id.expiry);
+         ppacking=dialog.findViewById(R.id.pack);
+         pquantity=dialog.findViewById(R.id.quantity);
+         pdirection=dialog.findViewById(R.id.direction);
+         pmanufacturer=dialog.findViewById(R.id.manufacturer);
+         addimage=dialog.findViewById(R.id.addimage);
         Button add=dialog.findViewById(R.id.addmedicine);
-        TextView datedelivery=dialog.findViewById(R.id.delivery);
+         datedelivery=dialog.findViewById(R.id.delivery);
         imageView.setImageResource(R.drawable.baseline_image_24);
 
 addimage.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
+        String product_nam = pname.getText().toString();
+        if (product_nam.isEmpty()) {
+            pname.setError("Product name is required before adding image");
+            pname.requestFocus();
+
+        }
+        else{
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
+        }
+
     }
 });
         add.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                product_name=pname.getText().toString();
-               product_delivery=datedelivery.getText().toString();
-               product_direction=pdirection.getText().toString();
-               product_expiry=pexpiry.getText().toString();
-               product_manufacturer=pmanufacturer.getText() .toString();
-               product_packing=ppacking.getText().toString();
-               product_quantity=pquantity.getText().toString();
-               product_price=pprice.getText().toString();
+                if(validateInputs()){
+                    product_name=pname.getText().toString();
+                    product_delivery=datedelivery.getText().toString();
+                    product_direction=pdirection.getText().toString();
+                    product_expiry=pexpiry.getText().toString();
+                    product_manufacturer=pmanufacturer.getText() .toString();
+                    product_packing=ppacking.getText().toString();
+                    product_quantity=pquantity.getText().toString();
+                    product_price=pprice.getText().toString();
 // Access a Firestore instance from your Activity or Fragment
-                // Access a Firestore instance from your Activity or Fragment
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    // Access a Firestore instance from your Activity or Fragment
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 // Create a new data object with the desired fields
-                Map<String, Object> newData = new HashMap<>();
-                newData.put("delivery", product_delivery);
-                newData.put("direction", product_direction);
-                newData.put("cost", product_price);
-                newData.put("manufacturer", product_manufacturer);
-                newData.put("expiry", product_expiry);
-                newData.put("quantity", product_packing);
-                newData.put("item", product_quantity);
-                newData.put("name", product_name);
+                    Map<String, Object> newData = new HashMap<>();
+                    newData.put("delivery", product_delivery);
+                    newData.put("direction", product_direction);
+                    newData.put("cost", product_price);
+                    newData.put("manufacturer", product_manufacturer);
+                    newData.put("expiry", product_expiry);
+                    newData.put("quantity", product_packing);
+                    newData.put("item", product_quantity);
+                    newData.put("name", product_name);
 
 
 // Add the new data to a Firestore document in the "orders" collection
-                db.collection("products")
-                        .document(product_name)
-                        .set(newData)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + name);
-                                // Show a success message to the user
-                                Toast.makeText(AdminProductViewActivity.this, "Product Added successfully", Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                                // Show an error message to the user
-                                Toast.makeText(AdminProductViewActivity.this, "Error Adding Product", Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
-                            }
-                        });
+                    db.collection("products")
+                            .document(product_name)
+                            .set(newData)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + name);
+                                    // Show a success message to the user
+                                    Toast.makeText(AdminProductViewActivity.this, "Product Added successfully", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                    // Show an error message to the user
+                                    Toast.makeText(AdminProductViewActivity.this, "Error Adding Product", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                            });
 
 
 
+
+                }
 
 
 
@@ -337,4 +349,64 @@ addimage.setOnClickListener(new View.OnClickListener() {
                 });
 
     }
+    private boolean validateInputs() {
+        String product_name = pname.getText().toString();
+        String product_delivery = datedelivery.getText().toString();
+        String product_direction = pdirection.getText().toString();
+        String product_expiry = pexpiry.getText().toString();
+        String product_manufacturer = pmanufacturer.getText().toString();
+        String product_packing = ppacking.getText().toString();
+        String product_quantity = pquantity.getText().toString();
+        String product_price = pprice.getText().toString();
+
+        if (product_name.isEmpty()) {
+            pname.setError("Product name is required");
+            pname.requestFocus();
+            return false;
+        }
+
+        if (product_delivery.isEmpty()) {
+            datedelivery.setError("Delivery date is required");
+            datedelivery.requestFocus();
+            return false;
+        }
+
+        if (product_direction.isEmpty()) {
+            pdirection.setError("Direction is required");
+            pdirection.requestFocus();
+            return false;
+        }
+
+        if (product_expiry.isEmpty()) {
+            pexpiry.setError("Expiry date is required");
+            pexpiry.requestFocus();
+            return false;
+        }
+
+        if (product_manufacturer.isEmpty()) {
+            pmanufacturer.setError("Manufacturer is required");
+            pmanufacturer.requestFocus();
+            return false;
+        }
+
+        if (product_packing.isEmpty()) {
+            ppacking.setError("Packing is required");
+            ppacking.requestFocus();
+            return false;
+        }
+        if (product_quantity.isEmpty()) {
+            pquantity.setError("Quantity is required");
+            pquantity.requestFocus();
+            return false;
+        }
+        if (product_price.isEmpty()) {
+            pprice.setError("Packing is required");
+            pprice.requestFocus();
+            return false;
+        }
+        // Add more validation rules here
+
+        return true;
+    }
+
 }

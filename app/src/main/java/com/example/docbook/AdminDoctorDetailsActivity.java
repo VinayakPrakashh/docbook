@@ -294,8 +294,15 @@ if(validateInput()){
 upload.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
+        String name = pname.getText().toString();
+        if (name.isEmpty()) {
+            pname.setError("Please enter your name before uploading image");
+
+        }
+else {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, REQUEST_CODE_IMAGE_PICKER);
+        }
     }
 });
         dialog.show();
