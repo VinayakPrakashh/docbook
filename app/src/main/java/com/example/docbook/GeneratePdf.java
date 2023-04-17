@@ -1,7 +1,5 @@
 package com.example.docbook;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -78,15 +76,6 @@ public class GeneratePdf extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = Uri.fromFile(destFile);
-        intent.setDataAndType(uri, "application/pdf");
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-
-            startActivity(intent);
-
-            Toast.makeText(this, "No app installed on the device to open PDF files", Toast.LENGTH_SHORT).show();
 
         Toast.makeText(this, "Invoice downloaded to Downloads directory", Toast.LENGTH_SHORT).show();
     }
