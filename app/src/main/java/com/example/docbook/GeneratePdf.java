@@ -1,5 +1,7 @@
 package com.example.docbook;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -76,6 +79,12 @@ public class GeneratePdf extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Launch the PDF viewer app
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", destFile);
+        intent.setDataAndType(uri, "application/pdf");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(intent);
 
         Toast.makeText(this, "Invoice downloaded to Downloads directory", Toast.LENGTH_SHORT).show();
     }
