@@ -158,7 +158,7 @@ user.setText(uname.trim());
 profile.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(HomeActivity.this,ProfileActivity.class));
+        startActivity(new Intent(HomeActivity.this,GeneratePdf.class));
     }
 });
         lgout.setOnClickListener(new View.OnClickListener() {
