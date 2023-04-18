@@ -54,7 +54,9 @@ public class BookedActivity extends AppCompatActivity {
         itemRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                 if (task.isSuccessful()) {
+
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String date = document.getString("date");
                         String name= document.getString("doctor");
@@ -63,6 +65,7 @@ public class BookedActivity extends AppCompatActivity {
 
                         BookedAdapter.Product product = new BookedAdapter.Product(name,specialization,date,time);
                         productList.add(product);
+
                         bookedAdapter.notifyDataSetChanged();
 
                     }

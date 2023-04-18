@@ -9,7 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#00FF00</color>
     <color name="lavender">#8692f7</color>
-        <color name="password_toggle_color">#00BCD4</color>
+    <color name="semiblack">#80000000</color>
+
+    <color name="password_toggle_color">#00BCD4</color>
 
 
         <color name="item_background_color">#FFD600</color>

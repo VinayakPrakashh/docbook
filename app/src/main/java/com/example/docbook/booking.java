@@ -397,6 +397,7 @@ timetext=findViewById(R.id.timetex);
         String dateinfo = datewrite2.getText().toString();
         String time = timetext.getText().toString();
         String genderselect = genders.getText().toString();
+        String ageda = Integer.toString(ageauth);
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
         String spec = sharedPreferences.getString("specialization", "");
         String doctor= sharedPreferences.getString("doctor", "").toString();
@@ -408,30 +409,54 @@ timetext=findViewById(R.id.timetex);
         appointmentRef.set(appointment).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                // Create the SweetAlertDialog
                 new SweetAlertDialog(booking.this, SweetAlertDialog.SUCCESS_TYPE)
-                        .setTitleText("Appointment Booked!")
-                        .setContentText("See booked appointments?")
-                        .setCancelText("No")
-                        .setConfirmText("Yes")
-                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                Intent intent = new Intent(booking.this, AppointmentActivity.class);
-                                startActivity(intent);
-                                sweetAlertDialog.dismissWithAnimation();
-                            }
-                        })
+                        .setTitleText("Appointment Has been Booked!")
+                        .setConfirmText("Download Invoice")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                // Do something when "Yes" button is clicked
-                                Intent intent = new Intent(booking.this, BookedActivity.class);
+                                Intent intent = new Intent(booking.this, GeneratePdf.class);
+                                intent.putExtra("doctorName", doctor);
+                                intent.putExtra("specialization", spec);
+                                intent.putExtra("hospital", "Specialists' Hospital Kochi");
+                                intent.putExtra("myName", ageda);
+                                intent.putExtra("age", ageauth);
+                                intent.putExtra("gender", genderselect);
+                                intent.putExtra("reason", reasonauth);
+                                intent.putExtra("date", dateinfo);
+                                intent.putExtra("time", time);
                                 startActivity(intent);
-                                sweetAlertDialog.dismissWithAnimation();
+
+                                sweetAlertDialog.dismiss();
+
+                                // Create the SweetAlertDialog
+                                new SweetAlertDialog(booking.this, SweetAlertDialog.SUCCESS_TYPE)
+                                        .setTitleText("Appointment Booked!")
+                                        .setContentText("See booked appointments?")
+                                        .setCancelText("No")
+                                        .setConfirmText("Yes")
+                                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                Intent intent = new Intent(booking.this, AppointmentActivity.class);
+                                                startActivity(intent);
+                                                sweetAlertDialog.dismissWithAnimation();
+                                            }
+                                        })
+                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                // Do something when "Yes" button is clicked
+                                                Intent intent = new Intent(booking.this, BookedActivity.class);
+                                                startActivity(intent);
+                                                sweetAlertDialog.dismissWithAnimation();
+                                            }
+                                        })
+                                        .show();
                             }
                         })
                         .show();
+
 
             }
         }).addOnFailureListener(new OnFailureListener() {

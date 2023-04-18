@@ -190,6 +190,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 productListFiltered = (List<Product>) filterResults.values;
                 notifyDataSetChanged();
+
             }
         };
     }

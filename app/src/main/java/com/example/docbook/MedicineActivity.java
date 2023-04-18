@@ -88,7 +88,9 @@ public class MedicineActivity extends AppCompatActivity {
                                 productList.add(product);
                                 dialog.dismiss();
                             }
+
                             productAdapter.notifyDataSetChanged();
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                             dialog.dismiss();
