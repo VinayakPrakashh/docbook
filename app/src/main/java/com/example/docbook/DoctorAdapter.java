@@ -158,7 +158,78 @@ imageView=itemView.findViewById(R.id.product_image);
         dialog.setContentView(R.layout.bottomsheet_appointment);
 
         Button cancel=dialog.findViewById(R.id.cancelorder);
+        Toast.makeText(context, username, Toast.LENGTH_SHORT).show();
+        TextView name=dialog.findViewById(R.id.a_name);
+        TextView age=dialog.findViewById(R.id.a_age);
+        TextView gender=dialog.findViewById(R.id.a_gender);
+        TextView reason=dialog.findViewById(R.id.a_reason);
+        TextView contact=dialog.findViewById(R.id.a_contact);
+        TextView date=dialog.findViewById(R.id.a_date);
+        TextView time=dialog.findViewById(R.id.a_time);
+        ImageView imageView=dialog.findViewById(R.id.product_image);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref",MODE_PRIVATE);
+        String specs = sharedPreferences.getString("specialization", "").toString();
+        Query itemDetailsRef =db.collectionGroup("item");
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + username + "/image");
+
+// Download the contents of the file as a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
+            @Override
+            public void onSuccess(byte[] bytes) {
+
+                // Create a bitmap image from the byte array
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Display the bitmap image in an ImageView
+
+               imageView.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors that occur
+            }
+        });
+
+
+        itemDetailsRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot itemDetailsDoc : task.getResult()) {
+
+                    String user = itemDetailsDoc.getString("name");
+
+                    String specialization=itemDetailsDoc.getString("specialization");
+
+                    if(user.trim().equals(username) && specialization.trim().equals(specs)) {
+                        String name_p = itemDetailsDoc.getString("name");
+
+                        String age_p=itemDetailsDoc.getString("age");
+                        String gender_p=itemDetailsDoc.getString("gender");
+                        String reason_p=itemDetailsDoc.getString("reason");
+                        String date_p=itemDetailsDoc.getString("date");
+                        String contact_p=itemDetailsDoc.getString("contact");
+                        String time_p=itemDetailsDoc.getString("time");
+                        name.setText(name_p);
+                        age.setText(age_p);
+                        gender.setText(gender_p);
+                        reason.setText(reason_p);
+                        date.setText(date_p);
+                        contact.setText(contact_p);
+                        time.setText(time_p);
+
+                    }
+                    else {
+
+                    }
+
+                }
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+        });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
