@@ -190,8 +190,7 @@ dialog.dismiss();
                                     @Override
                                     public void onFailure(@NonNull Exception exception) {
                                         // Handle any errors that occur during the download
-                                        Toast.makeText(EditProfileActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
-                                    }
+                                        }
                                 });
                             } else {
                                 Log.d(TAG, "No such document");

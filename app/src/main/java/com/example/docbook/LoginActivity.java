@@ -295,7 +295,7 @@ if(Objects.equals(mail, email) && Objects.equals(pass, password) && Objects.equa
                                     myEdit.putString("mail", mail);
                                     myEdit.putString("password",pass);
                                     myEdit.commit();
-                                    Toast.makeText(LoginActivity.this, "Sucess", Toast.LENGTH_SHORT).show();
+
                                 }else{
                                     Toast.makeText(LoginActivity.this, "Failed! Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                                 }

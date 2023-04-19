@@ -391,13 +391,13 @@ timetext=findViewById(R.id.timetex);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String uid = auth.getCurrentUser().getUid();
         String nameauth = name.getText().toString();
-        int ageauth = Integer.parseInt(ages.getText().toString());
+        String ageauth=ages.getText().toString();
         String contactauth = contact.getText().toString();
         String reasonauth = reasons.getText().toString();
         String dateinfo = datewrite2.getText().toString();
         String time = timetext.getText().toString();
         String genderselect = genders.getText().toString();
-        String ageda = Integer.toString(ageauth);
+
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
         String spec = sharedPreferences.getString("specialization", "");
         String doctor= sharedPreferences.getString("doctor", "").toString();
@@ -419,7 +419,7 @@ timetext=findViewById(R.id.timetex);
                                 intent.putExtra("doctorName", doctor);
                                 intent.putExtra("specialization", spec);
                                 intent.putExtra("hospital", "Specialists' Hospital Kochi");
-                                intent.putExtra("myName", ageda);
+                                intent.putExtra("myName", nameauth);
                                 intent.putExtra("age", ageauth);
                                 intent.putExtra("gender", genderselect);
                                 intent.putExtra("reason", reasonauth);
@@ -472,7 +472,7 @@ timetext=findViewById(R.id.timetex);
 
     public class Appointment {
         private String name;
-        private int age;
+        private String age;
         private String phone;
         private String reason;
         private String date;
@@ -482,7 +482,7 @@ timetext=findViewById(R.id.timetex);
         private String doctor;
         public Appointment() {}
 
-        public Appointment(String name, int age, String phone, String reason, String date, String time, String gender,String specialization,String doctor) {
+        public Appointment(String name, String age, String phone, String reason, String date, String time, String gender,String specialization,String doctor) {
             this.name = name;
             this.age = age;
             this.phone = phone;
@@ -514,11 +514,11 @@ public String getSpecialization(){
             this.name = name;
         }
 
-        public int getAge() {
+        public String getAge() {
             return age;
         }
 
-        public void setAge(int age) {
+        public void setAge(String age) {
             this.age = age;
         }
 

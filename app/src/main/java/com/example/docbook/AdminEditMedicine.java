@@ -265,7 +265,7 @@ startActivity(new Intent(AdminEditMedicine.this,AdminProductViewActivity.class))
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(context, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                         dialog.dismiss();

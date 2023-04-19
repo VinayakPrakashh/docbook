@@ -292,7 +292,7 @@ delete();
     public void delete() {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Toast.makeText(context, uuser, Toast.LENGTH_SHORT).show();
+
         DocumentReference parentDocRef = db.collection("bookings").document(uuser).collection("itemdetails").document(prod);
         parentDocRef.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

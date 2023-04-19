@@ -190,7 +190,7 @@ if (specialization.isEmpty()){
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(AdminEditPatientActivity.this, "sdsdffd", Toast.LENGTH_SHORT).show();
+
                     }});
         String name=uname.getText().toString();
         String age=uage.getText().toString();
@@ -337,7 +337,7 @@ image();
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(AdminEditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                         dialog.dismiss();
@@ -409,7 +409,7 @@ dialog.dismiss();
 private void image(){
     FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+
 // Create a reference to the image file you want to download
     StorageReference imageRef = storage.getReference().child("patients").child(special).child(keyname);
 

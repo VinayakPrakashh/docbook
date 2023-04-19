@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,7 +61,7 @@ uoccupation=scrollView.findViewById(R.id.occupation);
 name=uname.getText().toString();
         Intent intent = getIntent();
     keyname = intent.getStringExtra("key");
-        Toast.makeText(this, keyname, Toast.LENGTH_SHORT).show();
+
 addp.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {

@@ -320,7 +320,7 @@ addimage.setOnClickListener(new View.OnClickListener() {
                             public void onFailure(@androidx.annotation.NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(AdminProductViewActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                         dialog.dismiss();

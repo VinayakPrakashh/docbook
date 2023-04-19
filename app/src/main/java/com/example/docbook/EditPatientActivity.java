@@ -259,7 +259,7 @@ name=uname.getText().toString();
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors that occur during the download
-                Toast.makeText(EditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+
             }
         });
         db.collection("patients").document(keyname)
@@ -348,8 +348,7 @@ name=uname.getText().toString();
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(EditPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
-                            }
+                              }
                         });
                         dialog.dismiss();
                         new SweetAlertDialog(EditPatientActivity.this)

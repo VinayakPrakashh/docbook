@@ -233,7 +233,7 @@ name=uname.getText().toString();
 
     private void uploadImageToFirebaseStorage(Uri imageUri) {
         spec=uspecialization.getText().toString();
-        Toast.makeText(this, spec, Toast.LENGTH_SHORT).show();
+
 name=uname.getText().toString();
 
 
@@ -272,7 +272,7 @@ name=uname.getText().toString();
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(AdminAddPatientActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                         dialog.dismiss();

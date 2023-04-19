@@ -158,7 +158,7 @@ imageView=itemView.findViewById(R.id.product_image);
         dialog.setContentView(R.layout.bottomsheet_appointment);
 
         Button cancel=dialog.findViewById(R.id.cancelorder);
-        Toast.makeText(context, username, Toast.LENGTH_SHORT).show();
+
         TextView name=dialog.findViewById(R.id.a_name);
         TextView age=dialog.findViewById(R.id.a_age);
         TextView gender=dialog.findViewById(R.id.a_gender);

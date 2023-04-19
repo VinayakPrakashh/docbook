@@ -36,6 +36,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public class HomeActivity extends AppCompatActivity {
 
 LinearLayout store,cart,appointment;
+public String username22;
 TextView user;
 ConstraintLayout finddoctor;
 ImageView img;
@@ -72,12 +73,12 @@ user=findViewById(R.id.username);
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                    String username = documentSnapshot.getString("username");
-                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                  String username = documentSnapshot.getString("username");
+
                     user.setText(username);
-                    myEdit.putString("name", username);
-                    myEdit.commit();
+                    setUserName(username);
+
+
                 } else {
                     Log.d(TAG, "No such document");
                 }
@@ -89,31 +90,10 @@ user=findViewById(R.id.username);
             }
         });
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-        String uname = sharedPreferences.getString("name", "").toString();
-user.setText(uname.trim());
-        String suname=uname.trim();
+        String uname = sharedPreferences.getString("name", "");
 
-        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + suname + "/image");
 
-// Download the contents of the file as a byte array
-        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
 
-            @Override
-            public void onSuccess(byte[] bytes) {
-
-                // Create a bitmap image from the byte array
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                // Display the bitmap image in an ImageView
-
-                img.setImageBitmap(bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@androidx.annotation.NonNull Exception exception) {
-                // Handle any errors that occur
-            }
-        });
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -255,4 +235,30 @@ profile.setOnClickListener(new View.OnClickListener() {
                 .show();
     }
 
+    public void setUserName(String userName) {
+        username22=userName;
+
+
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("users/" + userName + "/image");
+
+// Download the contents of the file as a byte array
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+
+            @Override
+            public void onSuccess(byte[] bytes) {
+
+                // Create a bitmap image from the byte array
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // Display the bitmap image in an ImageView
+
+                img.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@androidx.annotation.NonNull Exception exception) {
+                // Handle any errors that occur
+            }
+        });
+    }
 }
