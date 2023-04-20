@@ -26,7 +26,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -64,24 +63,26 @@ user=findViewById(R.id.username);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-            String uid2 = currentUser.getUid();
+
+        String uid2 = currentUser.getUid();
 
         FirebaseFirestore db2 = FirebaseFirestore.getInstance();
         DocumentReference docRef2 = db2.collection("users").document(uid2);
 
-        docRef2.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                  String username = documentSnapshot.getString("username");
+        docRef2.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+              String username = documentSnapshot.getString("username");
 
-                    user.setText(username);
-                    setUserName(username);
+                user.setText(username);
+                SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                myEdit.putString("name", username);
+                myEdit.commit();
+                setUserName(username);
 
 
-                } else {
-                    Log.d(TAG, "No such document");
-                }
+            } else {
+                Log.d(TAG, "No such document");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

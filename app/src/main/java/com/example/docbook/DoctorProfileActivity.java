@@ -94,7 +94,7 @@ String experience=document.getString("experience");
                                 String phone=document.getString("contact");
                                 String fees=document.getString("fees");
                                 String email=document.getString("email");
-                                uname.setText(name);
+                                uname.setText("Dr. "+name);
                                 uspec.setText(specialization);
                                uqualification.setText(qualification);
 uexp.setText(experience);

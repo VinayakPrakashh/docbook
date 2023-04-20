@@ -17,11 +17,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -29,6 +28,7 @@ public class DoctorHomeActivity extends AppCompatActivity {
 LinearLayout lgout,appointment,profile,editprofile,patientadd,appointment_t,patient_t;
 TextView name;
 ImageView imageRefe;
+ConstraintLayout order;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +39,7 @@ editprofile=findViewById(R.id.mypatients);
         patient_t=findViewById(R.id.patients_top);
         appointment_t=findViewById(R.id.appointment_top);
         imageRefe=findViewById(R.id.photo);
+        order=findViewById(R.id.orders_mid);
 name=findViewById(R.id.username);
         SharedPreferences sharedPreferences = getSharedPreferences("doctor", Context.MODE_PRIVATE);
         String displayname = sharedPreferences.getString("doctor", "").toString();
@@ -83,8 +84,7 @@ name.setText(displayname);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.apply();
-                // When the user clicks the logout button
-                FirebaseAuth.getInstance().signOut();
+
                 Context context = view.getContext();
 // Reset the value of toast_displayed to false
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -94,6 +94,10 @@ name.setText(displayname);
                 startActivity(new Intent(DoctorHomeActivity.this, MainActivity.class));
             }
         });
+        order.setOnClickListener(view -> {
+                    startActivity(new Intent(DoctorHomeActivity.this,DoctorAppointmentActivity.class));
+                }
+                );
         appointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
