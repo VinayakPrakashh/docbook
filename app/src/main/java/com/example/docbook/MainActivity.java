@@ -191,7 +191,9 @@ public  String emailAUTH,passwordAUT,loginAUTH,specAUTH;
 
                                 if(Objects.equals(mail, emailAUTH) && Objects.equals(pass, passwordAUT) ){
 
-                                    startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+                                    Intent intent = new Intent(MainActivity.this,AdminHomeActivity.class);
+                                    intent.putExtra("animkey", "play");
+                                    startActivity(intent);
 
                                 }
                             } else {

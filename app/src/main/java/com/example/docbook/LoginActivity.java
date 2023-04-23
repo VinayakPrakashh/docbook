@@ -287,7 +287,9 @@ if(Objects.equals(mail, email) && Objects.equals(pass, password) && Objects.equa
 
                                 if(Objects.equals(mail, email) && Objects.equals(pass, password)){
                                     Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this,AdminHomeActivity.class));
+                                    Intent intent = new Intent(LoginActivity.this,AdminHomeActivity.class);
+                                    intent.putExtra("animkey", "play");
+                                    startActivity(intent);
                                     SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                                     SharedPreferences.Editor myEdit = sharedPreferences.edit();
                                     myEdit.putString("login", login);
