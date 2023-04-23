@@ -215,7 +215,7 @@
                     android:layout_width="124dp"
                     android:layout_height="111dp"
 
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:background="#00000000"
                     android:backgroundTint="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"

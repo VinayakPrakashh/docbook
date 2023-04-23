@@ -59,6 +59,7 @@ if(intent.hasExtra("animkey")){
     special();
 }
 else{
+
     normal();
 }
 

@@ -183,7 +183,8 @@
 
 
                 <LinearLayout
-                    android:layout_width="330dp"
+
+                    android:layout_width="323dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
@@ -219,21 +220,29 @@
 
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="330dp"
+                    android:layout_width="323dp"
                     android:layout_height="90dp"
                     android:orientation="horizontal"
                     android:gravity="center">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="90dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/product_all"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
 
-                    <TextView
-                        android:id="@+id/product_all"
-                        android:gravity="center"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold"
-                        android:layout_weight="1"/>
+                            android:background="@drawable/round_background"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="#5e3bee"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
                     <View
                         android:layout_width="1dp"
                         android:layout_height="70dp"
@@ -246,16 +255,24 @@
                         android:padding="1dp"
                         android:foreground="?android:attr/selectableItemBackground"
                         />
-                    <TextView
-                        android:id="@+id/order_all"
-                        android:gravity="center"
+                    <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold"
-                        android:layout_weight="1"/>
+                        android:layout_height="90dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/order_all"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+
+                            android:background="@drawable/round_background"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="#5e3bee"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                     <View
                         android:layout_width="1dp"
                         android:layout_height="70dp"
@@ -268,16 +285,24 @@
                         android:padding="1dp"
                         android:foreground="?android:attr/selectableItemBackground"
                         />
-                    <TextView
-                        android:id="@+id/patient_all"
-                        android:gravity="center"
+                    <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold"
-                        android:layout_weight="1"/>
+                        android:layout_height="90dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/patient_all"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+
+                            android:background="@drawable/round_background"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textColor="#5e3bee"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                 </LinearLayout>
 

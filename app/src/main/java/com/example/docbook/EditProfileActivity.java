@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,14 +43,16 @@ import java.util.Map;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class EditProfileActivity extends AppCompatActivity {
-EditText uname,uage,uaddress,uphone,ucity,uemail;
+EditText uname,uage,uaddress,uphone,ucity,uemail,upassword;
 Button save;
 public String nname;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     private static final int REQUEST_CODE_IMAGE_PICKER = 1;
 CardView uimageView;
+public String uid;
     Button upload;
+    FirebaseUser uuser;
     ImageView img;
 
     @Override
@@ -64,6 +68,10 @@ CardView uimageView;
         uimageView=findViewById(R.id.profile_photo2);
         save=findViewById(R.id.save);
       img=findViewById(R.id.profile_photo);
+        upassword=findViewById(R.id.password);
+
+       uuser = FirebaseAuth.getInstance().getCurrentUser();
+         uid = uuser.getUid();
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +116,7 @@ dialog.dismiss();
         String address=uaddress.getText().toString();
         String contact=uphone.getText().toString();
         String city=ucity.getText().toString();
-
+        String password=upassword.getText().toString();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -120,12 +128,42 @@ dialog.dismiss();
         user.put("address", address);
         user.put("contact", contact);
         user.put("city", city);
-
+        user.put("password", password);
         db.collection("users").document(userUid)
                 .set(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+
+
+
+                        uuser.updateEmail(email)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            uuser.updatePassword(password)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                sign();
+                                                            } else {
+                                                                // Password update failed
+                                                            }
+                                                        }
+                                                    });
+
+                                        } else {
+                                            // Email update failed
+                                            // Get the error message
+                                            String errorMessage = task.getException().getMessage();
+                                            Log.e("EditProfileActivity", "Email update failed: " + errorMessage);
+                                            Toast.makeText(EditProfileActivity.this, "Email update failed: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
                         new SweetAlertDialog(EditProfileActivity.this)
                                 .setTitleText("Profile Updated!")
                                 .show();
@@ -166,12 +204,14 @@ dialog.dismiss();
                                 String city=document.getString("city");
                                 String mail = document.getString("email");
                                 String phone=document.getString("contact");
+                                String password=document.getString("password");
                                 uname.setText(nname);
                                 uage.setText(age);
                                 uemail.setText(mail);
                                 ucity.setText(city);
                                 uphone.setText(phone);
                                 uaddress.setText(address);
+                                upassword.setText(password);
                                 // Create a reference to the image file you want to download
                                 StorageReference imageRef = storage.getReference().child("users/" + nname + "/image");
 
@@ -246,7 +286,7 @@ dialog.dismiss();
                             public void onFailure(@NonNull Exception exception) {
                                 // Handle any errors that occur during the download
                                 dialog.dismiss();
-                                Toast.makeText(EditProfileActivity.this, "Failed to Download Image", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                         dialog.dismiss();
@@ -319,5 +359,26 @@ dialog.dismiss();
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(EditProfileActivity.this,HomeActivity.class));
+    }
+     public void sign(){
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(uemail.getText().toString(), upassword.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                            SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+
+                            myEdit.putString("mail", uemail.getText().toString());
+                            myEdit.putString("password",upassword.getText().toString());
+                            myEdit.commit();
+                            // Do something with the user's updated information, such as updating a user profile in Firestore
+                        } else {
+
+                            // Handle the error, such as displaying an error message to the user
+                        }
+                    }
+                });
     }
 }

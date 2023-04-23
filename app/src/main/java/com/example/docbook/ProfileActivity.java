@@ -30,7 +30,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class ProfileActivity extends AppCompatActivity {
 
-TextView uname,uage,uemail,uaddress,ucity,uphone;
+TextView uname,uage,uemail,uaddress,ucity,uphone,umail,upassword;
 public String nname;
 Button b1;
 TextView name_t;
@@ -49,6 +49,8 @@ ImageView uimageView;
         uimageView=findViewById(R.id.profile_photo);
         b1=findViewById(R.id.button);
         name_t=findViewById(R.id.name_top);
+        umail=findViewById(R.id.mail);
+        upassword=findViewById(R.id.password);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         Dialog dialog = new Dialog(ProfileActivity.this);
         dialog.setContentView(R.layout.loading_dialog);
@@ -76,6 +78,8 @@ ImageView uimageView;
                                 String city=document.getString("city");
                                 String mail = document.getString("email");
                                 String phone=document.getString("contact");
+
+                                String password=document.getString("password");
                                 uname.setText(nname);
                                 name_t.setText(nname);
                                 uage.setText(age);
@@ -83,6 +87,8 @@ ImageView uimageView;
                                 ucity.setText(city);
                                uphone.setText(phone);
                                 uaddress.setText(address);
+                                umail.setText(mail);
+                                upassword.setText(password);
                                 b1.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

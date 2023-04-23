@@ -41,6 +41,7 @@ public  String emailAUTH,passwordAUT,loginAUTH,specAUTH;
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
         emailAUTH= sharedPreferences.getString("mail","").toString();
         passwordAUT=sharedPreferences.getString("password","").toString();
        loginAUTH= sharedPreferences.getString("login","").toString();
