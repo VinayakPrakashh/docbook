@@ -295,15 +295,7 @@ dialog.dismiss();
                                 .setTitleText("Profile Picture Updated Successfully")
                                 .show();
                         dialog.dismiss();
-                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                dialog.dismiss();
-                                String imageURL = uri.toString();
-                                // Do something with the image URL, such as saving it to Firebase Realtime Database or Firestore
-                            }
-                        });
-                        dialog.dismiss();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -313,7 +305,9 @@ dialog.dismiss();
                         new SweetAlertDialog(EditProfileActivity.this)
                                 .setTitleText("Failed to upload Image")
                                 .show();
+
                     }
+
                 });
 
     }
@@ -322,11 +316,11 @@ dialog.dismiss();
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_IMAGE_PICKER && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Dialog dialog = new Dialog(EditProfileActivity.this);
-            dialog.setContentView(R.layout.loading_dialog);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.setCancelable(false);
-            dialog.show();
+            Dialog dialog4 = new Dialog(EditProfileActivity.this);
+            dialog4.setContentView(R.layout.loading_dialog);
+            dialog4.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog4.setCancelable(false);
+            dialog4.show();
             Uri imageUri = data.getData();
             uploadImageToFirebaseStorage(imageUri);
             FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -343,7 +337,7 @@ dialog.dismiss();
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
                     // Display the bitmap image in an ImageView
-dialog.dismiss();
+dialog4.dismiss();
                     img.setImageBitmap(bitmap);
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -352,6 +346,7 @@ dialog.dismiss();
                     // Handle any errors that occur
                 }
             });
+            dialog4.dismiss();
         }
     }
 

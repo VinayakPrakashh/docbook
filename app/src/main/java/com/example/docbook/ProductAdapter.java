@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -53,7 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
    public static final int UPI_PAYMENT = 0;
     private Context context;
-    public String prod,name,price,manufacturer,quantity,item,expiry,direction,date;
+    public String prod,name,price,manufacturer,quantity,item,expiry,direction,date,email,adminmail;
     private List<Product> productList;
     private List<Product> productListFiltered;
     int lastPosition=-1;
@@ -319,9 +320,64 @@ TextView datedelivery=dialog.findViewById(R.id.product_date);
                                                         cod.setOnClickListener(new View.OnClickListener() {
                                                             @Override
                                                             public void onClick(View view) {
+                                                                FirebaseAuth auth = FirebaseAuth.getInstance();
+                                                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                                                String uid = auth.getCurrentUser().getUid();
+                                                                db.collection("users")
+                                                                        .document(uid)
+                                                                        .get()
+                                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                if (task.isSuccessful()) {
+                                                                                    DocumentSnapshot document = task.getResult();
+                                                                                    if (document.exists()) {
+
+                                                                                        String emails = document.getString("email");
+
+                                                                                        getmail(emails);
+
+// Create a reference to the image file you want to download
+
+                                                                                    } else {
+                                                                                        Log.d(TAG, "No such document");
+                                                                                    }
+                                                                                } else {
+                                                                                    Log.d(TAG, "get failed with ", task.getException());
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                db.collection("admin")
+                                                                        .document("vinayak")
+                                                                        .get()
+                                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                                if (task.isSuccessful()) {
+                                                                                    DocumentSnapshot document = task.getResult();
+                                                                                    if (document.exists()) {
+
+                                                                                        String emails = document.getString("email");
+
+                                                                                        getadminmail(emails);
+
+// Create a reference to the image file you want to download
+
+                                                                                    } else {
+                                                                                        Log.d(TAG, "No such document");
+                                                                                    }
+                                                                                } else {
+                                                                                    Log.d(TAG, "get failed with ", task.getException());
+                                                                                }
+                                                                            }
+                                                                        });
                                                                 SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
                                                                 String uname = sharedPreferences.getString("name", "").toString();
-                                                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                                                FirebaseFirestore db2 = FirebaseFirestore.getInstance();
                                                                 Map<String, Object> data = new HashMap<>();
                                                                 data.put("cost", finalamount);
                                                                 data.put("direction", direction);
@@ -336,7 +392,7 @@ TextView datedelivery=dialog.findViewById(R.id.product_date);
                                                                 data.put("numberofitems",numberofitems);
                                                                 data.put("delivery",date.trim());
 
-                                                                db.collection("bookings").document(uname).collection("itemdetails").document(prod)
+                                                                db2.collection("bookings").document(uname).collection("itemdetails").document(prod)
                                                                         .set(data)
                                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                             @Override
@@ -345,6 +401,27 @@ TextView datedelivery=dialog.findViewById(R.id.product_date);
                                                                                 new SweetAlertDialog(context)
                                                                                         .setTitleText("Order Placed.")
                                                                                         .show();
+
+
+                                                                                Toast.makeText(context, "hai "+email, Toast.LENGTH_SHORT).show();
+                                                                                String subject="Order Placed Successfully";
+                                                                                String message="Thank you for your order! Your Order For "+prod+" For Rs."+finalamount+" has been Placed. We are processing your order and it will be shipped to you on "+date.trim()+". If you have any questions or concerns about your order, please don't hesitate to contact us at docbookofficial1234@gmail.com";
+String subadmin="New order";
+                                                                                String messageadmin ="Dear Admin,\n\n" +
+                                                                                        "A new medicine order has been placed by a user with the following details:\n\n" +
+                                                                                        "User Name:" +uname+"\n" +
+                                                                                        "User pincode:" +pin+"\n" +
+                                                                                        "User Address:"+addresses+"\n" +
+                                                                                        "Medicine Name: "+name+"\n" +
+                                                                                        "Total Price:" +finalamount+"\n" +
+                                                                                        "Quantity:" +numberofitems+"\n" +
+                                                                                        "Delivery Date: "+date.trim()+"\n" +
+                                                                                        "Please take necessary actions to fulfill the order.\n\n" +
+                                                                                        "Thank you.\n\n" +
+                                                                                        "Best regards,\n" +
+                                                                                        "Docbook Team";
+                                                                                sendEmail(email,subject,message,"docbookofficial1234@gmail.com","tqusknxluwbichcp");
+                                                                                sendEmail(adminmail,subadmin,messageadmin,"docbookofficial1234@gmail.com","tqusknxluwbichcp");
                                                                                 dialog2.dismiss();
                                                                             }
                                                                         })
@@ -463,5 +540,16 @@ date=documentSnapshot.getString("delivery");
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
 
+    public void sendEmail(String email,String subject,String message,String fromEmail,String fromPassword) {
 
+
+        SendMailTask task = new SendMailTask(email, subject, message, fromEmail, fromPassword);
+        task.execute();
+    }
+    public void getmail(String emails){
+        email=emails;
+    }
+    public void getadminmail(String emails){
+        adminmail=emails;
+    }
 }
