@@ -403,7 +403,7 @@ TextView datedelivery=dialog.findViewById(R.id.product_date);
                                                                                         .show();
 
 
-                                                                                Toast.makeText(context, "hai "+email, Toast.LENGTH_SHORT).show();
+
                                                                                 String subject="Order Placed Successfully";
                                                                                 String message="Thank you for your order! Your Order For "+prod+" For Rs."+finalamount+" has been Placed. We are processing your order and it will be shipped to you on "+date.trim()+". If you have any questions or concerns about your order, please don't hesitate to contact us at docbookofficial1234@gmail.com";
 String subadmin="New order";

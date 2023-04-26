@@ -45,6 +45,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class booking extends AppCompatActivity {
 EditText name,reasons,contact,ages;
+String email,adminmail,docemail;
 TextView docname2,docspec2;
 public String val;
     private String[] genderOptions = {"Male", "Female", "Other"};
@@ -102,6 +103,8 @@ timetext=findViewById(R.id.timetex);
 
                                 // Extract doctor details here
                                 String name = document.getString("name");
+                                String emails = document.getString("email");
+                                getdocemail(emails);
                                 String specialization = document.getString("specialization");
                                 docname2.setText("Dr. "+name);
                                 docspec2.setText(specialization);
@@ -389,7 +392,7 @@ timetext=findViewById(R.id.timetex);
     private void bookit() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        String uid = auth.getCurrentUser().getUid();
+
         String nameauth = name.getText().toString();
         String ageauth=ages.getText().toString();
         String contactauth = contact.getText().toString();
@@ -398,6 +401,33 @@ timetext=findViewById(R.id.timetex);
         String time = timetext.getText().toString();
         String genderselect = genders.getText().toString();
 
+        String uid = auth.getCurrentUser().getUid();
+        db.collection("users")
+                .document(uid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                String emails = document.getString("email");
+
+                                getmail(emails);
+
+// Create a reference to the image file you want to download
+
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
         SharedPreferences sharedPreferences = getSharedPreferences("docselect", MODE_PRIVATE);
         String spec = sharedPreferences.getString("specialization", "");
         String doctor= sharedPreferences.getString("doctor", "").toString();
@@ -456,7 +486,42 @@ timetext=findViewById(R.id.timetex);
                             }
                         })
                         .show();
+// Patient details
 
+
+// Create the message
+                String docmessage ="Dear Dr. "+doctor+",\n\n" +
+                        "A new patient has booked an appointment with you with the following details:\n\n" +
+                        "Patient Name: "+nameauth+"\n" +
+                        "Age: "+ageauth+"\n" +
+                        "Gender: "+genderselect+"\n" +
+                        "Reason for Appointment: "+reasonauth+"\n" +
+                        "Appointment Date: "+dateinfo+"\n" +
+                        "Appointment Time: "+time+"\n" +
+                        "Patient Contact No: "+contactauth+"\n\n" +
+                        "Please review the patient's details and be ready for the appointment.\n\n" +
+                        "Thank you.\n\n";
+
+                String docsubject="New Appointment Booked";
+                String subject="Appointment Booked Successfully";
+
+                String message ="Dear User,\n\n" +
+                        "Thank you for booking an appointment. We have scheduled your appointment with the following details:\n\n" +
+                        "Doctor Name:"+doctor+"\n" +
+                        "Specialization: "+spec+"\n\n" +
+                        "Hospital Name: Specialists' Hospital Kochi \n" +
+                        "Appointment Date: "+dateinfo+"\n" +
+                        "Appointment Time: "+time+"\n" +
+                        "Please arrive 15 minutes prior to your appointment time to complete the necessary formalities.\n\n" +
+                        "If you have any questions or need to reschedule your appointment, please contact us at the number provided below.\n\n" +
+                        "Thank you for choosing our clinic.\n\n" +
+                        "Best regards,\n" +
+                        "Your Hospital Team\n" +
+                        "Phone: 7902963981";
+
+
+                sendEmail("vinayakprakash2121@gmail.com",subject,message,"docbookofficial1234@gmail.com","tqusknxluwbichcp");
+                sendEmail("vinayakprakash2121@gmail.com",docsubject,docmessage,"docbookofficial1234@gmail.com","tqusknxluwbichcp");
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -562,7 +627,18 @@ public String getSpecialization(){
             this.genderselect = gender;
         }
     }
+    public void sendEmail(String email,String subject,String message,String fromEmail,String fromPassword) {
 
+
+        SendMailTask task = new SendMailTask(email, subject, message, fromEmail, fromPassword);
+        task.execute();
+    }
+    public void getmail(String emails){
+        email=emails;
+    }
+    public void getdocemail(String emails){
+        docemail=emails;
+    }
 }
 
 
