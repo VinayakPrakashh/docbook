@@ -520,8 +520,8 @@ timetext=findViewById(R.id.timetex);
                         "Phone: 7902963981";
 
 
-                sendEmail("vinayakprakash2121@gmail.com",subject,message,"docbookofficial1234@gmail.com","tqusknxluwbichcp");
-                sendEmail("vinayakprakash2121@gmail.com",docsubject,docmessage,"docbookofficial1234@gmail.com","tqusknxluwbichcp");
+                sendEmail(email,subject,message,"docbookofficial1234@gmail.com","tqusknxluwbichcp");
+                sendEmail(docemail,docsubject,docmessage,"docbookofficial1234@gmail.com","tqusknxluwbichcp");
 
             }
         }).addOnFailureListener(new OnFailureListener() {
